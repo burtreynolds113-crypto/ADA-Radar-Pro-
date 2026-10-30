@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACR Kit — Create an honest VPAT / Accessibility Conformance Report for your SaaS</title>
+<meta name="description" content="A guided tool that scans your product, walks you through the manual WCAG checks, and exports a VPAT 2.5 ACR. Founding pre-order, fully refundable.">
+<!-- NOT DEPLOYED. Placeholders to fill after approval A-001:
+     {{STRIPE_PAYMENT_LINK}}  {{DELIVERY_DATE}}  {{CONTACT_EMAIL}}
+     Analytics: add Cloudflare Web Analytics snippet only after approval (no cookies). -->
+<style>
+  :root { --fg:#1a1a1a; --muted:#4a4a4a; --bg:#ffffff; --accent:#0b5cad; --soft:#f3f6fa; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:18px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color:var(--fg); background:var(--bg); }
+  .skip { position:absolute; left:-999px; } .skip:focus { left:1rem; top:1rem; background:#fff; padding:.5rem; }
+  header, main, footer { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+  header { padding-top: 2.5rem; }
+  h1 { font-size: 2.1rem; line-height:1.2; margin:.5rem 0 1rem; }
+  h2 { font-size: 1.4rem; margin-top: 2.5rem; }
+  p.lede { font-size:1.2rem; color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; padding:.85rem 1.4rem; border-radius:.4rem; text-decoration:none; font-weight:600; }
+  .cta:hover, .cta:focus { background:#084a8c; }
+  a:focus, .cta:focus { outline:3px solid #f2a900; outline-offset:2px; }
+  .box { background:var(--soft); border-radius:.5rem; padding:1rem 1.25rem; }
+  table { border-collapse: collapse; width:100%; }
+  th, td { text-align:left; padding:.5rem; border-bottom:1px solid #d0d7de; vertical-align:top; }
+  footer { color:var(--muted); font-size:.9rem; padding-bottom:3rem; margin-top:3rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <p><strong>ACR Kit</strong></p>
+  <h1>A prospect asked for your VPAT. Produce an honest one this week — without a $2,000+ consultant.</h1>
+  <p class="lede">ACR Kit scans your product, walks you through the checks software can't do, and exports a completed VPAT&nbsp;2.5 Accessibility Conformance Report you can stand behind.</p>
+  <p><a class="cta" href="{{STRIPE_PAYMENT_LINK}}">Pre-order for $79 (fully refundable)</a></p>
+  <p><small>Founding price. Regular price will be $149 per report.</small></p>
+</header>
+
+<main id="main">
+  <div class="box" role="note" aria-labelledby="status-h">
+    <h2 id="status-h" style="margin-top:0">Honest status</h2>
+    <p>ACR Kit is <strong>in development</strong>. Pre-orders fund the build. It will be delivered by <strong>{{DELIVERY_DATE}}</strong>. If it isn't, you are refunded automatically. You can also ask for a refund any time before delivery, for any reason.</p>
+  </div>
+
+  <h2>How it works</h2>
+  <ol>
+    <li><strong>Scan.</strong> Enter the URLs of your key screens (sign-in, dashboard, main workflows). An automated engine checks them against WCAG 2.2 A/AA.</li>
+    <li><strong>Check.</strong> Automated tools catch only part of the problems. For every remaining criterion you get short, plain-English test steps (keyboard, screen reader, zoom) and record what you found.</li>
+    <li><strong>Export.</strong> Download a completed VPAT 2.5 report (WCAG, Section 508, or International edition) as a Word document, with conservative wording drafted from your results.</li>
+  </ol>
+
+  <h2>Who it's for</h2>
+  <p>Small B2B software teams without an accessibility specialist, who need a credible report for an enterprise, university or government buyer.</p>
+
+  <h2>What it is not</h2>
+  <ul>
+    <li>Not a certification. There is no official VPAT certification.</li>
+    <li>Not legal advice, and not a guarantee of compliance with the ADA, Section 508 or the European Accessibility Act.</li>
+    <li>Not an overlay or widget. Nothing is injected into your site.</li>
+    <li>It will never mark something "Supports" unless you tested it and recorded that result.</li>
+  </ul>
+
+  <h2>Compared with the alternatives</h2>
+  <table>
+    <caption class="skip">Comparison of ways to produce an ACR</caption>
+    <thead><tr><th scope="col">Option</th><th scope="col">What you get</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Free VPAT template / GSA OpenACR editor</th><td>A blank form. You decide what to test and how to word it.</td></tr>
+      <tr><th scope="row">Accessibility consultancy</th><td>Expert manual audit and report. Often quoted in the thousands of dollars and takes weeks.</td></tr>
+      <tr><th scope="row">ACR Kit</th><td>Automated scan + guided self-testing + drafted report, for $149 per report.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Pre-order terms</h2>
+  <ul>
+    <li>$79 one-time, for one report on one product.</li>
+    <li>Delivered by {{DELIVERY_DATE}}, or automatic full refund.</li>
+    <li>Full refund on request at any time before delivery.</li>
+    <li>Payment handled by Stripe. We never see your card details.</li>
+  </ul>
+  <p><a class="cta" href="{{STRIPE_PAYMENT_LINK}}">Pre-order for $79</a></p>
+</main>
+
+<footer>
+  <p>Questions: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+  <p>"VPAT" is a registered service mark of the Information Technology Industry Council (ITI). ACR Kit is not affiliated with ITI or any government agency.</p>
+</footer>
+</body>
+</html>

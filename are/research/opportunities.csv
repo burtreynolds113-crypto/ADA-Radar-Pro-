@@ -1,0 +1,33 @@
+id,name,channel,intent,distribution,pain,margin_recurring,simplicity,automation,low_risk,evidence,excluded,notes
+O01,ACR/VPAT self-assessment kit for small B2B SaaS,SEO + directories + product-led ACR hosting,4,3,4,4,4,4,3,E,no,"Buyers pay $550-$4,450+ for consultant VPATs [S10,S11]; trigger is a deal blocked by procurement [S13]. Free substitutes exist: GSA OpenACR editor and free ITI template [S12] - so value must be guided testing + scan evidence + speed, not the template."
+O02,Shopify accessibility audit app (code-level fixes; no overlay),Shopify App Store,3,5,3,3,3,5,3,E,no,"67+ accessibility apps, mostly overlays [S7]; paid tiers $4.99-$59/mo [S7,S9]; 0% rev share to $1M after $19 reg [S14]. Strong marketplace distribution but price compression and must build before store validation."
+O03,Bulk AI alt-text for Shopify/WooCommerce,Shopify/Woo/WP marketplaces,4,4,2,3,4,5,4,E,no,AltText.ai claims 70k+ customers; ~$50 ARPA claimed via affiliate data [S8]. Proven WTP but dominated incumbent + many free apps; AI vision cost per image.
+O04,PDF accessibility checker/fixer for small public entities & faculty,SEO,4,2,5,3,1,3,3,E,no,Remediation priced ~$1-$25/page [S5]; Title II deadlines Apr 2027/2028 [S2]; faculty pointed to Acrobat/Panorama/Ally [S15]. Hard to build well (PDF tagging); procurement-heavy buyers.
+O05,WordPress accessibility checker plugin (freemium),WordPress.org directory,3,4,3,3,3,4,3,E,no,"Equalize Digital ~4k installs, $75/mo small-business tier [S4,S16]. Moderate category size."
+O06,Generic ADA website scanner SaaS (current ADA Radar concept),None identified,3,1,3,3,4,4,2,E,no,Many competitors at $9-$99/mo [S4]; no built-in channel; compliance-claim risk (FTC v. accessiBe) [S1]; automation catches ~57% of issues by volume [S6].
+O07,Shopify store finance/profit reporting app,Shopify App Store,3,4,3,4,2,4,4,A,no,Practitioner posts flag Store Management/Finance as less crowded [S17]. Not independently verified.
+O08,Shopify checkout extensibility / Functions app,Shopify App Store,3,4,3,4,2,4,4,A,no,Practitioner claim that new platform surfaces are unsaturated [S17]. Not verified.
+O09,Etsy/Gumroad spreadsheet templates (landlord/bookkeeping),Etsy marketplace,3,3,3,1,5,4,4,E,no,Many listings $2-$25; one tracked shop 30 sales [S18]. Low price; one-time.
+O10,ADA demand-letter response kit,SEO,3,2,5,1,4,3,1,E,yes,Pre-suit letters often settle $1.5k-$5k [S19]. High unauthorized-practice-of-law risk -> excluded.
+O11,Accessibility overlay widget,Marketplaces,3,4,2,4,4,5,1,E,yes,FTC $1M order against accessiBe for misleading claims [S1]. Ethically/legally unattractive -> excluded.
+O12,Google Sheets add-on (niche),Workspace Marketplace,2,3,3,3,3,4,4,E,no,Anecdotes range from $1.6k MRR to 3k users/$0 revenue [S20].
+O13,Chrome extension (freemium),Chrome Web Store,2,3,2,3,4,4,4,E,no,70% of extensions have <=100 users; 0.5-2% free-to-paid [S21].
+O14,EAA compliance checklist pack for EU-facing merchants,Etsy/Gumroad/SEO,2,3,3,1,5,4,3,E,no,EAA live since 28 Jun 2025 [S9]; microenterprise exemption; one-time low price.
+O15,Notion templates (profession niche),Notion marketplace/Gumroad,2,3,2,1,5,4,5,E,no,Generic categories 50k+ listings; 44% of tracked Gumroad products $0 [S22].
+O16,WCAG captions/transcripts (SRT) tool,SEO,3,2,2,2,3,5,4,N,no,Not researched; assumed crowded by Descript-class tools. Scored conservatively.
+O17,Accessibility statement generator (EAA multi-language),SEO + Shopify,1,3,2,1,5,5,3,E,no,"Free from Termly, DigitalA11Y; bundled in $4.99 Shopify apps [S9]."
+O18,Wix accessibility app,Wix App Market,2,4,2,2,3,4,2,E,no,Wix requires basic a11y settings be free; crowded with overlays [S23].
+O19,Squarespace accessibility checker,Chrome store/SEO,2,2,3,2,4,4,3,E,no,"Only free external checkers found (Tagpipes, Kat ADA, WAVE) [S23]; no native app market."
+O20,AI resume/cover-letter tool,SEO/ads,3,2,3,2,4,5,4,N,no,Not researched; assumed saturated. Scored conservatively.
+O21,SEO meta/schema generator,SEO,2,2,2,2,5,5,5,A,no,Blog evidence of commoditization [S24].
+O22,Uptime/SSL expiry monitor,SEO,2,2,2,3,4,5,5,N,no,Not researched; assumed saturated.
+O23,Invoice generator,SEO,1,2,1,1,5,5,5,A,no,Described as 'almost entirely commoditised' [S24].
+O24,Programmatic-SEO calculators monetized by ads,SEO,1,3,1,2,4,5,5,N,no,No verified purchase intent (ads only).
+O25,Figma plugin (design QA / contrast),Figma Community,2,3,2,2,4,4,5,N,no,Not researched.
+O26,Canva templates for niche professions,Canva/Etsy,2,3,1,1,5,3,4,N,no,Not researched; assumed saturated like Etsy printables [S25].
+O27,Etsy printable planners,Etsy,2,3,1,1,5,4,4,E,no,Sources describe saturation from AI/Canva near-duplicates [S25].
+O28,Cookie consent / privacy policy generator,SEO,3,2,3,3,3,4,1,N,no,Regulated/legal-advice adjacent; not researched.
+O29,Discord/Slack bot micro-SaaS,Bot directories,2,2,2,3,3,4,4,N,no,Not researched.
+O30,Accessibility course for developers,Udemy/Gumroad,2,2,2,2,3,2,5,N,no,Not researched; content production heavy.
+O31,Lead-gen / prospect data product,Outbound,3,2,3,4,3,5,1,N,yes,Violates founder rule (no cold prospecting) -> excluded.
+O32,Stock AI images / presets,Marketplaces,1,3,1,1,5,4,3,N,no,Not researched; assumed saturated and IP-risky.

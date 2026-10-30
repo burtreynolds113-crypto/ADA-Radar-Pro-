@@ -1,0 +1,13 @@
+{
+  "experiment": "EXP-001-acr-kit-presale",
+  "status": "not started - awaiting approval A-001",
+  "metrics": [
+    {"name": "Landing page unique visitors", "value": null, "source": "web analytics (not yet installed)"},
+    {"name": "Qualified visitors (from intent keywords)", "value": null, "source": "ad platform / referrer"},
+    {"name": "Checkout started", "value": null, "source": "Stripe dashboard"},
+    {"name": "Paid pre-orders", "value": null, "source": "Stripe dashboard (payments succeeded)"},
+    {"name": "Refunds", "value": null, "source": "Stripe dashboard"},
+    {"name": "Ad spend", "value": null, "source": "ad platform invoice -> ledger"},
+    {"name": "Cost per paid pre-order", "value": null, "source": "derived: ad spend / paid pre-orders"}
+  ]
+}
