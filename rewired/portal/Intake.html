@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rewired by TrueBrain – Intake</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,600..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF3F1; --grid:#D3E0DB; --ink:#17222D; --ink2:#3E4C57; --ink3:#6B7A84; --brand:#0E5E66; --brand2:#DCEBEA; --white:#FBFDFC;
+  --t-performer:#0E7C74; --t-wired:#C2365B; --t-scattered:#C9800F; --t-foggy:#5F64B0; --t-burnout:#5E7A8C; --p3:#E8A33D;
+  --flagbg:#F8E3E6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:17px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:100% 28px,28px 100%;background-attachment:fixed}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;margin:0}
+a{color:var(--brand)}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--p3);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:1080px;margin:0 auto}
+.logo{display:flex;align-items:baseline;gap:8px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:22px;letter-spacing:-.03em;color:var(--ink)}
+.logo span{font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:400;font-size:14px;color:var(--ink3);letter-spacing:0}
+
+/* hero */
+.hero{padding-top:8px}
+.hero h1{font-size:clamp(40px,8vw,84px);line-height:.95;max-width:12ch;font-variation-settings:"wdth" 85}
+.hero p.sub{font-size:clamp(18px,2.2vw,21px);color:var(--ink2);max-width:46ch;margin:18px 0 0}
+.trace{position:relative;margin:26px -20px 0;background:var(--white);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.trace canvas{display:block;width:100%;height:240px}
+.trace .tag{position:absolute;right:20px;bottom:10px;font-size:13px;color:var(--ink3)}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:26px 0 0}
+.cta{border:0;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:18px;padding:16px 26px;cursor:pointer}
+.cta:hover{background:var(--brand)}
+.cta-row small{color:var(--ink3);font-size:15px}
+
+/* types */
+.types{padding-top:84px;padding-bottom:20px}
+.types h2,.next h2,.impact h2{font-size:clamp(30px,5vw,48px);line-height:1.02;max-width:18ch}
+.types .intro{color:var(--ink2);max-width:58ch;margin:14px 0 26px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{border:2px solid var(--ink);background:transparent;border-radius:999px;padding:10px 18px;font-weight:700;font-size:16px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:8px}
+.tab i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.tab[aria-selected=true]{background:var(--c);border-color:var(--c);color:#fff}
+.tab[aria-selected=true] i{background:#fff}
+.typepanel{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:22px;align-items:start}
+.typepanel .say{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;line-height:1.05;color:var(--c);letter-spacing:-.02em}
+.typepanel .signal{margin-top:12px;color:var(--ink2)}
+.mini{margin-top:22px;background:var(--white);border:1.5px solid var(--ink);border-radius:18px;padding:12px 14px 8px}
+.mini canvas{display:block;width:100%;height:120px}
+.mini span{font-size:14px;color:var(--ink3)}
+.life{background:var(--white);border:1.5px solid var(--ink);border-radius:18px;padding:6px 20px}
+.life div{padding:14px 0;border-bottom:1px solid var(--grid)}
+.life div:last-child{border-bottom:0}
+.life b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:15px;color:var(--c)}
+.fine{font-size:14px;color:var(--ink3);margin-top:14px;max-width:62ch}
+
+/* impact timeline */
+.impact{padding-top:72px;padding-bottom:10px}
+.timeline{list-style:none;padding:0;margin:30px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:3px solid var(--ink)}
+.timeline li{padding:18px 18px 0 0;position:relative}
+.timeline li::before{content:"";position:absolute;top:-9px;left:0;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.timeline li:last-child::before{background:var(--p3)}
+.timeline h3{font-size:21px;margin:6px 0 6px}
+.timeline .when{font-size:14px;color:var(--ink3)}
+.timeline p{margin:0;color:var(--ink2);font-size:16px}
+
+/* start */
+.start{margin:80px auto 60px;max-width:720px;background:var(--ink);color:#EAF2F1;border-radius:26px;padding:34px 28px}
+.start h2{color:#fff;font-size:clamp(28px,4vw,40px)}
+.start ul{padding-left:20px;margin:14px 0;color:#C9D7D6}
+.start li{margin:6px 0}
+.consent{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.06);border-radius:14px;padding:14px;margin:18px 0}
+.consent input{width:22px;height:22px;accent-color:var(--p3);flex:none;margin-top:2px}
+.start .cta{background:var(--p3);color:var(--ink)}
+.start .cta:disabled{opacity:.4;cursor:not-allowed}
+.crisis{font-size:14px;color:#AFC3C2}
+
+/* wizard */
+#wiz{display:none}
+.wbar{position:sticky;top:0;z-index:5;background:rgba(238,243,241,.92);backdrop-filter:blur(6px);border-bottom:1.5px solid var(--ink)}
+.wbar .in{max-width:680px;margin:0 auto;padding:12px 20px}
+.wbar .row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink3)}
+.wbar .row b{color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:17px}
+.ekg{height:4px;background:var(--grid);border-radius:2px;margin-top:8px;overflow:hidden}
+.ekg i{display:block;height:100%;width:0;background:var(--brand);transition:width .35s}
+main#app{max-width:680px;margin:0 auto;padding:22px 20px 130px}
+.card{background:var(--white);border:1.5px solid var(--ink);border-radius:20px;padding:22px 20px;margin-bottom:14px}
+.card h2{font-size:28px;margin-bottom:4px}
+.lead{color:var(--ink2);margin:0 0 12px}
+.f{margin:18px 0}
+.f > label{display:block;font-weight:700;margin-bottom:6px}
+.f small{display:block;color:var(--ink3);font-size:14px;margin:-2px 0 8px}
+input[type=number],input[type=text],textarea,select{width:100%;font:inherit;padding:13px 14px;border:1.5px solid #B9C9C3;border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,textarea:focus{border-color:var(--brand);outline:none;box-shadow:0 0 0 3px var(--brand2)}
+textarea{min-height:96px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font-size:16px;border:1.5px solid #B9C9C3;background:#fff;border-radius:999px;padding:10px 16px;cursor:pointer;color:var(--ink)}
+.opts button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.opts.col{flex-direction:column}
+.opts.col button{border-radius:12px;text-align:left}
+.checks label{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--grid);font-size:16px;font-weight:400}
+.checks input{width:21px;height:21px;margin-top:2px;accent-color:var(--brand);flex:none}
+.q{padding:14px 0;border-bottom:1px solid var(--grid)}
+.q:last-child{border-bottom:0}
+.q p{margin:0 0 10px}
+nav.bar{position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:1.5px solid var(--ink);padding:12px 16px}
+nav.bar .in{max-width:680px;margin:0 auto;display:flex;gap:10px}
+.btn{font-weight:700;font-size:17px;border:0;border-radius:999px;padding:15px 20px;cursor:pointer;background:var(--ink);color:#fff;flex:1}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink);flex:0 0 auto}
+.btn:disabled{opacity:.4}
+.danger{background:var(--flagbg);border:1.5px solid var(--t-wired);border-radius:14px;padding:14px 16px;margin:12px 0;color:var(--ink)}
+.saved{font-size:13px;color:var(--ink3);text-align:center}
+.review dt{font-weight:700;margin-top:12px}
+.review dd{margin:2px 0 0;color:var(--ink2)}
+.center{text-align:center}
+.msg{max-width:560px;margin:14vh auto;padding:0 20px}
+
+@media (max-width:820px){
+  .typepanel{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr;border-top:0;border-left:3px solid var(--ink);margin-left:8px}
+  .timeline li{padding:0 0 24px 22px}
+  .timeline li::before{top:4px;left:-9px}
+  .trace canvas{height:190px}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .ekg i{transition:none} }
+</style>
+</head>
+<body>
+<div id="land">
+  <div class="top"><div class="logo">Rewired <span>by TrueBrain</span></div></div>
+  <section class="hero wrap">
+    <h1>Your brain has a signature.</h1>
+    <p class="sub">A 40-minute scan records how your brain responds, moment to moment. This questionnaire tells us how you actually live. Together they become a plan written for you, reviewed by a clinician.</p>
+    <div class="trace" aria-label="Animated EEG trace showing brain rhythm and the P300 response">
+      <canvas id="eeg" role="img" aria-label="Brainwave trace for the selected brain type"></canvas>
+      <div class="tag" id="traceTag">Performer pattern, three channels</div>
+    </div>
+    <div class="cta-row"><button class="cta" data-go="start">Start my questionnaire</button><small>About 10 minutes. Saves as you go.</small></div>
+  </section>
+
+  <section class="types wrap" id="types">
+    <h2>Five patterns we see every week</h2>
+    <p class="intro">Most people recognize themselves in one or two of these. Tap each to see how it tends to show up, and watch the trace change shape. Your scan shows which pattern is really yours.</p>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="typepanel" id="panel" role="tabpanel"></div>
+    <p class="fine">These are everyday patterns, not diagnoses. Your clinician reads your actual scan, with your history, before anything is recommended.</p>
+  </section>
+
+  <section class="impact wrap">
+    <h2>What changes once you can see it</h2>
+    <ol class="timeline">
+      <li><span class="when">This week</span><h3>Tell us how you live</h3><p>Sleep, food, movement, work, relationships, mood. Ten honest minutes.</p></li>
+      <li><span class="when">Scan day</span><h3>Measure, don't guess</h3><p>An at-home scan of attention speed, focus capacity and resting rhythm.</p></li>
+      <li><span class="when">Within a week</span><h3>Your plan, reviewed</h3><p>A clinician-approved report: what's working, what's draining you, and the first three changes.</p></li>
+      <li><span class="when">90 days</span><h3>See the difference</h3><p>A follow-up scan shows what moved, so the next steps are based on evidence.</p></li>
+    </ol>
+  </section>
+
+  <section class="start" id="start">
+    <h2>Before you begin</h2>
+    <ul>
+      <li>Your answers go only to your Rewired by TrueBrain clinician and are stored securely.</li>
+      <li>Close the page anytime and come back with the same link. Your progress is saved.</li>
+      <li>Skip anything you'd rather not answer.</li>
+    </ul>
+    <label class="consent"><input type="checkbox" id="consent"> <span>I agree to share these answers with my Rewired by TrueBrain clinician to prepare my NeuroProfile report.</span></label>
+    <button class="cta" id="beginBtn" disabled>Begin</button>
+    <p class="crisis">This is not an emergency service. If you are in crisis, call or text 988, or call 911.</p>
+  </section>
+</div>
+
+<div id="wiz">
+  <div class="wbar"><div class="in"><div class="row"><b id="stepTitle"></b><span id="stepLbl"></span></div><div class="ekg"><i id="progBar"></i></div></div></div>
+  <main id="app"></main>
+  <nav class="bar" id="bar"><div class="in"><button class="btn ghost" id="backBtn">Back</button><button class="btn" id="nextBtn">Next</button></div></nav>
+</div>
+<div id="msg" class="msg" style="display:none"></div>
+
+<script>
+/* ===== Backend shim: Google Apps Script in production, localStorage demo otherwise ===== */
+const HAS_GAS = (typeof google !== 'undefined') && google.script && google.script.run;
+const DEMO = (() => {
+  const K = 'np_demo_v1';
+  const load = () => { try { return JSON.parse(localStorage.getItem(K)) || { clients: [], intakes: {}, reports: {} }; } catch (e) { return { clients: [], intakes: {}, reports: {} }; } };
+  const save = (d) => { try { localStorage.setItem(K, JSON.stringify(d)); } catch (e) {} };
+  const base = () => location.href.split('?')[0].replace(/Console\.html$/, 'Intake.html');
+  const out = (c) => c && ({ ...c, intakeUrl: base() + '?page=intake&c=' + c.code + '&t=' + c.token, reportUrl: base() + '?page=report&c=' + c.code + '&t=' + c.token });
+  const find = (d, code) => d.clients.find(c => c.code === code);
+  const rnd = (n) => Array.from({ length: n }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  return {
+    verifyLogin: async (u, p) => (u && p) ? { ok: true, session: 'demo-session' } : { ok: false, error: 'Enter a username and password (any value works in demo mode).' },
+    logout: async () => true,
+    whoami: async (_s) => ({ email: 'demo@thetrubrain.com', baseUrl: base(), brand: 'Rewired by TrueBrain', demo: true }),
+    createClient: async (_s, label) => { const d = load(); const c = { code: 'RW-' + rnd(6), label: label || '', token: rnd(32), created: new Date().toISOString(), intake_status: 'sent', report_status: 'none', urgent: false }; d.clients.push(c); save(d); return out(c); },
+    listClients: async (_s) => load().clients.map(out).reverse(),
+    getIntake: async (_s, code) => { const it = load().intakes[code]; return it || null; },
+    approveReport: async (_s, code, html) => { const d = load(); const c = find(d, code); d.reports[code] = html; c.report_status = 'approved'; c.approved_at = new Date().toISOString(); save(d); return out(c); },
+    revokeReport: async (_s, code) => { const d = load(); const c = find(d, code); c.report_status = 'revoked'; save(d); return out(c); },
+    loadIntake: async (code, token) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return { ok: false, error: 'This link is not valid. Please check the link you were sent.' };
+      if (c.intake_status === 'submitted') return { ok: true, submitted: true }; return { ok: true, draft: (d.intakes[code] || {}).data || {} }; },
+    saveDraft: async (code, token, data) => { const d = load(); const c = find(d, code); if (!c || c.token !== token || c.intake_status === 'submitted') return { ok: false };
+      d.intakes[code] = { status: 'draft', updated: new Date().toISOString(), data }; c.intake_status = 'draft'; save(d); return { ok: true }; },
+    submitIntake: async (code, token, data) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return { ok: false, error: 'Link not valid.' };
+      d.intakes[code] = { status: 'submitted', updated: new Date().toISOString(), data }; c.intake_status = 'submitted'; c.submitted_at = new Date().toISOString(); c.urgent = Number(data.phq8) > 0; save(d); return { ok: true, urgent: c.urgent }; },
+    _report: (code, token) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return null; return c.report_status === 'approved' ? d.reports[code] : ''; }
+  };
+})();
+function api(fn, ...args) {
+  if (HAS_GAS) return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+  return DEMO[fn](...args);
+}
+function urlParams() {
+  return new Promise(r => { if (HAS_GAS) google.script.url.getLocation(l => r(l.parameter || {})); else r(Object.fromEntries(new URLSearchParams(location.search))); });
+}
+
+const SUPPS = [
+ {k:'omega3', n:'Omega-3 / fish oil', url:'https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/', meds:['warfarin','coumadin','apixaban','eliquis','rivaroxaban','xarelto','clopidogrel','plavix','aspirin'], note:'may add to bleeding risk with blood thinners'},
+ {k:'vitd', n:'Vitamin D', url:'https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/', meds:['prednisone','orlistat','statin','atorvastatin','thiazide','hydrochlorothiazide'], note:'can interact with steroids, orlistat, statins and thiazide diuretics'},
+ {k:'mag', n:'Magnesium', url:'https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/', meds:['alendronate','fosamax','doxycycline','tetracycline','ciprofloxacin','levofloxacin','furosemide','omeprazole','pantoprazole'], note:'reduces absorption of bisphosphonates and some antibiotics; diuretics and PPIs change magnesium levels'},
+ {k:'b12', n:'Vitamin B12', url:'https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/', meds:['metformin','omeprazole','pantoprazole'], note:'metformin and acid reducers can lower B12 (worth testing)'},
+ {k:'sjw', n:"St. John's wort", url:'https://www.nccih.nih.gov/health/st-johns-wort', meds:['sertraline','zoloft','fluoxetine','prozac','escitalopram','lexapro','citalopram','paroxetine','birth control','oral contraceptive','warfarin','digoxin','cyclosporine'], note:'serious interactions: weakens many drugs and risks serotonin syndrome with antidepressants'},
+ {k:'ginkgo', n:'Ginkgo', url:'https://www.nccih.nih.gov/health/ginkgo', meds:['warfarin','apixaban','eliquis','rivaroxaban','clopidogrel','aspirin'], note:'may increase bleeding risk with blood thinners'},
+ {k:'melatonin', n:'Melatonin', url:'https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know', meds:['warfarin','fluvoxamine','sedative','zolpidem'], note:'possible interactions with blood thinners and sedatives'},
+ {k:'creatine', n:'Creatine', url:'https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/', meds:['nsaid','ibuprofen','lisinopril'], note:'use caution with kidney-active drugs'},
+ {k:'ashwa', n:'Ashwagandha', url:'https://ods.od.nih.gov/factsheets/Ashwagandha-HealthProfessional/', meds:['levothyroxine','synthroid','sedative','immunosuppressant'], note:'may affect thyroid hormone and sedative effects'},
+ {k:'preworkout', n:'Pre-workout / energy products', url:'https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/', meds:['adderall','methylphenidate','stimulant','ssri'], note:'stacked stimulants'},
+];
+const STRESSORS = [
+ ['grief','Death of someone close',3],['divorce','Separation / divorce / breakup',3],['job','Job loss or job change',2],
+ ['money','Serious financial strain',2],['move','Moved home',1],['care','Caregiving for someone',2],
+ ['illness','Own serious illness or injury',3],['legal','Legal problems or litigation',2],['newbaby','New baby / child',1],
+ ['famconf','Ongoing family conflict',2],['accident','Accident / injury claim',2],['other','Other major change',1]];
+const FREQ = ['Not at all','Several days','More than half the days','Nearly every day'];
+const PHQ = ['Little interest or pleasure in doing things','Feeling down, depressed, or hopeless','Trouble falling or staying asleep, or sleeping too much','Feeling tired or having little energy','Poor appetite or overeating','Feeling bad about yourself — or that you are a failure or have let yourself or your family down','Trouble concentrating on things, such as reading the newspaper or watching television','Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual','Thoughts that you would be better off dead, or of hurting yourself'];
+const GAD = ['Feeling nervous, anxious, or on edge','Not being able to stop or control worrying','Worrying too much about different things','Trouble relaxing','Being so restless that it is hard to sit still','Becoming easily annoyed or irritable','Feeling afraid, as if something awful might happen'];
+const WHO = ['I have felt cheerful and in good spirits','I have felt calm and relaxed','I have felt active and vigorous','I woke up feeling fresh and rested','My daily life has been filled with things that interest me'];
+const WHOF = ['At no time','Some of the time','Less than half the time','More than half the time','Most of the time','All of the time'];
+const UCLA = ['How often do you feel that you lack companionship?','How often do you feel left out?','How often do you feel isolated from others?'];
+const UCLAF = ['Hardly ever','Some of the time','Often'];
+const YN=[['no','No'],['yes','Yes']];
+const S15=n=>[1,2,3,4,5].map(v=>[String(v),String(v)]);
+const STEPS=[
+ {t:'About you', f:[
+   {id:'c_age',type:'num',label:'Your age'},
+   {id:'c_sex',type:'pick',label:'Sex',opts:[['Male','Male'],['Female','Female'],['Other / not stated','Prefer not to say']]},
+   {id:'c_reason',type:'area',label:'What would you most like to improve?',help:'For example: focus at work, sleep, stress, memory, mood, energy, recovery after an injury.'}]},
+ {t:'Sleep', f:[
+   {id:'i_sleepH',type:'num',label:'On average, how many hours do you sleep a night?',step:0.5},
+   {id:'i_sleepQ',type:'pick',label:'How would you rate your sleep quality?',opts:[['1','Very poor'],['2','Poor'],['3','Fair'],['4','Good'],['5','Very good']]},
+   {id:'i_sleepVar',type:'pick',label:'Do your bedtime or wake time vary by more than an hour?',opts:[['no','No, pretty consistent'],['yes','Yes']]},
+   {id:'i_snore',type:'pick',label:'Has anyone said you snore loudly or stop breathing in your sleep?',opts:YN}]},
+ {t:'Movement', f:[
+   {id:'i_vig',type:'num',label:'Minutes of vigorous exercise per week',help:'Hard enough that talking is difficult: running, HIIT, fast cycling.'},
+   {id:'i_mod',type:'num',label:'Minutes of moderate activity per week',help:'Brisk walking, easy cycling, yard work.'},
+   {id:'i_str',type:'num',label:'Days per week of strength training'},
+   {id:'i_sit',type:'num',label:'Hours a day spent sitting',step:0.5}]},
+ {t:'Food & water', f:[
+   {id:'i_fv',type:'num',label:'Servings of fruit and vegetables a day',step:0.5,help:'One serving is about a fist-sized portion.'},
+   {id:'i_upf',type:'num',label:'Fast-food or packaged/processed meals a day',step:0.5},
+   {id:'i_fish',type:'num',label:'Fish or seafood meals a week'},
+   {id:'i_water',type:'num',label:'Glasses of water a day'},
+   {id:'i_skip',type:'pick',label:'Do you regularly skip meals?',opts:YN}]},
+ {t:'Supplements & medications', f:[
+   {id:'supps',type:'checks',label:'Which supplements do you take?',items:SUPPS.map(s=>['sp_'+s.k,s.n])},
+   {id:'i_meds',type:'area',label:'Prescription and over-the-counter medications',help:'Names and doses if you know them. Write "none" if none.'}]},
+ {t:'Habits & screens', f:[
+   {id:'i_alc',type:'num',label:'Alcoholic drinks per week'},
+   {id:'i_cafD',type:'num',label:'Cups of coffee (or equivalent caffeine) per day',step:0.5},
+   {id:'i_nic',type:'pick',label:'Do you use nicotine or vape?',opts:YN},
+   {id:'i_can',type:'pick',label:'Cannabis use',opts:[['0','None'],['1','Occasionally'],['2','Weekly'],['3','Daily']]},
+   {id:'i_screen',type:'num',label:'Hours a day of recreational screen time',step:0.5},
+   {id:'i_bedphone',type:'pick',label:'Do you use your phone in bed before sleep?',opts:YN}]},
+ {t:'Work', f:[
+   {id:'i_wh',type:'num',label:'Hours worked per week'},
+   {id:'i_wd',type:'pick',label:'How demanding is your work?',opts:[['1','1 Low'],['2','2'],['3','3'],['4','4'],['5','5 Very high']]},
+   {id:'i_wc',type:'pick',label:'How much control do you have over how and when you work?',opts:[['1','1 None'],['2','2'],['3','3'],['4','4'],['5','5 Full']]},
+   {id:'i_shift',type:'pick',label:'Do you work shifts or nights?',opts:YN},
+   {id:'i_wconf',type:'pick',label:'Conflict at work',opts:[['1','1 None'],['2','2'],['3','3'],['4','4'],['5','5 Constant']]}]},
+ {t:'People & life', f:[
+   ...UCLA.map((q,i)=>({id:'ucla'+i,type:'pick',label:q,opts:UCLAF.map((o,j)=>[String(j+1),o])})),
+   {id:'i_support',type:'pick',label:'Do you have someone you could call in a crisis?',opts:[['yes','Yes'],['no','No']]},
+   {id:'i_hconf',type:'pick',label:'Conflict at home',opts:[['1','1 None'],['2','2'],['3','3'],['4','4'],['5','5 Constant']]},
+   {id:'stress',type:'checks',label:'In the past 12 months, have you experienced any of these?',items:STRESSORS.map(s=>['st_'+s[0],s[1]])}]},
+ {t:'Mood (last 2 weeks)', mood:'phq', lead:'Over the last 2 weeks, how often have you been bothered by the following?'},
+ {t:'Worry (last 2 weeks)', mood:'gad', lead:'Over the last 2 weeks, how often have you been bothered by the following?'},
+ {t:'Wellbeing (last 2 weeks)', mood:'who', lead:'Over the last 2 weeks, how often has each statement been true for you?'},
+ {t:'Review & submit', review:true}
+];
+let S={code:null,token:null,data:{},step:0,consent:false,saveT:null};
+const app=document.getElementById('app');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function fieldHTML(f){
+  const v=S.data[f.id];
+  if(f.type==='num') return `<div class="f"><label for="${f.id}">${f.label}</label>${f.help?`<small>${f.help}</small>`:''}<input type="number" inputmode="decimal" min="0" step="${f.step||1}" id="${f.id}" value="${v??''}"></div>`;
+  if(f.type==='area') return `<div class="f"><label for="${f.id}">${f.label}</label>${f.help?`<small>${f.help}</small>`:''}<textarea id="${f.id}">${esc(v)}</textarea></div>`;
+  if(f.type==='pick') return `<div class="f"><label>${f.label}</label>${f.help?`<small>${f.help}</small>`:''}<div class="opts" data-id="${f.id}">${f.opts.map(([val,t])=>`<button type="button" data-v="${val}" class="${String(v)===val?'on':''}">${t}</button>`).join('')}</div></div>`;
+  if(f.type==='checks') return `<div class="f"><label>${f.label}</label><div class="checks">${f.items.map(([id,t])=>`<label><input type="checkbox" id="${id}" ${S.data[id]?'checked':''}> ${t}</label>`).join('')}</div></div>`;
+}
+function moodHTML(kind){
+  const items=kind==='phq'?PHQ:kind==='gad'?GAD:WHO, pre=kind, opts=kind==='who'?WHOF:FREQ;
+  return items.map((q,i)=>{const id=pre+i, v=S.data[id];
+    return `<div class="q"><p><b>${i+1}.</b> ${q}</p><div class="opts col" data-id="${id}">${opts.map((o,j)=>`<button type="button" data-v="${j}" class="${String(v)===String(j)?'on':''}">${o}</button>`).join('')}</div>
+     ${kind==='phq'&&i===8?'<div id="safety"></div>':''}</div>`;}).join('');
+}
+const SAFETY=`<div class="danger"><b>You don't have to handle this alone.</b> If you're having thoughts of harming yourself, please reach out now. Call or text <b>988</b> (Suicide &amp; Crisis Lifeline, US, 24/7), or call <b>911</b> if you are in immediate danger. Your clinician will also see this answer and follow up with you.</div>`;
+function render(){
+  const st=STEPS[S.step], n=STEPS.length;
+  document.getElementById('progBar').style.width=((S.step+1)/n*100)+'%';
+  document.getElementById('stepTitle').textContent=st.t;
+  document.getElementById('stepLbl').textContent=`${S.step+1} of ${n}`;
+  document.getElementById('backBtn').style.visibility='visible';
+  const next=document.getElementById('nextBtn');
+  next.textContent=st.review?'Send my answers':'Next';
+  next.disabled=false;
+  if(st.review){
+    const answered=Object.keys(S.data).filter(k=>!k.startsWith('_')&&S.data[k]!==''&&S.data[k]!==false&&S.data[k]!=null).length;
+    const phq=[...Array(9).keys()].every(i=>S.data['phq'+i]!=null);
+    app.innerHTML=`<div class="card"><h2>Ready to send?</h2><p class="lead">You answered ${answered} questions. You can go back and change anything before you submit. After you submit, the answers are locked.</p>
+      ${!phq?'<p class="note">Some mood questions are blank. They help your clinician, but they are optional.</p>':''}
+      <dl class="review"><dt>Your goal</dt><dd>${esc(S.data.c_reason)||'—'}</dd><dt>Sleep</dt><dd>${S.data.i_sleepH??'—'} hours a night</dd><dt>Activity</dt><dd>${(+S.data.i_mod||0)+(+S.data.i_vig||0)} active minutes a week</dd><dt>Medications</dt><dd>${esc(S.data.i_meds)||'—'}</dd></dl></div>`;
+    return;
+  }
+  app.innerHTML=`<div class="card"><h2>${st.t}</h2>${st.lead?`<p class="lead">${st.lead}</p>`:''}${st.mood?moodHTML(st.mood):st.f.map(fieldHTML).join('')}</div><div class="saved" id="saved"></div>`;
+  app.querySelectorAll('input[type=number],textarea').forEach(el=>el.oninput=()=>{S.data[el.id]=el.value;queueSave();});
+  app.querySelectorAll('.checks input').forEach(el=>el.onchange=()=>{S.data[el.id]=el.checked;queueSave();});
+  app.querySelectorAll('.opts').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const id=g.dataset.id, val=b.dataset.v; S.data[id]=(S.data[id]===val)?'':val;
+    g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===S.data[id])); if(id==='phq8') showSafety(); queueSave();}));
+  if(st.mood==='phq') showSafety();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function showSafety(){ const el=document.getElementById('safety'); if(el) el.innerHTML=Number(S.data.phq8)>0?SAFETY:''; }
+function queueSave(){ clearTimeout(S.saveT); S.saveT=setTimeout(async()=>{ try{ await api('saveDraft',S.code,S.token,S.data); const s=document.getElementById('saved'); if(s) s.textContent='Progress saved'; }catch(e){} },800); }
+document.getElementById('backBtn').onclick=()=>{ if(S.step>0){S.step--;render();} else showLanding(); };
+document.getElementById('nextBtn').onclick=async()=>{
+  const st=STEPS[S.step];
+  if(st.review){ const b=document.getElementById('nextBtn'); b.disabled=true; b.textContent='Sending…';
+    try{ const r=await api('submitIntake',S.code,S.token,S.data); if(!r.ok) throw new Error(r.error||'Could not submit');
+      done(r.urgent); }catch(e){ b.disabled=false; b.textContent='Send my answers'; alertBox('Something went wrong sending your answers. Please try again.'); } return; }
+  S.step++; render(); queueSave();
+};
+function alertBox(m){ const d=document.createElement('div'); d.className='danger'; d.textContent=m; app.prepend(d); }
+function showMsg(h){ document.getElementById('land').style.display='none'; document.getElementById('wiz').style.display='none'; const m=document.getElementById('msg'); m.style.display=''; m.innerHTML=h; window.scrollTo({top:0}); }
+function done(urgent,already){
+  showMsg(`<div class="card"><h2>${already?'Already sent':'Thank you'}</h2><p class="lead">${already?'This questionnaire has already been submitted. Thank you.':'Your answers are with your Rewired by TrueBrain clinician. Next comes your scan, then your clinician-reviewed report.'}</p>${urgent?SAFETY:''}</div>`);
+}
+function showLanding(){ document.getElementById('wiz').style.display='none'; document.getElementById('land').style.display=''; document.getElementById('start').scrollIntoView(); }
+function startWizard(){ document.getElementById('land').style.display='none'; document.getElementById('wiz').style.display='block'; render(); window.scrollTo({top:0,behavior:'instant'}); }
+(async function init(){
+  const p=await urlParams();
+  if(p.page==='report' && !HAS_GAS){ const h=DEMO._report(p.c,p.t); const html=h===null?'<p style="font-family:system-ui;padding:40px">Link not valid.</p>':h===''?'<p style="font-family:system-ui;padding:40px">Your report is being reviewed.</p>':h; const d=new DOMParser().parseFromString(html,'text/html'); document.documentElement.replaceWith(document.importNode(d.documentElement,true)); return; }
+  setupLanding();
+  S.code=p.c; S.token=p.t;
+  if(!HAS_GAS && (!S.code||!S.token)){ const c=await DEMO.createClient('Preview'); S.code=c.code; S.token=c.token; }
+  if(!S.code||!S.token){ lockStart('Open the full link your clinician sent you to begin.'); return; }
+  try{
+    const r=await api('loadIntake',S.code,S.token);
+    if(!r.ok){ lockStart(r.error); return; }
+    if(r.submitted){ done(false,true); return; }
+    S.data=r.draft||{}; S.consent=!!S.data._consent; document.getElementById('consent').checked=S.consent; document.getElementById('beginBtn').disabled=!S.consent;
+    if(Object.keys(S.data).filter(k=>!k.startsWith('_')).length){ document.getElementById('beginBtn').textContent='Continue where I left off'; }
+  }catch(e){ lockStart('Connection problem. Please refresh the page.'); }
+})();
+function lockStart(m){ const b=document.getElementById('beginBtn'); b.disabled=true; document.getElementById('consent').disabled=true; const p=document.createElement('p'); p.className='danger'; p.style.color='var(--ink)'; p.textContent=m; b.after(p); }
+
+/* ===== Landing: brain types + live EEG trace ===== */
+const TYPES={
+ performer:{name:'Performer',c:'var(--t-performer)',hex:'#0E7C74',say:'Clear, quick and steady.',
+   signal:'On a scan this usually looks like a fast, strong attention response and a well-organized resting rhythm.',
+   day:'You switch on when you need to and switch off when you don\'t.',work:'Long focus blocks feel natural, and decisions come quickly.',people:'Present and patient. You have room for other people.',helps:'Protecting what\'s working: sleep, training, recovery, and a baseline to compare against.',
+   w:{alpha:1,theta:.25,beta:.3,hb:.05,noise:.08,p3:1.15,p3lat:.30,amp:1}},
+ wired:{name:'Wired',c:'var(--t-wired)',hex:'#C2365B',say:'Always on.',
+   signal:'Often shows lots of fast activity and a resting rhythm that won\'t settle.',
+   day:'Racing thoughts, tight shoulders, and trouble winding down at night.',work:'Productive but draining. The edge turns to irritability by late afternoon.',people:'A shorter fuse than you\'d like, and it\'s hard to be fully present.',helps:'Downshifting: breathing and HRV work, caffeine timing, an evening wind-down that actually happens.',
+   w:{alpha:.35,theta:.2,beta:.85,hb:.55,noise:.18,p3:.8,p3lat:.32,amp:.9}},
+ scattered:{name:'Scattered',c:'var(--t-scattered)',hex:'#C9800F',say:'Twenty tabs open.',
+   signal:'Often shows slow "drift" rhythm mixed into focus rhythm, and a response that varies trial to trial.',
+   day:'You start plenty and finish less. Your mind wanders mid-sentence.',work:'Missed details, slipping deadlines, rereading the same email.',people:'"You\'re not listening" comes up more than you\'d like.',helps:'Structure over willpower: single-tasking, movement breaks, a consistent sleep window.',
+   w:{alpha:.45,theta:1.05,beta:.35,hb:.15,noise:.2,p3:.7,p3lat:.36,amp:1,burst:true}},
+ foggy:{name:'Foggy',c:'var(--t-foggy)',hex:'#5F64B0',say:'Running through mud.',
+   signal:'Often shows a slower attention response and a slower resting rhythm.',
+   day:'Slow recall, lost words, a heavy head. Common after medication changes, during perimenopause, or after a concussion.',work:'Everything takes a second pass.',people:'You pull back because conversation takes energy you don\'t have.',helps:'Finding the drivers: sleep, movement, nutrition, and a medical review where it\'s needed.',
+   w:{alpha:.5,theta:.9,beta:.15,hb:.03,noise:.1,p3:.75,p3lat:.42,amp:1.05,slow:true}},
+ burnout:{name:'Burnout',c:'var(--t-burnout)',hex:'#5E7A8C',say:'Running on empty.',
+   signal:'Often shows a smaller attention response and a dampened rhythm overall.',
+   day:'Tired all day, then wired at night. Motivation feels flat.',work:'Everything costs more effort, and you care less than you used to.',people:'Little left for the people you love by the end of the day.',helps:'Recovery first: lowering the load, rebuilding sleep, reconnecting with people.',
+   w:{alpha:.3,theta:.35,beta:.25,hb:.1,noise:.12,p3:.35,p3lat:.34,amp:.55}}
+};
+let curType='performer', W={...TYPES.performer.w}, target={...TYPES.performer.w}, curHex='#0E7C74';
+function setupLanding(){
+  document.querySelectorAll('[data-go=start]').forEach(b=>b.onclick=()=>document.getElementById('start').scrollIntoView());
+  const c=document.getElementById('consent'), bb=document.getElementById('beginBtn');
+  c.onchange=()=>{ S.consent=c.checked; S.data._consent=c.checked?new Date().toISOString():''; bb.disabled=!c.checked; if(S.code) queueSave(); };
+  bb.onclick=startWizard;
+  const tabs=document.getElementById('tabs');
+  tabs.innerHTML=Object.entries(TYPES).map(([k,t])=>`<button class="tab" role="tab" id="tab-${k}" aria-controls="panel" aria-selected="${k===curType}" style="--c:${t.c}" data-k="${k}"><i></i>${t.name}</button>`).join('');
+  tabs.querySelectorAll('.tab').forEach(b=>b.onclick=()=>selectType(b.dataset.k));
+  tabs.addEventListener('keydown',e=>{ const ks=Object.keys(TYPES); let i=ks.indexOf(curType);
+    if(e.key==='ArrowRight'){i=(i+1)%ks.length;} else if(e.key==='ArrowLeft'){i=(i-1+ks.length)%ks.length;} else return;
+    e.preventDefault(); selectType(ks[i]); document.getElementById('tab-'+ks[i]).focus(); });
+  selectType(curType); startTrace();
+}
+function selectType(k){
+  curType=k; const t=TYPES[k]; target={...t.w}; curHex=t.hex;
+  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
+  const p=document.getElementById('panel'); p.style.setProperty('--c',t.c); p.setAttribute('aria-labelledby','tab-'+k);
+  p.innerHTML=`<div><div class="say">${t.say}</div><p class="signal">${t.signal}</p><div class="mini"><canvas id="mini" aria-hidden="true"></canvas><span>${t.name} signature, central channel</span></div></div>
+   <div class="life"><div><b>Day to day</b>${t.day}</div><div><b>At work</b>${t.work}</div><div><b>With people</b>${t.people}</div><div><b>What usually helps</b>${t.helps}</div></div>`;
+  document.getElementById('traceTag').textContent=`${t.name} pattern, three channels`;
+}
+function startTrace(){
+  const cv=document.getElementById('eeg'), ctx=cv.getContext('2d');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t0=performance.now(), drawn=0, seed=[Math.random()*99,Math.random()*99,Math.random()*99];
+  const chans=[{n:'Fz',ph:0,g:.85},{n:'Cz',ph:1.7,g:1},{n:'Pz',ph:3.1,g:1.12}];
+  function size(){ const r=cv.getBoundingClientRect(), d=window.devicePixelRatio||1; cv.width=r.width*d; cv.height=r.height*d; ctx.setTransform(d,0,0,d,0,0); }
+  size(); window.addEventListener('resize',size);
+  function sig(x,ch,time){ // x in seconds along the strip
+    const tt=x+time*(reduce?0:1);
+    let v= W.alpha*Math.sin(2*Math.PI*(W.slow?8.4:10.2)*tt+ch.ph)
+         + W.theta*Math.sin(2*Math.PI*(W.slow?4.6:5.6)*tt+ch.ph*.7)*(W.burst?(.5+.5*Math.sin(2*Math.PI*.45*tt)):1)
+         + W.beta*.55*Math.sin(2*Math.PI*19*tt+ch.ph*1.3)
+         + W.hb*.45*Math.sin(2*Math.PI*27*tt+ch.ph)
+         + W.noise*(Math.sin(tt*91.7+seed[0])*Math.sin(tt*57.3+seed[1]));
+    v*=W.amp*.42*ch.g;
+    const period=1.6, ph=((tt%period)+period)%period, lat=W.p3lat*(W.burst?(1+.25*Math.sin(Math.floor(tt/period)*2.3)):1);
+    const d=ph-lat; v+= W.p3*ch.g*1.25*Math.exp(-(d*d)/(2*0.035*0.035)) - W.p3*ch.g*.35*Math.exp(-((ph-.1)**2)/(2*.02*.02));
+    return v;
+  }
+  function frame(now){
+    const time=(now-t0)/1000;
+    Object.keys(target).forEach(k=>{ if(typeof target[k]==='number') W[k]+= (target[k]-W[k])*0.06; else W[k]=target[k]; });
+    const w=cv.clientWidth, h=cv.clientHeight; ctx.clearRect(0,0,w,h);
+    // chart grid
+    ctx.strokeStyle='#E1EAE6'; ctx.lineWidth=1;
+    for(let x=0;x<w;x+=24){ctx.beginPath();ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,h);ctx.stroke();}
+    const secs=w/160, rowH=h/3;
+    drawn=Math.min(1, drawn+(reduce?1:0.012));
+    chans.forEach((ch,i)=>{
+      const y0=rowH*(i+.5);
+      ctx.fillStyle='#6B7A84'; ctx.font='13px "Atkinson Hyperlegible", sans-serif'; ctx.fillText(ch.n,14,y0-rowH*.28);
+      ctx.strokeStyle=i===1?curHex:'#17222D'; ctx.lineWidth=i===1?2.2:1.3; ctx.beginPath();
+      const xmax=w*drawn;
+      for(let x=46;x<xmax;x+=1.5){ const v=sig((x/w)*secs,ch,time); const y=y0 - v*rowH*.42; x===46?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+      ctx.stroke();
+    });
+    // P300 marker on Cz for the most recent response
+    const period=1.6, base=time*(reduce?0:1);
+    for(let k=Math.ceil(base/period);k*period<base+secs;k++){
+      const xs=((k*period+W.p3lat-base)/secs)*w; if(xs<60||xs>w*drawn-10) continue;
+      ctx.fillStyle='#E8A33D'; ctx.beginPath(); ctx.arc(xs,rowH*1.5-W.p3*1.25*.42*W.amp*rowH*.42-10,4,0,7); ctx.fill();
+      ctx.fillStyle='#3E4C57'; ctx.font='12px "Atkinson Hyperlegible", sans-serif'; ctx.fillText('P300',xs+7,rowH*1.5-W.p3*1.25*.42*W.amp*rowH*.42-6);
+      break;
+    }
+    const mc=document.getElementById('mini');
+    if(mc){ const d=window.devicePixelRatio||1, mw=mc.clientWidth, mh=mc.clientHeight;
+      if(mc.width!==Math.round(mw*d)){ mc.width=mw*d; mc.height=mh*d; }
+      const m=mc.getContext('2d'); m.setTransform(d,0,0,d,0,0); m.clearRect(0,0,mw,mh);
+      m.strokeStyle=curHex; m.lineWidth=2.4; m.beginPath();
+      for(let x=0;x<mw;x+=1.2){ const v=sig((x/mw)*3.2,chans[1],time); const y=mh/2 - v*mh*.32; x===0?m.moveTo(x,y):m.lineTo(x,y); }
+      m.stroke(); }
+    if(!reduce || drawn<1) requestAnimationFrame(frame); else setTimeout(()=>requestAnimationFrame(frame),400);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>

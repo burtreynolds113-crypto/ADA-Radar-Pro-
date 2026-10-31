@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_top">
+<title>NeuroProfile Console – Rewired by TrueBrain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14212b; --ink2:#41525e; --ink3:#71818c; --line:#dfe5e9; --bg:#f6f8f9; --card:#fff;
+  --brand:#0f5c63; --brand2:#e3f0f0; --good:#2f7d4f; --goodbg:#e6f3eb; --watch:#a86a00; --watchbg:#fbf1dc;
+  --flag:#b3372e; --flagbg:#f9e5e3; --prov:#5a4fa0; --provbg:#ecebf7;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.5}
+h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;margin:0}
+.mono{font-family:"IBM Plex Mono",monospace}
+header.top{background:var(--ink);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+header.top .logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#2bb3a3,#0f5c63);display:grid;place-items:center;font-weight:700}
+header.top h1{font-size:20px}
+header.top .sub{color:#a9bac4;font-size:13px}
+nav.steps{display:flex;gap:4px;background:#fff;border-bottom:1px solid var(--line);padding:0 20px;position:sticky;top:0;z-index:5;overflow-x:auto}
+nav.steps button{border:0;background:none;padding:14px 16px;font:inherit;color:var(--ink3);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+nav.steps button.on{color:var(--ink);border-color:var(--brand);font-weight:600}
+nav.steps .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--line);font-size:12px;margin-right:6px}
+nav.steps button.on .n{background:var(--brand);color:#fff}
+td .btn{margin:2px 4px 2px 0}
+.st{font-weight:600}
+main{max-width:1080px;margin:0 auto;padding:24px 20px 80px}
+section.pane{display:none}
+section.pane.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+.card h2{font-size:19px;margin-bottom:4px}
+.card .lead{color:var(--ink2);margin:0 0 14px}
+.grid{display:grid;gap:12px 18px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink2);font-weight:500}
+label.f input,label.f select,label.f textarea{font:inherit;color:var(--ink);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+label.f textarea{min-height:64px;resize:vertical}
+label.f small{color:var(--ink3);font-weight:400}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink3);font-weight:600}
+td input[type=number],td input[type=text]{width:84px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px}
+.btn{font:inherit;border:1px solid var(--brand);background:var(--brand);color:#fff;padding:9px 16px;border-radius:8px;cursor:pointer;font-weight:500}
+.btn.ghost{background:#fff;color:var(--brand)}
+.btn.small{padding:5px 10px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+.p-good{background:var(--goodbg);color:var(--good)} .p-watch{background:var(--watchbg);color:var(--watch)}
+.p-flag{background:var(--flagbg);color:var(--flag)} .p-prov{background:var(--provbg);color:var(--prov)}
+.p-neutral{background:#eef1f3;color:var(--ink2)}
+.banner{border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:14px}
+.banner.warn{background:var(--watchbg);border:1px solid #efd9a8}
+.banner.info{background:var(--brand2);border:1px solid #c7e1e1}
+.banner.danger{background:var(--flagbg);border:1px solid #efc4bf}
+.q{padding:10px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.q:last-child{border-bottom:0}
+.q select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;max-width:260px}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px 14px;font-size:14px}
+.checks label{display:flex;gap:8px;align-items:center}
+details{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+summary{cursor:pointer;font-weight:600;color:var(--brand)}
+/* report */
+.viewtoggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.viewtoggle button{border:0;background:#fff;padding:8px 14px;font:inherit;cursor:pointer;color:var(--ink2)}
+.viewtoggle button.on{background:var(--ink);color:#fff}
+.report{background:#fff;border:1px solid var(--line);border-radius:14px;padding:34px 38px;margin-top:14px}
+.report h2{font-size:22px;margin:30px 0 6px;padding-top:18px;border-top:1px solid var(--line)}
+.report h2:first-of-type{border-top:0;padding-top:0;margin-top:8px}
+.report .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--brand);font-weight:700}
+.rhead{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:14px}
+.rhead h1{font-size:26px}
+.meta{font-size:13px;color:var(--ink2);text-align:right}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.three .col{border-radius:10px;padding:14px 16px}
+.three .col h3{font-size:15px;margin-bottom:8px;font-family:"IBM Plex Sans";font-weight:700}
+.three ul{margin:0;padding-left:18px;font-size:14px}
+.three li{margin-bottom:6px}
+.c-good{background:var(--goodbg)} .c-watch{background:var(--watchbg)} .c-act{background:var(--brand2)}
+.metric{display:grid;grid-template-columns:200px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.metric:last-child{border-bottom:0}
+.metric .name{font-weight:600}
+.metric .name small{display:block;color:var(--ink3);font-weight:400;font-size:12px}
+.gauge{position:relative;height:30px;margin:6px 0 2px}
+.gauge .track{position:absolute;top:12px;left:0;right:0;height:6px;border-radius:3px;background:#eef1f3}
+.gauge .band{position:absolute;top:10px;height:10px;border-radius:5px;background:#cfe6e2}
+.gauge .dot{position:absolute;top:6px;width:18px;height:18px;border-radius:50%;margin-left:-9px;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.gauge .lbl{position:absolute;top:-4px;font-size:11px;color:var(--ink3);transform:translateX(-50%)}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3)}
+.bars .b{display:grid;grid-template-columns:190px 1fr 46px;gap:12px;align-items:center;margin:8px 0;font-size:14px}
+.bars .t{height:10px;background:#eef1f3;border-radius:5px;overflow:hidden}
+.bars .t i{display:block;height:100%;border-radius:5px}
+.prof{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.prof .p{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.prof .p h3{font-family:"IBM Plex Sans";font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.prof .p p{margin:8px 0 0;font-size:14px;color:var(--ink2)}
+.action{border-left:4px solid var(--brand);padding:10px 14px;margin:10px 0;background:#fafcfc;border-radius:0 8px 8px 0}
+.action h3{font-family:"IBM Plex Sans";font-size:15px;font-weight:700}
+.action p{margin:4px 0;font-size:14px;color:var(--ink2)}
+.ev{font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:6px;vertical-align:2px}
+.evA{background:#dff0e6;color:#1f6a3e}.evB{background:#e6eef8;color:#2a5687}.evC{background:#f2ecdf;color:#7a5b16}.evP{background:#eceef0;color:#4a5660}
+.src{font-size:13px;color:var(--ink2)}
+.src li{margin-bottom:4px}
+.src a{color:var(--brand)}
+.disc{font-size:12px;color:var(--ink3);border-top:1px solid var(--line);margin-top:26px;padding-top:12px}
+.cliniconly{display:none}
+.report.clinician .cliniconly{display:block}
+.report.clinician tr.cliniconly{display:table-row}
+.report.clinician .clientonly{display:none}
+sup.c{font-size:10px;color:var(--brand);font-weight:600}
+.log li{margin-bottom:8px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:760px){.three{grid-template-columns:1fr}.metric{grid-template-columns:1fr}.report{padding:22px 18px}.bars .b{grid-template-columns:120px 1fr 40px}}
+@media print{header.top,nav.steps,.noprint{display:none!important}body{background:#fff}main{padding:0;max-width:none}section.pane{display:none!important}#pane-report{display:block!important}.report{border:0;padding:0}}
+</style>
+</head>
+<body>
+<div id="loginOverlay" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(20,33,43,.96);align-items:center;justify-content:center;padding:20px">
+ <form id="loginForm" style="background:#fff;border-radius:16px;padding:28px 26px;width:100%;max-width:380px">
+  <div style="font-family:IBM Plex Serif,serif;font-size:22px;font-weight:600">Rewired console</div>
+  <p style="color:#41525e;font-size:14px;margin:6px 0 16px">Staff only. Signed in to Google with your TrueBrain account, then enter your console login.</p>
+  <label class="f">Username<input id="lgUser" autocomplete="username" required></label>
+  <label class="f" style="margin-top:10px">Password<input id="lgPass" type="password" autocomplete="current-password" required></label>
+  <div id="loginErr" style="color:#b3372e;font-size:14px;min-height:20px;margin:10px 0"></div>
+  <button class="btn" id="lgBtn" style="width:100%">Sign in</button>
+  <p style="font-size:12px;color:#71818c;margin:12px 0 0">5 failed attempts locks the console for 15 minutes. Every sign-in is recorded in the security log.</p>
+ </form>
+</div>
+<header class="top">
+  <div class="logo">N</div>
+  <div>
+    <h1>NeuroProfile console</h1>
+    <div class="sub">Rewired by TrueBrain · <span id="whoami">connecting…</span> · ERP + lifestyle report · template v1.2 (WAVi-native) · rules updated from 5 real cases</div>
+  </div>
+</header>
+
+<nav class="steps" id="steps">
+  <button data-p="clients" class="on"><span class="n">0</span>Clients</button>
+  <button data-p="scan"><span class="n">1</span>Scan data</button>
+  <button data-p="state"><span class="n">2</span>Pre-scan state</button>
+  <button data-p="intake"><span class="n">3</span>Lifestyle &amp; life intake</button>
+  <button data-p="report"><span class="n">4</span>Report</button>
+  <button data-p="learn"><span class="n">5</span>Learning log</button>
+</nav>
+
+<main>
+<!-- ============ 1. SCAN ============ -->
+<section class="pane on" id="pane-clients">
+  <div class="card">
+    <h2>Send a new intake</h2>
+    <p class="lead">Create a private link for a client. The label is only for you; it stays in your Google Sheet and never appears in a report.</p>
+    <div class="row"><label class="f" style="flex:1;min-width:220px">Private label (e.g. client name)<input id="newLabel" placeholder="Jane D., referred by Dr. Smith"></label>
+      <button class="btn" id="newBtn" style="align-self:flex-end">Create intake link</button></div>
+    <div id="newOut"></div>
+  </div>
+  <div class="card">
+    <div class="row"><h2>Clients</h2><span class="spacer"></span><button class="btn ghost small" id="refreshBtn">Refresh</button></div>
+    <p class="lead">Status updates when a client saves or submits. Urgent means the client answered the self-harm question above "Not at all": follow your safety protocol today.</p>
+    <div id="clientList"><p class="src">Loading…</p></div>
+  </div>
+</section>
+
+<section class="pane" id="pane-scan">
+  <div class="banner info" id="curClientBanner" style="display:none"></div>
+  <div class="card" id="dropCard" style="border:2px dashed var(--brand);background:var(--brand2)">
+    <h2>Import a WAVi report (PDF)</h2>
+    <p class="lead">Drop the WAVi Scan Clinician Report here, or choose the file. It's read <b>inside this browser</b> and never uploaded. The client's name and date of birth are used only to work out age and initials, then discarded.</p>
+    <div class="row"><input type="file" id="pdfIn" accept="application/pdf"><span id="impMsg" style="font-size:14px"></span></div>
+  </div>
+  <div class="banner info">Loaded: <b>Case 001</b>, a real WAVi baseline scan, de-identified (initials only, no date of birth). Edit any value to run a new client. WAVi adjusts target ranges by age, so copy the ranges from each client's printout.</div>
+  <div class="card">
+    <h2>Client &amp; session</h2>
+    <div class="grid">
+      <label class="f">Client ID / initials<input id="c_id" value="TF-001"></label>
+      <label class="f">Age<input id="c_age" type="number" value="48"></label>
+      <label class="f">Sex<select id="c_sex"><option>Male</option><option>Female</option><option>Other / not stated</option></select></label>
+      <label class="f">Scan date<input id="c_date" type="date" value="2026-10-31"></label>
+      <label class="f">Session<select id="c_session"><option>Baseline</option><option>Follow-up</option></select></label>
+      <label class="f">System<input id="c_sys" value="WAVi Scan 1.1.0.0"></label>
+      <label class="f">Reason for visit / presenting concerns<input id="c_reason" value="No presenting concerns documented"></label>
+      <label class="f">Prepared by<input id="c_prep" placeholder="Technician / coach name"></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Performance metrics (WAVi page 1)</h2>
+    <p class="lead">Tick "Low yield" wherever the printout shows ⬓. A flagged value is treated as <b>provisional</b> throughout the report.</p>
+    <table id="metricTable"><thead><tr><th>Metric</th><th>Region</th><th>Value</th><th>Low yield ⬓</th><th>Range low</th><th>Range high</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="card">
+    <h2>Site-level P300 (WAVi page 2)</h2>
+    <p class="lead">Central-parietal sites only. Leave µV blank if the printout shows &lt;0, and ms blank if it shows N/A. An asterisk (*) means possible late artifact.</p>
+    <table id="siteTable"><thead><tr><th>Site</th><th>Yield (#)</th><th>µV</th><th>ms</th><th>Artifact *</th></tr></thead><tbody></tbody></table>
+    <div class="grid" style="margin-top:14px">
+      <label class="f">Central-frontal N100 (µV)<input id="n100uv" type="number" step="0.1" value="-0.6"></label>
+      <label class="f">N100 latency (ms)<input id="n100ms" type="number" value="120"></label>
+      <label class="f">Frontal/occipital alpha ratio (R)<input id="foR" type="number" step="0.01" value="0.85"><small>WAVi reference 0.8 ± 0.3</small></label>
+      <label class="f">Frontal/blink artifact noted?<select id="frontArt"><option value="yes">Yes: FP/F sites &lt;0 µV or N/A</option><option value="no">No</option></select></label>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Performance assessments <small style="font-weight:400;color:var(--ink3);font-family:'IBM Plex Sans'">(WAVi page 3, if run)</small></h2>
+    <p class="lead">Trail Making and Flanker tests appear on some WAVi printouts and in neurologist summaries. Leave these blank if they weren't run.</p>
+    <div class="grid">
+      <label class="f">Trail Making A (sec)<input id="tmtA" type="number"></label>
+      <label class="f">Target A (sec)<input id="tmtAr" value="45–77"><small>From printout</small></label>
+      <label class="f">Trail Making B (sec)<input id="tmtB" type="number"></label>
+      <label class="f">Target B (sec)<input id="tmtBr" value="64–124"></label>
+      <label class="f">Flanker trials / responses<input id="flkTR" placeholder="e.g. 112 / 73"></label>
+      <label class="f">Flanker correct / incorrect<input id="flkCI" placeholder="e.g. 64 / 9"></label>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Age-range library</h2>
+    <p class="lead">WAVi target ranges observed on real printouts, keyed by age. This fills the range columns above from the nearest age on file. Always check the result against the client's own printout. The library grows with every scan.</p>
+    <div class="row"><button class="btn small ghost" onclick="applyRanges()">Fill ranges from nearest library age</button><span id="rangeMsg" style="font-size:13px;color:var(--ink3)"></span></div>
+  </div>
+  <div class="row noprint"><span class="spacer"></span><button class="btn" onclick="go('state')">Next: pre-scan state →</button></div>
+</section>
+
+<!-- ============ 2. PRE-SCAN STATE ============ -->
+<section class="pane" id="pane-state">
+  <div class="banner warn"><b>New in v1.1 (from Case 001):</b> sleep, time since meal and the change field were all N/A on the WAVi printout. Sleep loss, caffeine and fasting all shift the P300, so a scan without this context can't be read cleanly. The report now flags any field left blank here.</div>
+  <div class="card">
+    <h2>State on the day of the scan</h2>
+    <div class="grid">
+      <label class="f">Hours slept last night<input id="s_sleep" type="number" step="0.5" placeholder="e.g. 7"></label>
+      <label class="f">Hours since last meal<input id="s_meal" type="number" step="0.5" placeholder="e.g. 2"></label>
+      <label class="f">Caffeine in last 4 hours?<select id="s_caf"><option value="">Not recorded</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+      <label class="f">Nicotine / alcohol / cannabis in last 12 h?<select id="s_sub"><option value="">Not recorded</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+      <label class="f">Medications taken today<input id="s_meds" placeholder="names, or 'none'"></label>
+      <label class="f">Feeling ill / in pain today?<select id="s_ill"><option value="">Not recorded</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+      <label class="f">Stress right now (0–10)<input id="s_stress" type="number" min="0" max="10" placeholder="0–10"></label>
+      <label class="f">Clicked for every rare tone?<select id="s_rt"><option value="">Not recorded</option><option value="yes">Yes</option><option value="no">No / unsure</option></select><small>Fewer than 15 clicks makes WAVi report reaction time as N/A</small></label>
+    </div>
+  </div>
+  <div class="row noprint"><button class="btn ghost" onclick="go('scan')">← Back</button><span class="spacer"></span><button class="btn" onclick="go('intake')">Next: lifestyle intake →</button></div>
+</section>
+
+<!-- ============ 3. INTAKE ============ -->
+<section class="pane" id="pane-intake">
+  <div class="banner info row"><span>No intake on file for Case 001 yet. Fill it in with the client, or preview the full report with a <b>fictional</b> example intake.</span><span class="spacer"></span>
+    <button class="btn small ghost" onclick="fillExample()">Preview with example intake (fictional)</button>
+    <button class="btn small ghost" onclick="clearIntake()">Clear intake</button></div>
+
+  <div class="card"><h2>Sleep</h2>
+    <div class="grid">
+      <label class="f">Average sleep, hours/night<input id="i_sleepH" type="number" step="0.5"></label>
+      <label class="f">Sleep quality<select id="i_sleepQ"><option value="">—</option><option value="1">1 – very poor</option><option value="2">2 – poor</option><option value="3">3 – fair</option><option value="4">4 – good</option><option value="5">5 – very good</option></select></label>
+      <label class="f">Bed/wake time varies by more than 1 h?<select id="i_sleepVar"><option value="">—</option><option value="no">No, consistent</option><option value="yes">Yes</option></select></label>
+      <label class="f">Snoring or breathing pauses reported?<select id="i_snore"><option value="">—</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+    </div></div>
+
+  <div class="card"><h2>Movement <small style="font-weight:400;color:var(--ink3);font-family:'IBM Plex Sans'">(IPAQ-short style)</small></h2>
+    <div class="grid">
+      <label class="f">Vigorous activity, minutes/week<input id="i_vig" type="number"></label>
+      <label class="f">Moderate activity, minutes/week<input id="i_mod" type="number"></label>
+      <label class="f">Strength-training days/week<input id="i_str" type="number"></label>
+      <label class="f">Sitting, hours/day<input id="i_sit" type="number" step="0.5"></label>
+    </div></div>
+
+  <div class="card"><h2>Nutrition &amp; hydration</h2>
+    <div class="grid">
+      <label class="f">Fruit + vegetable servings/day<input id="i_fv" type="number" step="0.5"></label>
+      <label class="f">Fast-food / ultra-processed meals/day<input id="i_upf" type="number" step="0.5"></label>
+      <label class="f">Fish / seafood meals/week<input id="i_fish" type="number"></label>
+      <label class="f">Water, glasses/day<input id="i_water" type="number"></label>
+      <label class="f">Skips meals regularly?<select id="i_skip"><option value="">—</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+    </div></div>
+
+  <div class="card"><h2>Supplements &amp; medications</h2>
+    <p class="lead">Each supplement is checked against the medication list using interaction notes from the NIH Office of Dietary Supplements and NCCIH.</p>
+    <div class="checks" id="suppChecks"></div>
+    <label class="f" style="margin-top:12px">Prescription and OTC medications (one per line or comma-separated)<textarea id="i_meds"></textarea></label>
+  </div>
+
+  <div class="card"><h2>Substances &amp; stimulation</h2>
+    <div class="grid">
+      <label class="f">Alcoholic drinks/week<input id="i_alc" type="number"></label>
+      <label class="f">Caffeine, cups of coffee or equivalent/day<input id="i_cafD" type="number" step="0.5"></label>
+      <label class="f">Nicotine / vaping<select id="i_nic"><option value="">—</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+      <label class="f">Cannabis use<select id="i_can"><option value="">—</option><option value="0">None</option><option value="1">Occasional</option><option value="2">Weekly</option><option value="3">Daily</option></select></label>
+      <label class="f">Recreational screen time, hours/day<input id="i_screen" type="number" step="0.5"></label>
+      <label class="f">Phone in bed before sleep?<select id="i_bedphone"><option value="">—</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+    </div></div>
+
+  <div class="card"><h2>Work</h2>
+    <div class="grid">
+      <label class="f">Work hours/week<input id="i_wh" type="number"></label>
+      <label class="f">Job demands (1 low – 5 very high)<select id="i_wd"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+      <label class="f">Control over how and when you work (1 none – 5 full)<select id="i_wc"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+      <label class="f">Shift or night work?<select id="i_shift"><option value="">—</option><option value="no">No</option><option value="yes">Yes</option></select></label>
+      <label class="f">Conflict at work (1 none – 5 constant)<select id="i_wconf"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    </div></div>
+
+  <div class="card"><h2>Relationships &amp; connection <small style="font-weight:400;color:var(--ink3);font-family:'IBM Plex Sans'">(UCLA 3-item)</small></h2>
+    <div id="uclaQs"></div>
+    <div class="grid" style="margin-top:10px">
+      <label class="f">Has someone to call in a crisis?<select id="i_support"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+      <label class="f">Conflict at home (1 none – 5 constant)<select id="i_hconf"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    </div></div>
+
+  <div class="card"><h2>Life stressors in the past 12 months</h2>
+    <div class="checks" id="stressChecks"></div></div>
+
+  <div class="card"><h2>Clinician-noted concerns</h2>
+    <p class="lead">Tick only what is documented or reported by the referring clinician. These unlock the brain-training evidence library in the report. Nothing is shown unless a box here, a screen score or a scan finding calls for it.</p>
+    <div class="checks" id="concernChecks"></div></div>
+
+  <div class="card"><h2>Mood &amp; wellbeing screens</h2>
+    <p class="lead">PHQ-9 and GAD-7 (free to use), plus WHO-5. Over the <b>last 2 weeks</b>, how often has the client been bothered by…</p>
+    <details open><summary>PHQ-9: mood</summary><div id="phqQs"></div></details>
+    <details><summary>GAD-7: anxiety</summary><div id="gadQs"></div></details>
+    <details><summary>WHO-5: wellbeing</summary><div id="whoQs"></div></details>
+  </div>
+  <div class="row noprint"><button class="btn ghost" onclick="go('state')">← Back</button><span class="spacer"></span><button class="btn" onclick="go('report')">Generate report →</button></div>
+</section>
+
+<!-- ============ 4. REPORT ============ -->
+<section class="pane" id="pane-report">
+  <div class="card noprint" id="releaseCard" style="display:none;border-color:var(--brand)">
+    <div class="row"><div><b>Release to client</b><div class="src" id="releaseState"></div></div><span class="spacer"></span>
+      <button class="btn" id="approveBtn">Approve &amp; release</button></div>
+    <div id="approveConfirm" style="display:none;margin-top:12px" class="banner warn">The <b>client view</b> of this report will be saved to your Drive and shown to the client at their private link. Check it over first.
+      <div class="row" style="margin-top:8px"><button class="btn small" id="approveYes">Yes, release it</button><button class="btn ghost small" id="approveNo">Cancel</button></div></div>
+  </div>
+  <div class="row noprint">
+    <div class="viewtoggle"><button id="vClient" class="on" onclick="setView('client')">Client view</button><button id="vClin" onclick="setView('clinician')">Clinician view</button></div>
+    <span class="spacer"></span>
+    <button class="btn ghost small" onclick="copyReport()">Copy report text</button>
+    <span style="font-size:12px;color:var(--ink3)">To save as PDF, press Ctrl/Cmd + P.</span>
+  </div>
+  <div id="reportOut"></div>
+</section>
+
+<!-- ============ 5. LEARNING LOG ============ -->
+<section class="pane" id="pane-learn">
+  <div class="card"><h2>Learning log</h2>
+    <p class="lead">Every scan you send updates the template. This log records what changed and which case caused it.</p>
+    <h3 style="font-size:16px;margin:14px 0 6px">Case 001: WAVi baseline, 48-year-old male, 10/31/2026</h3>
+    <ul class="log">
+      <li><b>Added a pre-scan state step.</b> The printout's sleep, time since meal and change fields were N/A. Sleep loss is known to lengthen P300 latency and shrink amplitude, so the report now names any missing state field.</li>
+      <li><b>Added a data-quality gate.</b> Four of the eight non-alpha metrics were flagged low yield, reaction time was N/A, and frontal sites were &lt;0 µV, probably from blinks. The report now grades overall confidence and recommends a standardized retest when confidence is low.</li>
+      <li><b>Added a site-consistency check.</b> Good central-parietal sites ranged from 328 to 492 ms (Cz was the late outlier against P3/Pz/P4 at about 330 ms). The engine now applies WAVi's own consistency rule (at least 40% of good C-P pairs within 75 ms) and reports the spread.</li>
+      <li><b>Added a reaction-time compliance prompt.</b> WAVi reports N/A below 15 clicks. The technician now confirms clicking instructions at setup.</li>
+      <li><b>Added alpha-rhythm strengths to the snapshot.</b> Peak alpha of 11.0 Hz in every region and a normal frontal/occipital ratio are clean findings worth telling the client. The report now opens with them so it doesn't read as deficits only.</li>
+    </ul>
+    <h3 style="font-size:16px;margin:14px 0 6px">Cases 002–005: Drive archive (WAVi printout + 3 neurologist summaries, de-identified)</h3>
+    <ul class="log">
+      <li><b>Corrected a rule:</b> P300 voltage above range is no longer scored as a strength. In one case (44-year-old male, 22.7 µV), the neurologist listed it among the abnormal findings. It now reads "Above range: interpret clinically", with an artifact check first. Delay below range is handled the same way.</li>
+      <li><b>Added a near-500 ms delay flag.</b> One case (30-year-old female) had a 496 ms delay, read as abnormally prolonged. The engine now flags any delay of 450 ms or more and prompts a waveform and topo check, because WAVi's window ends at 500 ms.</li>
+      <li><b>Added the ❓ questionable and ⧪ excess synchrony flags.</b> One case (11-year-old male) had peak alpha marked ❓ at 7.0 Hz. Before this, only ⬓ was supported.</li>
+      <li><b>Added a performance-task module.</b> WAVi page 3 can include Trail Making A/B (target 45–77 s and 64–124 s on the pediatric printout) and Flanker counts. All three neurologist summaries used Trail Making, and it was the deciding abnormality in one of them.</li>
+      <li><b>Started an age-range library.</b> Ranges shift substantially with age. At 11 vs 48, the voltage range is 9–22 vs 8–18 µV and theta/beta is 1.6–3.9 vs 0.8–1.8. The library holds 2 ages so far.</li>
+      <li><b>Noted for a later module:</b> the Synapse TBI reports add balance (BTrackS mCTSIB percentiles), a smell screen and oculomotor tracking. A future TBI-panel add-on could ingest these. Out of scope for the wellness report.</li>
+      <li><b>Confirmed the pre-test checklist.</b> TrueBrain's own testing criteria require "well-rested and adequately hydrated", which matches the v1.1 pre-scan step.</li>
+    </ul>
+    <h3 style="font-size:16px;margin:14px 0 6px">Evidence library: 9 neurofeedback studies (the June 27 email to Chad, also in Drive)</h3>
+    <ul class="log">
+      <li><b>Added a "Brain-training options to discuss" section</b> that appears only when triggered: by a clinician-noted concern, a PHQ-9 score of 10 or more, theta/beta above range, F3/F4 asymmetry outside range, or age 55+ with slower processing. This follows the Project rule to use each source only when indicators call for it.</li>
+      <li>Covers attention (Lévesque 2006; Arns meta-analysis), depression (Xia 2024 meta-analysis, g −0.60; Choi 2011 RCT), PTSD (Nicholson 2020, remission 61% vs 33%), substance use (Scott 2005, 12-month abstinence 77% vs 44%), seizures (Sterman & Egner 2006, neurologist-directed only), autism (Kouijzer 2010) and memory in older adults (Campos da Paz 2018).</li>
+      <li>Grades are conservative: most of these are small trials, and the client view says plainly that these are options to discuss, not prescriptions.</li>
+    </ul>
+    <h3 style="font-size:16px;margin:18px 0 6px">Next cases should teach the template</h3>
+    <ul class="log"><li>Test-retest deltas: WAVi lists ±11 ms for delay, ±2 µV for voltage and ±0.2 Hz for peak frequency. Change scoring turns on once a follow-up scan exists.</li><li>Age-specific range shifts: collect ranges from more ages so they can auto-fill.</li><li>Flanker / visual tasks, if your protocol includes them.</li></ul>
+  </div>
+</section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======================= DATA DEFINITIONS ======================= */
+const METRICS = [
+ {k:'rt',    label:'Physical reaction time', region:'Behavioral', unit:'ms', v:null, ly:true, lo:251, hi:361, dir:'lower',
+  plain:'Reaction time', analogy:'how fast your hand responds once your brain spots the target tone'},
+ {k:'f3f4',  label:'F3/F4 eyes-closed alpha (power ratio)', region:'Frontal', unit:'', v:1.1, ly:false, lo:0.9, hi:1.1, dir:'mid',
+  plain:'Left–right frontal balance', analogy:'how evenly the left and right front of your brain idle'},
+ {k:'pafF',  label:'Peak alpha frequency', region:'Frontal', unit:'Hz', v:11.0, ly:false, lo:8.5, hi:11.0, dir:'higher',
+  plain:'Brain "idle speed" (front)', analogy:'the clock speed your brain runs at when it is resting'},
+ {k:'p3d',   label:'Audio P300 delay', region:'Central-parietal', unit:'ms', v:328, ly:true, lo:262, hi:341, dir:'lower',
+  plain:'Processing speed', analogy:'how quickly your brain says "that\'s the one" when the target tone plays'},
+ {k:'p3v',   label:'Audio P300 voltage', region:'Central-parietal', unit:'µV', v:7.3, ly:true, lo:8, hi:18, dir:'higher',
+  plain:'Attention resources', analogy:'how much attention bandwidth your brain throws at the target'},
+ {k:'pafCP', label:'Peak alpha frequency', region:'Central-parietal', unit:'Hz', v:11.0, ly:false, lo:9.0, hi:11.0, dir:'higher',
+  plain:'Brain "idle speed" (middle)', analogy:'resting clock speed across the middle of the head'},
+ {k:'tbEO',  label:'Cz theta/beta, eyes open', region:'Central-parietal', unit:'', v:1.3, ly:true, lo:0.8, hi:1.8, dir:'mid',
+  plain:'Drift vs drive (eyes open)', analogy:'the balance between a daydreaming rhythm and a focused rhythm'},
+ {k:'tbEC',  label:'Cz theta/beta, eyes closed', region:'Central-parietal', unit:'', v:1.3, ly:true, lo:0.8, hi:1.8, dir:'mid',
+  plain:'Drift vs drive (eyes closed)', analogy:'the same balance at rest with eyes closed'},
+ {k:'pafO',  label:'Peak alpha frequency', region:'Occipital', unit:'Hz', v:11.0, ly:false, lo:9.0, hi:11.0, dir:'higher',
+  plain:'Brain "idle speed" (back)', analogy:'resting clock speed at the back of the head, where alpha is usually strongest'},
+];
+const SITES = [
+ {s:'Cz',y:26,uv:5.0,ms:492,a:false},{s:'C3',y:20,uv:null,ms:null,a:true},{s:'C4',y:24,uv:1.8,ms:500,a:true},
+ {s:'P3',y:23,uv:7.3,ms:344,a:false},{s:'Pz',y:32,uv:3.6,ms:336,a:false},{s:'P4',y:33,uv:4.3,ms:328,a:false}];
+
+const SUPPS = [
+ {k:'omega3', n:'Omega-3 / fish oil', url:'https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/', meds:['warfarin','coumadin','apixaban','eliquis','rivaroxaban','xarelto','clopidogrel','plavix','aspirin'], note:'may add to bleeding risk with blood thinners'},
+ {k:'vitd', n:'Vitamin D', url:'https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/', meds:['prednisone','orlistat','statin','atorvastatin','thiazide','hydrochlorothiazide'], note:'can interact with steroids, orlistat, statins and thiazide diuretics'},
+ {k:'mag', n:'Magnesium', url:'https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/', meds:['alendronate','fosamax','doxycycline','tetracycline','ciprofloxacin','levofloxacin','furosemide','omeprazole','pantoprazole'], note:'reduces absorption of bisphosphonates and some antibiotics; diuretics and PPIs change magnesium levels'},
+ {k:'b12', n:'Vitamin B12', url:'https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/', meds:['metformin','omeprazole','pantoprazole'], note:'metformin and acid reducers can lower B12 (worth testing)'},
+ {k:'sjw', n:"St. John's wort", url:'https://www.nccih.nih.gov/health/st-johns-wort', meds:['sertraline','zoloft','fluoxetine','prozac','escitalopram','lexapro','citalopram','paroxetine','birth control','oral contraceptive','warfarin','digoxin','cyclosporine'], note:'serious interactions: weakens many drugs and risks serotonin syndrome with antidepressants'},
+ {k:'ginkgo', n:'Ginkgo', url:'https://www.nccih.nih.gov/health/ginkgo', meds:['warfarin','apixaban','eliquis','rivaroxaban','clopidogrel','aspirin'], note:'may increase bleeding risk with blood thinners'},
+ {k:'melatonin', n:'Melatonin', url:'https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know', meds:['warfarin','fluvoxamine','sedative','zolpidem'], note:'possible interactions with blood thinners and sedatives'},
+ {k:'creatine', n:'Creatine', url:'https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/', meds:['nsaid','ibuprofen','lisinopril'], note:'use caution with kidney-active drugs'},
+ {k:'ashwa', n:'Ashwagandha', url:'https://ods.od.nih.gov/factsheets/Ashwagandha-HealthProfessional/', meds:['levothyroxine','synthroid','sedative','immunosuppressant'], note:'may affect thyroid hormone and sedative effects'},
+ {k:'preworkout', n:'Pre-workout / energy products', url:'https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/', meds:['adderall','methylphenidate','stimulant','ssri'], note:'stacked stimulants'},
+];
+const STRESSORS = [
+ ['grief','Death of someone close',3],['divorce','Separation / divorce / breakup',3],['job','Job loss or job change',2],
+ ['money','Serious financial strain',2],['move','Moved home',1],['care','Caregiving for someone',2],
+ ['illness','Own serious illness or injury',3],['legal','Legal problems or litigation',2],['newbaby','New baby / child',1],
+ ['famconf','Ongoing family conflict',2],['accident','Accident / injury claim',2],['other','Other major change',1]];
+const CONCERNS = [['attn','Attention / focus / ADHD concerns'],['dep','Depression (diagnosed or reported)'],['ptsd','Trauma / PTSD'],['sud','Substance use (in recovery or active)'],['seiz','Seizure history / epilepsy'],['asd','Autism spectrum'],['mem','Memory concerns (older adult)']];
+/* Neurofeedback evidence library: from the 9 research PDFs in Drive (sent to Chad Emmons 6/27/2026). Shown only when triggered. */
+const NFB = [
+ {k:'attn', title:'Attention: SMR/beta up, theta down', ev:'B', when:'Attention concerns, or theta/beta above range',
+  client:'A brain-training approach that rewards the "focused" rhythm and quiets the "drifting" rhythm. In a controlled study of 20 children, it improved attention test scores and normalized activity in a key attention hub.',
+  clin:'40 sessions (SMR 12–15 Hz up + theta 4–7 Hz down, then beta1 15–18 Hz up + theta down) at Cz. Digit span, IVA and CPRS-R inattention/hyperactivity improved vs control, and right dorsal ACC activation appeared on fMRI after training (Lévesque 2006, n=20). Supporting meta-analysis on inattention, impulsivity and hyperactivity in the library (Arns et al.; text extraction garbled, title only verified).',
+  src:['nf_attn','nf_adhd']},
+ {k:'dep', title:'Mood: frontal alpha-asymmetry training', ev:'B', when:'PHQ-9 ≥ 10, a depression concern, or F3/F4 alpha outside range',
+  client:'Training that shifts the balance between the left and right front of the brain. Studies show it can ease low mood and sharpen thinking. It is an add-on to care from a licensed clinician, not a replacement.',
+  clin:'Meta-analysis of 22 studies in MDD: depressive symptoms g = −0.60, neurophysiology g = −0.73, neuropsychological function g = −0.42, with longer programs doing better (Xia 2024). Pilot RCT, 10 sessions F3/F4 asymmetry: BDI-II 22.8→9.1 vs placebo 26.2→21.3; 50% responders vs 0%; held at 1 month (Choi 2011, n=23).',
+  src:['nf_mdd','nf_dep']},
+ {k:'ptsd', title:'Trauma: alpha-rhythm downtraining', ev:'C', when:'Trauma/PTSD concern noted by clinician',
+  client:'A calming brain-training approach studied in people with PTSD. More people reached remission with real training than with placebo training. It works alongside trauma therapy.',
+  clin:'Double-blind sham-controlled RCT (n=36, 20 weeks): no group × time interaction on the primary outcome, but within-group PTSD severity fell in the active arm only (dz 0.71 post, 0.77 at 3 months). Remission 61.1% vs 33.3%. DMN/SN connectivity shifted toward normal (Nicholson 2020). Preliminary.',
+  src:['nf_ptsd']},
+ {k:'sud', title:'Recovery: beta/SMR then alpha-theta', ev:'B', when:'Substance-use concern noted',
+  client:'Brain training added to a recovery program. In one controlled study, people stayed in treatment longer and more were abstinent a year later.',
+  clin:'RCT n=121 inpatients: 10–20 beta/SMR sessions then 30 alpha-theta sessions, added to treatment as usual. Retention 138 vs 101 days. 12-month abstinence 77% vs 44% among completers. TOVA impulsivity/variability improved (Scott 2005).',
+  src:['nf_sud']},
+ {k:'seiz', title:'Seizures: SMR training (neurologist-directed only)', ev:'B', when:'Seizure history noted',
+  client:'There is a long research history of rhythm training for seizures, but it is only ever done under a neurologist\'s direction and never replaces seizure medication.',
+  clin:'Review: SMR training is the best-established clinical neurofeedback application, and the authors call it a "viable alternative" to anticonvulsants (Sterman & Egner 2006). In this platform: adjunct only, neurologist-directed, no medication changes. A seizure history also warrants an ambulatory EEG before any training.',
+  src:['nf_epi']},
+ {k:'asd', title:'Autism: theta down, low beta up', ev:'C', when:'Autism concern noted',
+  client:'Early studies suggest brain training may help with social communication and flexible thinking in some children on the autism spectrum.',
+  clin:'Controlled study: 60% of participants reduced excess theta, with gains in social interaction, communication and set-shifting. Design biases noted by the authors (Kouijzer 2010, small sample).',
+  src:['nf_asd']},
+ {k:'mem', title:'Memory: SMR training for older adults', ev:'C', when:'Memory concerns, or age 55+ with slower processing',
+  client:'A training approach that improved working memory in healthy older adults in a small placebo-controlled study.',
+  clin:'Placebo-controlled study, n=17 older adults: SMR protocol improved delayed matching-to-sample working memory, while sham and no-training groups did not change (Campos da Paz 2018).',
+  src:['nf_smr']},
+];
+const FREQ = ['Not at all','Several days','More than half the days','Nearly every day'];
+const PHQ = ['Little interest or pleasure in doing things','Feeling down, depressed, or hopeless','Trouble falling or staying asleep, or sleeping too much','Feeling tired or having little energy','Poor appetite or overeating','Feeling bad about yourself — or that you are a failure or have let yourself or your family down','Trouble concentrating on things, such as reading the newspaper or watching television','Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual','Thoughts that you would be better off dead, or of hurting yourself'];
+const GAD = ['Feeling nervous, anxious, or on edge','Not being able to stop or control worrying','Worrying too much about different things','Trouble relaxing','Being so restless that it is hard to sit still','Becoming easily annoyed or irritable','Feeling afraid, as if something awful might happen'];
+const WHO = ['I have felt cheerful and in good spirits','I have felt calm and relaxed','I have felt active and vigorous','I woke up feeling fresh and rested','My daily life has been filled with things that interest me'];
+const WHOF = ['At no time','Some of the time','Less than half the time','More than half the time','Most of the time','All of the time'];
+const UCLA = ['How often do you feel that you lack companionship?','How often do you feel left out?','How often do you feel isolated from others?'];
+const UCLAF = ['Hardly ever','Some of the time','Often'];
+
+const SRC = {
+ dinteren:{t:'van Dinteren et al. (2014). P300 development across the lifespan: a systematic review and meta-analysis. PLOS ONE.',u:'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3923761/'},
+ pavarini:{t:'Pavarini et al. (2018). On the use of the P300 as a tool for cognitive processing assessment in healthy aging. Dement Neuropsychol.',u:'https://pmc.ncbi.nlm.nih.gov/articles/PMC5901243'},
+ lee:{t:'Lee et al. (2004). Auditory event-related potentials and psychological changes during sleep deprivation. Neuropsychobiology.',u:'https://pure.korea.ac.kr/en/publications/auditory-event-related-potentials-and-psychological-changes-durin/'},
+ sleepq:{t:'Repercussions of sleep quality on the P300 auditory evoked potential in older adults (2025). Dement Neuropsychol.',u:'https://pmc.ncbi.nlm.nih.gov/articles/PMC12377821/'},
+ kao:{t:'Kao et al. Acute effects of exercise engagement on neurocognitive function: meta-analysis on P3 amplitude and latency.',u:'https://scholar.lib.ntnu.edu.tw/en/publications/acute-effects-of-exercise-engagement-on-neurocognitive-function-a/'},
+ kao2020:{t:'Kao et al. (2020). A systematic review of physical activity and cardiorespiratory fitness on P3b. Psychophysiology.',u:'https://hbcl.msu.edu/_files/Kao_2020_ASystematicReviewOf.pdf'},
+ iaf:{t:'Ociepka, Kałamała & Chuderski (2022). High individual alpha frequency brains run fast, but it does not make them smart. Intelligence.',u:'https://ruj.uj.edu.pl/xmlui/handle/item/289953'},
+ klimesch:{t:'Klimesch (1999). EEG alpha and theta oscillations reflect cognitive and memory performance. Brain Res Rev.',u:'https://pubmed.ncbi.nlm.nih.gov/10209231/'},
+ pag:{t:'U.S. HHS. Physical Activity Guidelines for Americans.',u:'https://health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines'},
+ cdcsleep:{t:'CDC. About sleep: how much sleep adults need.',u:'https://www.cdc.gov/sleep/about/index.html'},
+ niaaa:{t:'NIAAA. Drinking levels defined.',u:'https://www.niaaa.nih.gov/alcohol-health/overview-alcohol-consumption/moderate-binge-drinking'},
+ fda:{t:'FDA. Spilling the beans: how much caffeine is too much?',u:'https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much'},
+ sg:{t:'U.S. Surgeon General (2023). Our epidemic of loneliness and isolation.',u:'https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf'},
+ ods:{t:'NIH Office of Dietary Supplements. Dietary supplement fact sheets.',u:'https://ods.od.nih.gov/factsheets/list-all/'},
+ medline:{t:'NIH National Library of Medicine. MedlinePlus.',u:'https://medlineplus.gov/'},
+ lifeline:{t:'988 Suicide & Crisis Lifeline.',u:'https://988lifeline.org/'},
+ nf_attn:{t:'Lévesque, Beauregard & Mensour (2006). Effect of neurofeedback training on the neural substrates of selective attention in children with AD/HD: an fMRI study. Neurosci Lett 394:216–221.',u:'https://doi.org/10.1016/j.neulet.2005.10.100'},
+ nf_adhd:{t:'Arns, de Ridder, Strehl, Breteler & Coenen (2009). Efficacy of neurofeedback treatment in ADHD: effects on inattention, impulsivity and hyperactivity, a meta-analysis. Clin EEG Neurosci.',u:'https://drive.google.com/file/d/10PxT4HdO2iuksn1dysKnEhkpXISu5Gio/view'},
+ nf_mdd:{t:'Xia et al. (2024). Uncovering the power of neurofeedback: a meta-analysis of its effectiveness in treating major depressive disorders. Cerebral Cortex 34:bhae252.',u:'https://doi.org/10.1093/cercor/bhae252'},
+ nf_dep:{t:'Choi et al. (2011). Is alpha wave neurofeedback effective with randomized clinical trials in depression? A pilot study. Neuropsychobiology 63:43–51.',u:'https://doi.org/10.1159/000322290'},
+ nf_ptsd:{t:'Nicholson et al. (2020). A randomized, controlled trial of alpha-rhythm EEG neurofeedback in PTSD. NeuroImage: Clinical.',u:'https://doi.org/10.1016/j.nicl.2020.102490'},
+ nf_sud:{t:'Scott, Kaiser, Othmer & Sideroff (2005). Effects of an EEG biofeedback protocol on a mixed substance abusing population. Am J Drug Alcohol Abuse 31:455–469.',u:'https://doi.org/10.1081/ADA-200056807'},
+ nf_epi:{t:'Sterman & Egner (2006). Foundation and practice of neurofeedback for the treatment of epilepsy. Appl Psychophysiol Biofeedback 31:21–35.',u:'https://doi.org/10.1007/s10484-006-9002-x'},
+ nf_asd:{t:'Kouijzer et al. (2010). Neurofeedback treatment in autism: preliminary findings in behavioral, cognitive, and neurophysiological functioning. Res Autism Spectr Disord 4:386–399.',u:'https://drive.google.com/file/d/1vCT719_XGtrhQfd4nJJ_78felW8fN8Ml/view'},
+ nf_smr:{t:'Campos da Paz et al. (2018). SMR neurofeedback training facilitates working memory performance in healthy older adults. Front Behav Neurosci 12:321.',u:'https://doi.org/10.3389/fnbeh.2018.00321'},
+ wavi:{t:'WAVi Scan Clinician Report: metric definitions, low-yield rules and target ranges (system printout, appendix).',u:'https://wavimed.com/publications'},
+};
+
+/* ======================= BUILD FORMS ======================= */
+const $ = id => document.getElementById(id);
+function buildForms(){
+  const mt = document.querySelector('#metricTable tbody');
+  mt.innerHTML = METRICS.map(m=>`<tr><td>${m.label}</td><td>${m.region}</td>
+   <td><input type="number" step="any" id="m_${m.k}" value="${m.v??''}" placeholder="N/A"> ${m.unit}</td>
+   <td><select id="ly_${m.k}"><option value="">—</option><option value="ly" ${m.ly?'selected':''}>⬓ Low yield</option><option value="q">❓ Questionable</option><option value="sync">⧪ Excess synchrony</option></select></td>
+   <td><input type="number" step="any" id="lo_${m.k}" value="${m.lo}"></td>
+   <td><input type="number" step="any" id="hi_${m.k}" value="${m.hi}"></td></tr>`).join('');
+  const st = document.querySelector('#siteTable tbody');
+  st.innerHTML = SITES.map((s,i)=>`<tr><td><b>${s.s}</b></td>
+   <td><input type="number" id="sy_${i}" value="${s.y??''}"></td>
+   <td><input type="number" step="0.1" id="su_${i}" value="${s.uv??''}" placeholder="<0"></td>
+   <td><input type="number" id="sm_${i}" value="${s.ms??''}" placeholder="N/A"></td>
+   <td><input type="checkbox" id="sa_${i}" ${s.a?'checked':''}></td></tr>`).join('');
+  $('suppChecks').innerHTML = SUPPS.map(s=>`<label><input type="checkbox" id="sp_${s.k}"> ${s.n}</label>`).join('');
+  $('concernChecks').innerHTML = CONCERNS.map(c=>`<label><input type="checkbox" id="cn_${c[0]}"> ${c[1]}</label>`).join('');
+  $('stressChecks').innerHTML = STRESSORS.map(s=>`<label><input type="checkbox" id="st_${s[0]}"> ${s[1]}</label>`).join('');
+  const qs = (arr,pre,opts)=>arr.map((q,i)=>`<div class="q"><span>${i+1}. ${q}</span><select id="${pre}${i}"><option value="">—</option>${opts.map((o,j)=>`<option value="${j}">${o} (${j})</option>`).join('')}</select></div>`).join('');
+  $('phqQs').innerHTML = qs(PHQ,'phq',FREQ);
+  $('gadQs').innerHTML = qs(GAD,'gad',FREQ);
+  $('whoQs').innerHTML = qs(WHO,'who',WHOF);
+  $('uclaQs').innerHTML = UCLA.map((q,i)=>`<div class="q"><span>${q}</span><select id="ucla${i}"><option value="">—</option>${UCLAF.map((o,j)=>`<option value="${j+1}">${o}</option>`).join('')}</select></div>`).join('');
+}
+
+/* ======================= READ STATE ======================= */
+const num = id => { const e=$(id); if(!e||e.value==='') return null; const n=parseFloat(e.value); return isNaN(n)?null:n; };
+const val = id => { const e=$(id); return e? e.value : ''; };
+const chk = id => { const e=$(id); return !!(e&&e.checked); };
+function sumItems(pre,n){ let s=0,c=0; for(let i=0;i<n;i++){ const v=num(pre+i); if(v!==null){s+=v;c++;} } return c===n? s : (c===0? null : {partial:true,s,c}); }
+
+function readAll(){
+  const metrics = METRICS.map(m=>({...m, v:num('m_'+m.k), flag:val('ly_'+m.k), ly:val('ly_'+m.k)!=='', lo:num('lo_'+m.k), hi:num('hi_'+m.k)}));
+  const sites = SITES.map((s,i)=>({s:s.s, y:num('sy_'+i), uv:num('su_'+i), ms:num('sm_'+i), a:chk('sa_'+i)}));
+  const I = {
+    sleepH:num('i_sleepH'), sleepQ:num('i_sleepQ'), sleepVar:val('i_sleepVar'), snore:val('i_snore'),
+    vig:num('i_vig'), mod:num('i_mod'), str:num('i_str'), sit:num('i_sit'),
+    fv:num('i_fv'), upf:num('i_upf'), fish:num('i_fish'), water:num('i_water'), skip:val('i_skip'),
+    meds:val('i_meds').toLowerCase(), supps:SUPPS.filter(s=>chk('sp_'+s.k)),
+    alc:num('i_alc'), cafD:num('i_cafD'), nic:val('i_nic'), can:num('i_can'), screen:num('i_screen'), bedphone:val('i_bedphone'),
+    wh:num('i_wh'), wd:num('i_wd'), wc:num('i_wc'), shift:val('i_shift'), wconf:num('i_wconf'),
+    ucla:sumItems('ucla',3), support:val('i_support'), hconf:num('i_hconf'),
+    stressors:STRESSORS.filter(s=>chk('st_'+s[0])), concerns:CONCERNS.filter(c=>chk('cn_'+c[0])).map(c=>c[0]),
+    phq:sumItems('phq',9), phq9:num('phq8'), gad:sumItems('gad',7), who:sumItems('who',5),
+  };
+  const S = {sleep:num('s_sleep'), meal:num('s_meal'), caf:val('s_caf'), sub:val('s_sub'), meds:val('s_meds'), ill:val('s_ill'), stress:num('s_stress'), rt:val('s_rt')};
+  const C = {id:val('c_id')||'Client', age:num('c_age'), sex:val('c_sex'), date:val('c_date'), session:val('c_session'), sys:val('c_sys'), reason:val('c_reason'), prep:val('c_prep'),
+    tmtA:num('tmtA'), tmtAr:val('tmtAr'), tmtB:num('tmtB'), tmtBr:val('tmtBr'), flkTR:val('flkTR'), flkCI:val('flkCI'),
+    n100uv:num('n100uv'), n100ms:num('n100ms'), foR:num('foR'), frontArt:val('frontArt')};
+  return {metrics, sites, I, S, C};
+}
+
+/* ======================= ENGINE ======================= */
+const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,x));
+function position(m){
+  if(m.v===null||m.lo===null||m.hi===null) return {cls:'na', frac:null};
+  const frac=(m.v-m.lo)/(m.hi-m.lo);
+  let cls = frac<0?'below': frac>1?'above': frac<1/3?'lowband': frac>2/3?'highband':'mid';
+  return {cls, frac};
+}
+// 0-100 "supportiveness" of the ERP value for performance
+function erpScore(m){
+  const p=position(m); if(p.frac===null) return null;
+  const f=p.frac;
+  if(m.k==='p3v' && f>1) return 65;  // above range = neutral, not a bonus
+  if(m.k==='p3d' && m.v>=450) return 20;
+  if(m.dir==='higher') return clamp(30+f*60);         // at lo=30, at hi=90, beyond scales
+  if(m.dir==='lower')  return clamp(90-f*60);
+  return clamp(100-Math.abs(f-0.5)*120);               // mid-is-best
+}
+function status(m){
+  const p=position(m);
+  if(p.cls==='na') return {pill:'p-neutral',txt:'Not captured'};
+  // Learned from Synapse/neurologist reads: above-range P300 voltage and below-range delay are flagged clinically, not treated as "better".
+  if(m.k==='p3v' && p.cls==='above') return {pill:'p-watch',txt:'Above range: interpret clinically'};
+  if(m.k==='p3d' && p.cls==='below') return {pill:'p-watch',txt:'Below range: interpret clinically'};
+  if(m.k==='p3d' && m.v>=450) return {pill:'p-flag',txt: p.cls==='above'?'Above range, near 500 ms edge':'Near 500 ms edge'};
+  const goodSide = (m.dir==='higher' && p.cls==='above') || (m.dir==='lower' && p.cls==='below');
+  if(p.cls==='below'||p.cls==='above') return goodSide? {pill:'p-good',txt:'Beyond range (favorable)'} : {pill:'p-flag',txt: p.cls==='below'?'Below range':'Above range'};
+  const edge = (m.dir==='higher'&&p.cls==='lowband')||(m.dir==='lower'&&p.cls==='highband');
+  const strong=(m.dir==='higher'&&p.cls==='highband')||(m.dir==='lower'&&p.cls==='lowband');
+  if(m.dir==='mid' && (p.frac<=0.02||p.frac>=0.98)) return {pill:'p-watch',txt:'In range, at edge'};
+  if(edge) return {pill:'p-watch',txt:'In range, toward the slower/lower end'};
+  if(strong) return {pill:'p-good',txt:'In range, strong end'};
+  return {pill:'p-good',txt:'Within range'};
+}
+function metricText(m){
+  const p=position(m), st=status(m);
+  if(p.cls==='na') return {client:`This wasn't captured on this scan, so nothing is interpreted. It should be collected at the retest.`, clin:`N/A on printout. WAVi reports reaction time as N/A when there are fewer than 15 physical responses to rare tones: check click instructions and compliance.`};
+  const k=m.k; let client='', clin='';
+  if(k==='p3v'){
+    if(p.cls==='below'){ client=`Your brain's attention response to the target tone was <b>smaller than expected</b> for your age range. This is the main item to recheck. Attention response is sensitive to how you slept, your energy, mood and the conditions on the day, so it can move.`;
+      clin=`${m.v} ${m.unit} vs ${m.lo}–${m.hi}. Amplitude indexes attentional resource allocation. It falls with sleep loss<sup class="c">[lee]</sup><sup class="c">[sleepq]</sup> and rises with physical activity and fitness<sup class="c">[kao2020]</sup>.`; }
+    else if(p.cls==='above'){ client=`Your brain's attention response was <b>larger than the expected range</b>. A bigger response isn't automatically better: it can reflect strong engagement or extra effort, or it may need a technical check. Your clinician will interpret it alongside your other results.`;
+      clin=`${m.v} ${m.unit} vs ${m.lo}–${m.hi}. Above range. In prior neurologist reads (Synapse format), above-target voltage was listed among the abnormal findings, so it is not scored as favorable here. Rule out artifact (blinks, sync, late waves) and correlate clinically.`; }
+    else { client=`Your brain's attention response was ${st.txt.toLowerCase()}.`; clin=`${m.v} ${m.unit} vs ${m.lo}–${m.hi}.`; }
+  } else if(k==='p3d'){
+    client = p.cls==='highband'? `Your processing speed is <b>within the normal range</b> but on the slower half of it. Think of it as a healthy engine that isn't running at full RPM yet.` : `Your processing speed is ${st.txt.toLowerCase()}.`;
+    clin=`${m.v} ms vs ${m.lo}–${m.hi} ms (test-retest ±11 ms). Latency lengthens with age<sup class="c">[dinteren]</sup> and sleep deprivation<sup class="c">[lee]</sup>, and shortens slightly after exercise<sup class="c">[kao]</sup>.`;
+  } else if(k.startsWith('paf')){
+    client = (p.cls==='highband'||p.cls==='above')? `Your brain's resting rhythm is <b>fast and well organized</b>, at the top of the expected range. This is a genuine strength.` : `Your resting rhythm is ${st.txt.toLowerCase()}.`;
+    clin=`${m.v} Hz vs ${m.lo}–${m.hi} Hz. Higher individual alpha frequency correlates modestly with processing speed (about 5.5% shared variance)<sup class="c">[iaf]</sup>. Alpha slows after sustained wakefulness<sup class="c">[klimesch]</sup>.`;
+  } else if(k.startsWith('tb')){
+    client=`The balance between your "drifting" and "focused" rhythms is ${st.txt.toLowerCase()}, meaning no sign of excess drift or over-drive.`;
+    clin=`${m.v} vs ${m.lo}–${m.hi}. Mid-range. Interpret with caution because theta/beta is not a stand-alone diagnostic marker.`;
+  } else if(k==='f3f4'){
+    client=`Left and right frontal activity are balanced, within the expected range.`;
+    clin=`${m.v} vs ${m.lo}–${m.hi}. ${p.frac>=0.98?'At the upper edge of range: track on retest, no interpretation at this level.':''}`;
+  } else if(k==='rt'){
+    client=`Your hand reaction time was ${st.txt.toLowerCase()}.`; clin=`${m.v} ms vs ${m.lo}–${m.hi}.`;
+  }
+  if(k==='p3d' && m.v>=450){ clin+=` <b>Delay is close to the 500 ms edge of WAVi's analysis window.</b> Check the topo for a "No consistent P300" warning and the waveform morphology before accepting this latency.`; client+=` This reading needs a careful second look by your clinician.`; }
+  if(m.ly){ client+=` <i>This reading was recorded with limited clean data, so treat it as a first look, not a final answer.</i>`;
+    clin+= m.flag==='q'?` <b>Questionable ❓</b>: low alpha or peak magnitude relative to background noise. Provisional.`
+         : m.flag==='sync'?` <b>Excess synchrony ⧪</b>: artifact affecting multiple channels equally; background metrics may be inaccurate. Provisional.`
+         : ` <b>Low yield ⬓</b>: fewer than 3 C-P sites with yield ≥30, or ≥40% delta artifact. Provisional.`; }
+  return {client, clin};
+}
+function quality(R){
+  const issues=[]; const m=R.metrics;
+  const ly = m.filter(x=>x.ly && x.v!==null).length, na=m.filter(x=>x.v===null).length;
+  if(ly) issues.push(`${ly} of ${m.filter(x=>x.v!==null).length} captured metrics flagged low yield (⬓)`);
+  if(na) issues.push(`${na} metric(s) not captured (${m.filter(x=>x.v===null).map(x=>x.plain).join(', ')})`);
+  if(R.C.frontArt==='yes') issues.push('Frontal/blink artifact: FP and F sites <0 µV or N/A');
+  const d3=m.find(x=>x.k==='p3d'); if(d3&&d3.v!==null&&d3.v>=450) issues.push(`P300 delay ${d3.v} ms is near the 500 ms window edge. Verify the waveform is a true P300`);
+  const qf=m.filter(x=>x.flag==='q'||x.flag==='sync'); if(qf.length) issues.push(`${qf.length} metric(s) flagged ❓/⧪: ${qf.map(x=>x.plain).join(', ')}`);
+  const stMissing=[]; const S=R.S;
+  if(S.sleep===null) stMissing.push('sleep last night'); if(S.meal===null) stMissing.push('time since meal');
+  if(!S.caf) stMissing.push('caffeine'); if(!S.sub) stMissing.push('substances'); if(!S.meds) stMissing.push('medications today');
+  if(stMissing.length) issues.push(`Pre-scan state not documented: ${stMissing.join(', ')}`);
+  if(S.sleep!==null && S.sleep<6) issues.push(`Short sleep the night before (${S.sleep} h) can suppress P300 on the day`);
+  if(S.caf==='yes') issues.push('Caffeine within 4 h of the scan');
+  if(S.sub==='yes') issues.push('Substance use within 12 h of the scan');
+  if(S.ill==='yes') issues.push('Client unwell or in pain on the day of the scan');
+  // site consistency (WAVi rule)
+  const good = R.sites.filter(s=>s.y!==null&&s.y>=20&&s.uv!==null&&s.uv>=3&&s.ms!==null);
+  let cons=null;
+  if(good.length>=2){
+    let pairs=0,within=0; for(let i=0;i<good.length;i++)for(let j=i+1;j<good.length;j++){pairs++; if(Math.abs(good[i].ms-good[j].ms)<=75) within++;}
+    const lat=good.map(g=>g.ms), spread=Math.max(...lat)-Math.min(...lat);
+    const early=lat.filter(l=>l<350).length, late=lat.filter(l=>l>450).length;
+    const ok = within/pairs>=0.4 && !(early>=2&&late>=2);
+    const outl = good.filter(g=>Math.abs(g.ms - median(lat))>75).map(g=>`${g.s} (${g.ms} ms)`);
+    cons={good:good.map(g=>`${g.s} ${g.uv}µV/${g.ms}ms`), pct:Math.round(within/pairs*100), spread, ok, outl};
+    if(outl.length) issues.push(`Latency outlier among good C-P sites: ${outl.join(', ')}. Spread ${spread} ms`);
+  }
+  const sev = (ly>=3?2:ly?1:0) + (na?1:0) + (R.C.frontArt==='yes'?1:0) + (stMissing.length>=3?1:0);
+  const level = sev>=4?'Low':sev>=2?'Moderate':'Good';
+  return {issues, level, cons, stMissing};
+}
+function median(a){const s=[...a].sort((x,y)=>x-y);const h=s.length>>1;return s.length%2?s[h]:(s[h-1]+s[h])/2;}
+
+function intakeFilled(I){ return [I.sleepH,I.sleepQ,I.vig,I.mod,I.fv,I.wd].some(v=>v!==null) || (typeof I.phq==='number'); }
+function domains(I){
+  const D={};
+  if(I.sleepH!==null||I.sleepQ!==null){
+    const h=I.sleepH, hs = h===null?60: h>=7&&h<=9?100: h>=6?70: h>=5?40: h>9?70:15;
+    const qs = I.sleepQ===null?60:(I.sleepQ-1)*25; const cs = I.sleepVar==='yes'?40:I.sleepVar==='no'?100:70;
+    D.sleep = Math.round(.5*hs+.35*qs+.15*cs - (I.snore==='yes'?10:0));
+  }
+  if(I.vig!==null||I.mod!==null){
+    const mv=(I.mod||0)+2*(I.vig||0); let s=clamp(mv/150*80,0,80)+((I.str||0)>=2?20:(I.str||0)*8); if(I.sit!==null&&I.sit>8) s-=15;
+    D.movement=Math.round(clamp(s)); D._mvpa=mv;
+  }
+  if(I.fv!==null||I.upf!==null){
+    let s=0; s+= I.fv===null?20:Math.min(I.fv/5,1)*40; s+= I.upf===null?15:30*clamp(1-I.upf/3,0,1);
+    s+= (I.fish||0)>=2?15:(I.fish||0)*6; s+= I.water===null?8:Math.min(I.water/8,1)*15; if(I.skip==='yes') s-=10; D.nutrition=Math.round(clamp(s));
+  }
+  if(I.alc!==null||I.cafD!==null||I.nic||I.can!==null||I.screen!==null){
+    let s=100; const heavy = I.alc!==null && I.alc>14; if(heavy) s-=35; else if(I.alc!==null&&I.alc>7) s-=15;
+    if(I.cafD!==null&&I.cafD>4) s-=15; if(I.nic==='yes') s-=20; if(I.can!==null) s-=[0,5,15,25][I.can]||0;
+    if(I.screen!==null&&I.screen>4) s-=10; if(I.bedphone==='yes') s-=10; D.substances=Math.round(clamp(s));
+  }
+  if(I.wd!==null||I.wc!==null||I.wh!==null){
+    let s=100; const strain = (I.wd||3)-(I.wc||3); s-= clamp(strain*15,0,45); if(I.wh!==null&&I.wh>55) s-=20; else if(I.wh!==null&&I.wh>45) s-=8;
+    if(I.shift==='yes') s-=15; if(I.wconf!==null) s-=(I.wconf-1)*7; D.work=Math.round(clamp(s)); D._strain = (I.wd>=4&&I.wc<=2);
+  }
+  if(typeof I.ucla==='number'||I.support||I.hconf!==null){
+    let s=100; if(typeof I.ucla==='number') s-= (I.ucla-3)*10; if(I.support==='no') s-=25; if(I.hconf!==null) s-=(I.hconf-1)*8; D.relationships=Math.round(clamp(s));
+  }
+  if(I.stressors.length){ const load=I.stressors.reduce((a,s)=>a+s[2],0); D.stressLoad=Math.round(clamp(100-load*12)); D._load=load; }
+  if(typeof I.phq==='number'||typeof I.gad==='number'||typeof I.who==='number'){
+    let parts=[]; if(typeof I.phq==='number') parts.push(100-I.phq/27*100); if(typeof I.gad==='number') parts.push(100-I.gad/21*100); if(typeof I.who==='number') parts.push(I.who*4);
+    D.mood=Math.round(parts.reduce((a,b)=>a+b,0)/parts.length);
+  }
+  return D;
+}
+const DLABEL={sleep:'Sleep',movement:'Movement',nutrition:'Nutrition & hydration',substances:'Substances & stimulation',work:'Work load',relationships:'Relationships & connection',stressLoad:'Life-stressor load (inverse)',mood:'Mood & wellbeing'};
+const sev=(x,a,b)=>x<a?'flag':x<b?'watch':'good';
+const color=s=>s==='good'?'var(--good)':s==='watch'?'#d4930f':'var(--flag)';
+
+function avg(arr){const v=arr.filter(x=>x!==null&&x!==undefined&&!isNaN(x));return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;}
+function wavg(pairs){let s=0,w=0;for(const[v,wt]of pairs){if(v!==null&&v!==undefined){s+=v*wt;w+=wt;}}return w?s/w:null;}
+
+function profile(R,D){
+  const g=k=>R.metrics.find(m=>m.k===k); const e=k=>erpScore(g(k));
+  const I=R.I;
+  const phqInv = typeof I.phq==='number'? 100-I.phq/27*100 : null, gadInv= typeof I.gad==='number'?100-I.gad/21*100:null;
+  const tb = avg([e('tbEO'),e('tbEC')]), paf=avg([e('pafF'),e('pafCP'),e('pafO')]);
+  const P=[
+   {k:'focus', n:'Focus & attention capacity', v:wavg([[e('p3v'),.4],[D.sleep??null,.3],[phqInv,.3]]), erpOnly: D.sleep===undefined&&phqInv===null,
+    hi:'Can sustain deep work and track conversations without losing the thread.', mid:'Good focus in the right conditions. Expect it to dip after poor sleep or long meetings.', lo:'Shorter windows of deep focus. Likely to re-read, lose track in long meetings, or need lists to stay on task.'},
+   {k:'speed', n:'Processing speed', v:wavg([[e('p3d'),.5],[paf,.3],[D.movement??null,.2]]), erpOnly:D.movement===undefined,
+    hi:'Quick on the uptake. Picks up new information and makes fast calls.', mid:'Solid speed. May need a beat longer under pressure or when tired.', lo:'Takes longer to switch tasks and absorb new information. Benefits from written follow-ups.'},
+   {k:'reg', n:'Arousal & emotional regulation', v:wavg([[tb,.3],[gadInv,.4],[D.work??null,.3]]), erpOnly:gadInv===null&&D.work===undefined,
+    hi:'Stays level under pressure and recovers quickly from friction.', mid:'Generally steady. Stress may show up as irritability or racing thoughts on heavy days.', lo:'Runs "hot" or drained. Small frictions at work or home cost more than they should.'},
+   {k:'energy', n:'Energy & recovery', v:wavg([[D.sleep??null,.4],[D.movement??null,.3],[D.nutrition??null,.3]]), erpOnly:false, needsIntake:true,
+    hi:'Consistent energy across the day, with a quick bounce-back.', mid:'Workable energy with a predictable afternoon dip.', lo:'Low or erratic energy. Leans on caffeine or sugar to get through the day.'},
+   {k:'social', n:'Social & relational bandwidth', v:wavg([[D.relationships??null,.6],[D.work??null,.2],[D.mood??null,.2]]), erpOnly:false, needsIntake:true,
+    hi:'Has capacity for people: patient, present and connected.', mid:'Connected, but bandwidth shrinks when stressed or tired.', lo:'Social battery runs low. May withdraw, snap, or feel isolated even around others.'},
+  ];
+  return P;
+}
+
+function actions(R,D,Q){
+  const A=[]; const I=R.I; const p3v=R.metrics.find(m=>m.k==='p3v'); const lowV = position(p3v).cls==='below';
+  if(Q.level!=='Good') A.push({pri:1, who:'clinician', t:'Standardized retest in 2–4 weeks', ev:'P', why:`Confidence in this scan is ${Q.level.toLowerCase()}. Before the retest: log sleep the night before, no caffeine for 4 hours, eat 1–3 hours beforehand, confirm the client will click on every rare tone, and check electrode impedance and blinks. A same-protocol retest also lets WAVi's test-retest bands (±11 ms, ±2 µV, ±0.2 Hz) show real change.`, src:['wavi']});
+  if((D.sleep!==undefined&&D.sleep<70)||(D.sleep===undefined&&lowV)) A.push({pri:lowV?1:2, t:'Protect 7–9 hours of consistent sleep', ev:'A', why:`Sleep loss lengthens P300 latency and shrinks amplitude, and poorer sleep quality tracks with a smaller P300.${lowV?' This is the first lever to pull for the attention-response finding.':''} Adults need 7 or more hours.`, src:['lee','sleepq','cdcsleep'], extra: I.snore==='yes'?'Snoring or breathing pauses were reported: ask a physician about a sleep apnea evaluation.':''});
+  if(D.movement!==undefined&&D._mvpa<150) A.push({pri:2, t:`Build to 150+ minutes/week of moderate activity, plus 2 strength days (currently about ${D._mvpa})`, ev:'A', why:'Federal guidelines for adults. Physical activity and fitness are associated with a larger, faster P3b, and single exercise sessions produce small, measurable P3 gains.', src:['pag','kao2020','kao']});
+  else if(D.movement===undefined&&lowV) A.push({pri:3, t:'Add regular aerobic movement', ev:'B', why:'Physical activity and fitness are associated with a larger P3b, the attention response that was low on this scan.', src:['kao2020','pag']});
+  if(typeof I.phq==='number'&&I.phq>=10) A.push({pri:1, t:'Refer for a mood evaluation with a licensed clinician', ev:'A', why:`PHQ-9 = ${I.phq} (${I.phq>=20?'severe':I.phq>=15?'moderately severe':'moderate'} range). Depressive symptoms also affect cognitive processing on ERP measures.`, src:['pavarini','medline']});
+  if(typeof I.gad==='number'&&I.gad>=10) A.push({pri:1, t:'Refer for an anxiety evaluation', ev:'A', why:`GAD-7 = ${I.gad} (${I.gad>=15?'severe':'moderate'} range).`, src:['medline']});
+  if(typeof I.ucla==='number'&&I.ucla>=6 || I.support==='no') A.push({pri:2, t:'Build a weekly connection plan', ev:'B', why:`${typeof I.ucla==='number'?`UCLA-3 = ${I.ucla} (6 or above suggests loneliness). `:''}The Surgeon General's advisory links social disconnection to poorer health and cognitive outcomes. Schedule one standing in-person contact per week.`, src:['sg','pavarini']});
+  if(D._strain) A.push({pri:2, t:'Address job strain: high demand with low control', ev:'B', why:'Batch deep work into protected blocks, negotiate one area of control (scheduling, priorities), and set a hard stop time.', src:[]});
+  if(I.alc!==null && ((R.C.sex==='Female'&&I.alc>7)||I.alc>14)) A.push({pri:2, t:`Reduce alcohol (currently ${I.alc} drinks/week)`, ev:'A', why:'This is above NIAAA heavy-drinking thresholds (more than 14/week for men, more than 7/week for women). Alcohol also fragments sleep.', src:['niaaa']});
+  if(I.cafD!==null&&I.cafD>4) A.push({pri:3, t:'Bring caffeine under about 400 mg/day and stop it 8 hours before bed', ev:'B', why:`About ${I.cafD} cups/day reported. 400 mg/day is the FDA's general ceiling for healthy adults.`, src:['fda']});
+  if(D.nutrition!==undefined&&D.nutrition<65) A.push({pri:3, t:'Upgrade the plate: 5+ fruit and vegetable servings, fish twice a week, fewer ultra-processed meals', ev:'B', why:'Simple, food-first changes. Nutrient values can be checked in USDA FoodData Central.', src:['ods']});
+  if(I.bedphone==='yes'||(I.screen!==null&&I.screen>4)) A.push({pri:3, t:'Set a 30–60 minute screen-free wind-down', ev:'C', why:'Supports sleep timing and quality, the main lever above.', src:['cdcsleep']});
+  // supplements to discuss
+  const disc=[];
+  if(I.fish!==null&&I.fish<2) disc.push({n:'Omega-3 (EPA/DHA)', ev:'C', why:'Fish intake is under 2 meals/week. Evidence for cognitive benefit in healthy adults is mixed: food first.', url:SUPPS[0].url, k:'omega3'});
+  if(I.meds.includes('metformin')||I.meds.includes('omeprazole')||I.meds.includes('pantoprazole')) disc.push({n:'Vitamin B12 status (lab test)', ev:'B', why:'Medication on the list can lower B12. Test before supplementing.', url:SUPPS[3].url, k:'b12'});
+  disc.push({n:'Vitamin D status (lab test)', ev:'C', why:'Test, don\'t guess: supplement only to correct a measured low level.', url:SUPPS[1].url, k:'vitd'});
+  // interaction check on current supplements + suggestions
+  const inter=[];
+  const medTokens=I.meds;
+  [...I.supps, ...disc.map(d=>SUPPS.find(s=>s.k===d.k)).filter(Boolean)].forEach(s=>{ const hit=s.meds.filter(md=>medTokens.includes(md)); if(hit.length) inter.push(`${s.n} + ${hit.join(', ')}: ${s.note}`);});
+  A.sort((a,b)=>a.pri-b.pri);
+  return {A, disc, inter:[...new Set(inter)]};
+}
+
+function nfbTriggers(R){
+  const I=R.I, C=R.C, g=k=>R.metrics.find(m=>m.k===k), cn=new Set(I.concerns||[]), out=[];
+  const pos=k=>position(g(k)).cls;
+  const why={};
+  if(cn.has('attn')) why.attn='attention concern noted';
+  else if(['above'].includes(pos('tbEO'))||['above'].includes(pos('tbEC'))) why.attn='theta/beta above range';
+  if(cn.has('dep')) why.dep='depression concern noted';
+  else if(typeof I.phq==='number'&&I.phq>=10) why.dep=`PHQ-9 = ${I.phq}`;
+  else if(['above','below'].includes(pos('f3f4'))) why.dep='F3/F4 alpha outside range';
+  ['ptsd','sud','seiz','asd'].forEach(k=>{ if(cn.has(k)) why[k]='noted by clinician'; });
+  if(cn.has('mem')) why.mem='memory concern noted';
+  else if(C.age!==null&&C.age>=55&&['highband','above'].includes(pos('p3d'))) why.mem=`age ${C.age} with slower-half processing speed`;
+  NFB.forEach(n=>{ if(why[n.k]) out.push({...n, trig:why[n.k]}); });
+  return out;
+}
+function safetyLock(I){ return I.phq9!==null && I.phq9>0; }
+
+/* ======================= RENDER REPORT ======================= */
+let VIEW='client'; let lastText='';
+function cite(keys){ return keys.map(k=>`<sup class="c">[${k}]</sup>`).join(''); }
+function gauge(m){
+  if(m.v===null) return '<div class="scale"><span>Not captured</span></div>';
+  const span=m.hi-m.lo, min=m.lo-span*0.6, max=m.hi+span*0.6; const pc=x=>clamp((x-min)/(max-min)*100);
+  const st=status(m); const dotc = st.pill==='p-good'?'var(--good)':st.pill==='p-watch'?'#d4930f':st.pill==='p-flag'?'var(--flag)':'#999';
+  return `<div class="gauge"><div class="track"></div><div class="band" style="left:${pc(m.lo)}%;width:${pc(m.hi)-pc(m.lo)}%"></div>
+   <div class="lbl" style="left:${pc(m.lo)}%">${m.lo}</div><div class="lbl" style="left:${pc(m.hi)}%">${m.hi}</div>
+   <div class="dot" style="left:${pc(m.v)}%;background:${dotc};${m.ly?'outline:2px dashed var(--prov);outline-offset:2px':''}"></div></div>
+   <div class="scale"><span>${m.dir==='lower'?'faster ←':m.dir==='higher'?'← lower':'←'}</span><span><b class="mono">${m.v} ${m.unit}</b></span><span>${m.dir==='lower'?'→ slower':m.dir==='higher'?'higher →':'→'}</span></div>`;
+}
+
+function render(){
+  const R=readAll(); const I=R.I, C=R.C;
+  const out=$('reportOut');
+  if(safetyLock(I)){
+    out.innerHTML=`<div class="report"><div class="banner danger"><h2 style="font-size:20px;margin-bottom:6px">Report paused: safety check required</h2>
+     <p>PHQ-9 item 9 (thoughts of being better off dead or of self-harm) was answered above "Not at all". <b>Don't release a report.</b> Follow your clinic's suicide-risk protocol now: same-day review by a licensed clinician, and make sure the client knows they can call or text <b>988</b> (Suicide &amp; Crisis Lifeline, US), any time.</p>
+     <p style="margin:0">Once a licensed clinician has documented the review, clear item 9 here to generate the performance report.</p></div>
+     <p class="src">Resource: <a href="${SRC.lifeline.u}" target="_blank" rel="noopener">988lifeline.org</a> (call or text 988)</p></div>`;
+    lastText='Report paused: PHQ-9 item 9 positive. Clinician safety review required. 988 Suicide & Crisis Lifeline.'; return;
+  }
+  const Q=quality(R); const hasI=intakeFilled(I); const D=domains(I); const P=profile(R,D); const AC=actions(R,D,Q);
+  const used=new Set(['wavi']);
+  const mt=R.metrics;
+  const findM=k=>mt.find(m=>m.k===k);
+  const pafs=['pafF','pafCP','pafO'].map(findM).filter(m=>m.v!==null);
+  // strengths / watch
+  const strengths=[], watch=[];
+  if(pafs.length && pafs.every(m=>position(m).frac>=0.67)) strengths.push(`Fast, well-organized resting brain rhythm: peak alpha ${[...new Set(pafs.map(m=>m.v))].join('/')} Hz in every region, at the top of the expected range.`);
+  if(C.foR!==null && C.foR>=0.5 && C.foR<=1.1) strengths.push(`Normal front-to-back alpha pattern (R = ${C.foR}; reference 0.8 ± 0.3).`);
+  const pd=findM('p3d'); if(pd.v!==null && ['lowband','mid','highband'].includes(position(pd).cls)) strengths.push(`Processing speed within the normal range for age (${pd.v} ms).`);
+  const tbs=['tbEO','tbEC'].map(findM).filter(m=>m.v!==null&&['lowband','mid','highband'].includes(position(m).cls)); if(tbs.length) strengths.push('Balanced focus vs drift rhythm (theta/beta mid-range).');
+  Object.entries(D).filter(([k,v])=>!k.startsWith('_')&&v>=80).forEach(([k])=>strengths.push(`${DLABEL[k]} is a supportive factor.`));
+  const pv=findM('p3v'); if(position(pv).cls==='below') watch.push(`Attention response (P300 voltage ${pv.v} µV) is below the ${pv.lo}–${pv.hi} µV range${pv.ly?' (provisional: low yield)':''}.`);
+  if(position(pd).cls==='highband') watch.push('Processing speed is on the slower half of the normal range.');
+  Object.entries(D).filter(([k,v])=>!k.startsWith('_')&&v<60).forEach(([k,v])=>watch.push(`${DLABEL[k]} is adding load (${v}/100).`));
+  if(Q.level!=='Good') watch.push(`Scan confidence is ${Q.level.toLowerCase()}. Several readings need a clean retest.`);
+  const top3=AC.A.slice(0,3);
+  AC.A.forEach(a=>a.src.forEach(s=>used.add(s)));
+  ['dinteren','lee','sleepq','kao','kao2020','iaf','klimesch','pavarini','ods','medline'].forEach(k=>used.add(k));
+
+  const head=`<div class="rhead"><div><div class="kicker">NeuroProfile performance report</div><h1>${esc(C.id)}</h1>
+    <div style="color:var(--ink2);font-size:14px">${C.sex}, ${C.age??'—'} yrs · ${esc(C.session)} · ${esc(C.reason)}</div></div>
+    <div class="meta">Scan ${C.date||'—'} · ${esc(C.sys)}<br>Report generated ${new Date().toLocaleDateString()}<br>Scan confidence: <span class="pill ${Q.level==='Good'?'p-good':Q.level==='Moderate'?'p-watch':'p-flag'}">${Q.level}</span>${C.prep?'<br>Prepared by '+esc(C.prep):''}</div></div>`;
+
+  const snap=`<h2>1 · Snapshot</h2>
+   <p class="clientonly">This report pulls together your brain-response scan and the way you live (sleep, food, movement, work, relationships) to show how you're likely to show up day to day, and what to do about it.</p>
+   <p class="cliniconly">Integrated summary of a WAVi auditory oddball P300 and resting EEG with a structured lifestyle and psychosocial intake. Wellness and decision-support use only: not a diagnosis.</p>
+   ${!hasI?'<div class="banner warn"><b>Scan-only report.</b> The lifestyle and life intake hasn\'t been completed, so sections 3–5 are limited. Complete step 3 to unlock the full report.</div>':''}
+   ${hasI&&window.EXAMPLE?'<div class="banner warn"><b>Template preview:</b> the lifestyle intake below is fictional example data, not this client\'s.</div>':''}
+   <div class="three">
+    <div class="col c-good"><h3>What's working</h3><ul>${(strengths.slice(0,4).map(s=>`<li>${s}</li>`).join(''))||'<li>—</li>'}</ul></div>
+    <div class="col c-watch"><h3>What to watch</h3><ul>${(watch.slice(0,4).map(s=>`<li>${s}</li>`).join(''))||'<li>Nothing flagged.</li>'}</ul></div>
+    <div class="col c-act"><h3>Next 30 days</h3><ul>${top3.map(a=>`<li>${a.t}</li>`).join('')||'<li>Maintain current routine.</li>'}</ul></div>
+   </div>`;
+
+  const qual=`<div class="banner ${Q.level==='Good'?'info':'warn'}" style="margin-top:16px"><b>How much to trust this scan: ${Q.level}.</b>
+    <span class="clientonly"> ${Q.level==='Good'?'The recording quality was good.':'Some of the recording had limited clean data, so a few numbers are a first look. A short, standardized retest will confirm them.'}</span>
+    <div class="cliniconly"><ul style="margin:6px 0 0;padding-left:18px">${Q.issues.map(i=>`<li>${i}</li>`).join('')}</ul>
+    ${Q.cons?`<p style="margin:6px 0 0">Site consistency (WAVi rule: ≥40% of good C-P pairs within 75 ms): <b>${Q.cons.pct}%</b>, ${Q.cons.ok?'passes':'fails, so treat as "No consistent P300"'}. Good sites: ${Q.cons.good.join(' · ')}.</p>`:''}</div></div>`;
+
+  const erpGroups=[['Attention & processing (P300)',['p3v','p3d','rt']],['Resting rhythm',['pafF','pafCP','pafO','f3f4']],['Arousal balance',['tbEO','tbEC']]];
+  const erp=`<h2>2 · Brain response findings</h2>
+   <p class="clientonly">Your scan measured how your brain reacts when it picks out a rare "target" tone among common ones (the P300), plus your brain's resting rhythm. Each bar shows the expected range for your age in green and your result as a dot. A dashed ring means the reading is provisional.</p>
+   ${erpGroups.map(([g,ks])=>`<h3 style="font-size:16px;margin:16px 0 0;font-family:'IBM Plex Sans'">${g}</h3>`+ks.map(k=>{const m=findM(k);const t=metricText(m);const st=status(m);
+     return `<div class="metric"><div><div class="name">${m.plain}<small>${m.label} · ${m.region}</small></div><span class="pill ${st.pill}">${st.txt}</span> ${m.ly&&m.v!==null?'<span class="pill p-prov">Provisional</span>':''}</div>
+     <div>${gauge(m)}<p style="margin:8px 0 0;font-size:14px"><span class="clientonly"><i style="color:var(--ink3)">What it is:</i> ${m.analogy}. ${t.client}</span><span class="cliniconly">${t.clin}</span></p></div></div>`;}).join('')).join('')}
+   ${perfBlock(C)}
+   <div class="cliniconly"><h3 style="font-size:16px;margin:16px 0 6px;font-family:'IBM Plex Sans'">Site-level P300 and other values</h3>
+    <table><thead><tr><th>Site</th><th>Yield</th><th>µV</th><th>ms</th><th>Note</th></tr></thead><tbody>
+    ${R.sites.map(s=>`<tr><td>${s.s}</td><td>${s.y??'—'}</td><td>${s.uv??'&lt;0'}</td><td>${s.ms??'N/A'}</td><td>${s.a?'Possible late artifact':''}${s.y!==null&&s.y<20?' Yield &lt;20':''}</td></tr>`).join('')}
+    </tbody></table>
+    <p class="src">Central-frontal N100: ${C.n100uv??'—'} µV at ${C.n100ms??'—'} ms. Frontal/occipital alpha ratio R = ${C.foR??'—'} (reference 0.8 ± 0.3). <i>Unverified: no age-normed N100 reference is loaded yet. Note the value only and track it across sessions.</i></p></div>`;
+
+  let life;
+  if(!hasI){ life=`<h2>3 · Lifestyle load map</h2><p style="color:var(--ink3)">Awaiting intake.</p><h2>4 · How you may show up day to day</h2>
+    <p style="color:var(--ink3)">Needs the lifestyle intake. On the scan alone, the strongest signal is a fast resting rhythm alongside a smaller-than-expected attention response. That pattern often reflects state (sleep, fatigue, stress on the day) rather than capacity, but this scan didn't record state, so it can't be confirmed. <i>(Interpretive hypothesis, not a finding.)</i></p>`; }
+  else {
+    life=`<h2>3 · Lifestyle load map</h2><p class="clientonly">Each bar shows how much that part of your life is <b>supporting</b> your brain right now (100 = fully supportive).</p>
+     <p class="cliniconly">Composite 0–100 scores from intake (higher = more supportive). These are internal heuristics, not validated scales. Validated sub-scores: PHQ-9 ${fmt(I.phq)}, GAD-7 ${fmt(I.gad)}, WHO-5 raw ${fmt(I.who)} (×4 = ${typeof I.who==='number'?I.who*4:'—'}), UCLA-3 ${fmt(I.ucla)}.</p>
+     <div class="bars">${Object.entries(D).filter(([k])=>!k.startsWith('_')).map(([k,v])=>{const s=sev(v,50,75);return `<div class="b"><span>${DLABEL[k]}</span><div class="t"><i style="width:${v}%;background:${color(s)}"></i></div><b class="mono">${v}</b></div>`;}).join('')}</div>
+     ${I.stressors.length?`<p class="src">Life stressors in the past 12 months: ${I.stressors.map(s=>s[1]).join('; ')}.</p>`:''}
+     <h2>4 · How you may show up day to day</h2>
+     <p class="clientonly">This combines your brain data with your life data. These are patterns to notice, not labels.</p>
+     <p class="cliniconly">Composite profile weighting ERP position with intake domains. Heuristic: label any use as an estimate.</p>
+     <div class="prof">${P.filter(p=>p.v!==null).map(p=>{const s=sev(p.v,50,72);const txt=s==='good'?p.hi:s==='watch'?p.mid:p.lo;
+       return `<div class="p"><h3>${p.n}<span class="pill p-${s==='good'?'good':s==='watch'?'watch':'flag'}">${Math.round(p.v)}</span></h3><p>${txt}</p></div>`;}).join('')}</div>`;
+  }
+
+  const act=`<h2>5 · Action plan</h2>
+   <p class="src">Evidence grades: <span class="ev evA">A</span> strong, guideline-level · <span class="ev evB">B</span> moderate · <span class="ev evC">C</span> emerging or mixed · <span class="ev evP">P</span> protocol / quality step</p>
+   ${AC.A.filter(a=>a.who!=='clinician').map(a=>`<div class="action"><h3>${a.t}<span class="ev ev${a.ev}">${a.ev}</span></h3><p>${a.why}${a.src.length?cite(a.src):''}</p>${a.extra?`<p><b>${a.extra}</b></p>`:''}</div>`).join('')||'<p>No lifestyle actions triggered yet: complete the intake.</p>'}
+   <div class="cliniconly">${AC.A.filter(a=>a.who==='clinician').map(a=>`<div class="action" style="border-color:var(--prov)"><h3>${a.t}<span class="ev evP">P</span></h3><p>${a.why}</p></div>`).join('')}</div>
+   <h3 style="font-size:16px;margin:18px 0 6px;font-family:'IBM Plex Sans'">Supplements to discuss with your physician</h3>
+   <ul class="src">${AC.disc.map(d=>`<li><b>${d.n}</b> <span class="ev ev${d.ev}">${d.ev}</span> ${d.why} <a href="${d.url}" target="_blank" rel="noopener">NIH fact sheet</a></li>`).join('')}</ul>
+   ${I.supps.length?`<p class="src">Currently taking: ${I.supps.map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.n}</a>`).join(', ')}.</p>`:''}
+   ${AC.inter.length?`<div class="banner danger"><b>Interaction check:</b><ul style="margin:6px 0 0;padding-left:18px">${AC.inter.map(x=>`<li>${x}</li>`).join('')}</ul><span style="font-size:12px">Keyword match against NIH ODS / NCCIH interaction notes. Pharmacist review is required.</span></div>`:(I.meds?'<p class="src">No interactions flagged by keyword check (this does not replace pharmacist review).</p>':'')}`;
+
+  const NF=nfbTriggers(R); NF.forEach(n=>n.src.forEach(s=>used.add(s)));
+  const nfb = NF.length ? `<h2>6 · Brain-training options to discuss</h2>
+   <p class="clientonly">Based on what your scan and intake show, these brain-training (neurofeedback) approaches have research behind them. They are options to talk through with your clinician, not prescriptions.</p>
+   <p class="cliniconly">Evidence library entries triggered by scan findings, screens or clinician-noted concerns. Neurofeedback for a clinical condition should be planned with a qEEG baseline and directed by a qualified, BCIA-trained provider. Evidence is mostly small RCTs. Grades are conservative.</p>
+   ${NF.map(n=>`<div class="action" style="border-color:#5a4fa0"><h3>${n.title}<span class="ev ev${n.ev}">${n.ev}</span></h3>
+     <p class="src" style="margin:2px 0 6px">Why this appears: ${n.trig}</p>
+     <p><span class="clientonly">${n.client}</span><span class="cliniconly">${n.clin}</span>${cite(n.src)}</p></div>`).join('')}` : '';
+
+  const srcs=`<h2>Sources</h2><ol class="src">${[...used].map(k=>`<li id="s-${k}"><b>[${k}]</b> ${SRC[k].t} <a href="${SRC[k].u}" target="_blank" rel="noopener">link</a></li>`).join('')}</ol>
+   <div class="disc">This report is for education and wellness planning, and to support (not replace) evaluation by a licensed clinician. It is not a diagnosis. ERP values come from the WAVi system's age-referenced target ranges, and values marked low yield or provisional should be confirmed by retest. Lifestyle composite and day-to-day profile scores are internal estimates, not validated clinical scales. Supplement items are discussion points for a physician or pharmacist, not prescriptions. If you are in crisis, call or text 988 (US).</div>`;
+
+  out.innerHTML=`<div class="report ${VIEW}" id="theReport">${head}${snap}${qual}${erp}${life}${act}${nfb}${srcs}</div>`;
+  lastText=$('theReport').innerText;
+}
+function parseRange(s){const m=String(s||'').match(/(\d+(?:\.\d+)?)\D+(\d+(?:\.\d+)?)/);return m?[+m[1],+m[2]]:null;}
+function perfBlock(C){
+  if(C.tmtA===null&&C.tmtB===null&&!C.flkTR) return '';
+  const row=(name,plain,v,rs)=>{ if(v===null) return ''; const r=parseRange(rs); const over=r&&v>r[1];
+    return `<div class="metric"><div><div class="name">${plain}<small>${name}</small></div><span class="pill ${over?'p-flag':'p-good'}">${over?'Slower than target':'Within target'}</span></div>
+     <div><p style="margin:0;font-size:14px"><b class="mono">${v} sec</b> (target ${esc(rs)})</p>
+     <p style="margin:6px 0 0;font-size:14px"><span class="clientonly">${name.includes('A')?'A connect-the-dots task timing how quickly you scan and move.':'The same task alternating numbers and letters, which tests mental flexibility.'} ${over?'You took longer than the target. Fatigue, unfamiliarity with the task or slowed processing can all contribute.':'You finished within the target time.'}</span>
+     <span class="cliniconly">${name.includes('A')?'Psychomotor speed and visual scanning.':'Set-shifting and executive control.'} ${over?'Prolonged completion time: correlate with P300 latency and reaction time.':''}</span></p></div></div>`;};
+  let flk=''; if(C.flkTR||C.flkCI){ const tr=parseRange(C.flkTR), ci=parseRange(C.flkCI);
+    const respRate=tr?Math.round(tr[1]/tr[0]*100):null, acc=ci?Math.round(ci[0]/(ci[0]+ci[1])*100):null;
+    flk=`<div class="metric"><div><div class="name">Flanker test<small>Inhibitory control under distraction</small></div>${respRate!==null&&respRate<80?'<span class="pill p-watch">Low response rate</span>':''}</div>
+     <div><p style="margin:0;font-size:14px">Trials/responses ${esc(C.flkTR)||'—'} ${respRate!==null?`(${respRate}% responded)`:''} · correct/incorrect ${esc(C.flkCI)||'—'} ${acc!==null?`(${acc}% accurate)`:''}</p>
+     <p style="margin:6px 0 0;font-size:14px" class="cliniconly">Low response rates limit interpretation. Check task engagement first.</p></div></div>`;}
+  return `<h3 style="font-size:16px;margin:16px 0 0;font-family:'IBM Plex Sans'">Performance tasks</h3>${row('Trail Making Test A','Visual scanning speed',C.tmtA,C.tmtAr)}${row('Trail Making Test B','Mental flexibility',C.tmtB,C.tmtBr)}${flk}`;
+}
+function fmt(x){return typeof x==='number'?x:(x&&x.partial?`incomplete (${x.c} items)`:'—');}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ======================= UI ======================= */
+function go(p){ document.querySelectorAll('section.pane').forEach(s=>s.classList.toggle('on',s.id==='pane-'+p));
+  document.querySelectorAll('#steps button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+  if(p==='report') render(); window.scrollTo({top:0}); }
+document.querySelectorAll('#steps button').forEach(b=>b.onclick=()=>go(b.dataset.p));
+function setView(v){ VIEW=v; $('vClient').classList.toggle('on',v==='client'); $('vClin').classList.toggle('on',v==='clinician'); render(); }
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1800);}
+function copyReport(){ try{ navigator.clipboard.writeText(lastText).then(()=>toast('Report text copied'),()=>toast('Copy blocked — select and copy manually')); }catch(e){toast('Copy blocked — select and copy manually');} }
+function setv(id,v){const e=$(id); if(e) e.value=v;}
+function fillExample(){
+  window.EXAMPLE=true;
+  const ex={i_sleepH:6,i_sleepQ:2,i_sleepVar:'yes',i_snore:'yes',i_vig:0,i_mod:60,i_str:0,i_sit:9,i_fv:2,i_upf:1.5,i_fish:0,i_water:4,i_skip:'yes',
+    i_meds:'lisinopril, atorvastatin',i_alc:10,i_cafD:5,i_nic:'no',i_can:'0',i_screen:3,i_bedphone:'yes',i_wh:55,i_wd:'5',i_wc:'2',i_shift:'no',i_wconf:'3',i_support:'yes',i_hconf:'2'};
+  Object.entries(ex).forEach(([k,v])=>setv(k,v));
+  ['ucla0','ucla1','ucla2'].forEach((k,i)=>setv(k,[2,1,2][i]));
+  [1,1,2,2,1,0,2,0,0].forEach((v,i)=>setv('phq'+i,v)); [1,1,1,2,0,1,0].forEach((v,i)=>setv('gad'+i,v)); [2,1,1,1,3].forEach((v,i)=>setv('who'+i,v));
+  ['job','money'].forEach(k=>{$('st_'+k).checked=true}); $('sp_vitd').checked=true; $('sp_creatine').checked=true;
+  toast('Fictional example intake loaded');
+}
+/* WAVi target ranges observed on real printouts (de-identified). [lo,hi] per metric key. */
+const RANGE_LIB = [
+ {age:11, src:'Case 002 (WAVi, 11-year-old male)', r:{rt:[286,411],f3f4:[0.9,1.1],pafF:[8.3,10.2],p3d:[260,338],p3v:[9,22],pafCP:[8.6,10.5],tbEO:[1.6,3.9],tbEC:[1.6,3.9],pafO:[8.6,10.5]}},
+ {age:48, src:'Case 001 (WAVi, 48-year-old male)', r:{rt:[251,361],f3f4:[0.9,1.1],pafF:[8.5,11.0],p3d:[262,341],p3v:[8,18],pafCP:[9.0,11.0],tbEO:[0.8,1.8],tbEC:[0.8,1.8],pafO:[9.0,11.0]}},
+];
+function applyRanges(){
+  const a=num('c_age'); if(a===null){$('rangeMsg').textContent='Enter an age first.';return;}
+  const best=RANGE_LIB.reduce((b,x)=>Math.abs(x.age-a)<Math.abs(b.age-a)?x:b);
+  Object.entries(best.r).forEach(([k,[lo,hi]])=>{setv('lo_'+k,lo);setv('hi_'+k,hi);});
+  const gap=Math.abs(best.age-a);
+  $('rangeMsg').textContent=`Filled from ${best.src}${gap>5?`: ${gap} years from this client, so confirm against the printout`:''}.`;
+}
+function clearIntake(){ window.EXAMPLE=false; document.querySelectorAll('#pane-intake input, #pane-intake select, #pane-intake textarea').forEach(e=>{ if(e.type==='checkbox') e.checked=false; else e.value=''; }); toast('Intake cleared'); }
+/* WAVi Scan Clinician Report parser. Input: array of text lines. Output: de-identified fields.
+   The name is never returned. DOB is used only to compute age, then discarded. */
+function parseWAVi(lines){
+  const out={ok:false, metrics:{}, perf:{}, notes:[], age:null, sex:null, scanDate:null, session:null, initials:null};
+  const L=lines.map(l=>l.replace(/\s+/g,' ').trim()).filter(Boolean);
+  const all=L.join('\n'), squash=all.replace(/\s+/g,'');
+  if(!/WAViScan/i.test(squash)) { out.notes.push('This does not look like a WAVi Scan report.'); return out; }
+  const lre = s => new RegExp(s.replace(/\s+/g,'').split('').map(c=>c.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&')).join('\\s*'),'i');
+  // header: NAME — Sex, DOB
+  const hm = all.match(/^([^—\n]+?)\s*—\s*(Male|Female|Other)[^,\n]*,\s*(\d{1,2})\/(\d{1,2})\/(\d{4})/m);
+  if(hm){
+    out.sex=hm[2];
+    const parts=hm[1].split(',').map(s=>s.trim()); // LAST, First M.
+    if(parts.length>=2) out.initials=(parts[1][0]||'')+(parts[0][0]||'');
+    out._dob=new Date(+hm[5],+hm[3]-1,+hm[4]);
+  }
+  const sm = all.match(/Session\s*1\s*\((\d{1,2})\/(\d{1,2})\/(\d{4})\)\s*([A-Za-z\- ]+?)\s+(?:N\/A|\S)/);
+  if(sm){ out.scanDate=`${sm[3]}-${sm[1].padStart(2,'0')}-${sm[2].padStart(2,'0')}`; out.session=/follow/i.test(sm[4])?'Follow-up':'Baseline'; }
+  const am = squash.match(/(\d{1,3})yrs/);
+  if(am) out.age=+am[1];
+  else if(out._dob && out.scanDate){ const s=new Date(out.scanDate); let a=s.getFullYear()-out._dob.getFullYear(); if(s<new Date(s.getFullYear(),out._dob.getMonth(),out._dob.getDate())) a--; out.age=a; }
+  delete out._dob;
+  // pre-scan header row values (Change, Sleep, Since Meal) if present
+  const hr = all.match(/Session\s*1\s*\([^)]*\)\s*\S+\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+\d+\s*y/);
+  if(hr){ const [_,conc,chg,slp,meal]=hr; out.prescan={sleep: slp!=='N/A'?slp:null, meal: meal!=='N/A'?meal:null};
+    if(slp==='N/A'&&meal==='N/A') out.notes.push('Sleep and time since meal were N/A on the printout. Record them in step 2.'); }
+  // metrics
+  const defs=[
+    ['rt','Physical Reaction Time'],['f3f4','F3/F4 Eyes Closed Alpha (Power)'],['pf','Peak Frequency (7.0–13.0 Hz)'],
+    ['p3d','Audio P300 Delay'],['p3v','Audio P300 Voltage'],['tbEO','CZ Eyes Open Theta/Beta (Power)'],['tbEC','CZ Eyes Closed Theta/Beta (Power)']];
+  let region='';
+  for(const line of L){
+    const sq=line.replace(/\s+/g,'');
+    if(/^Frontal$/i.test(sq)) {region='F';continue;}
+    if(/^Central-Parietal$/i.test(sq)) {region='CP';continue;}
+    if(/^Occipital$/i.test(sq)) {region='O';continue;}
+    for(const [k,label] of defs){
+      const m=line.match(lre(label)); if(!m || m.index>3) continue;
+      let rest=line.slice(m.index+m[0].length).trim();
+      const flag=/⬓/.test(rest)?'ly':/❓/.test(rest)?'q':/⧪/.test(rest)?'sync':'';
+      rest=rest.replace(/[⬓❓⧪]/g,'').trim();
+      const rg=rest.match(/(-?\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)\s*(?:ms|Hz|μ\s*V|uV)?\s*$/);
+      const valPart=rg?rest.slice(0,rg.index):rest;
+      let v=null; if(!/N\/A/.test(valPart) && !/<\s*0/.test(valPart)){ const n=valPart.match(/-?\d+(?:\.\d+)?/); if(n) v=+n[0]; }
+      if(/<\s*0/.test(valPart)) out.notes.push(`${label}: printout shows "< 0 μV".`);
+      let key=k; if(k==='pf') key = region==='F'?'pafF':region==='CP'?'pafCP':region==='O'?'pafO':null;
+      if(key && !(key in out.metrics)) out.metrics[key]={v, flag, lo:rg?+rg[1]:null, hi:rg?+rg[2]:null};
+      break;
+    }
+  }
+  // performance assessments
+  const g=(re)=>{const x=squash.match(re);return x?+x[1]:null;};
+  out.perf.tmtA=g(/PartATime\(seconds\)(\d+)/i); out.perf.tmtB=g(/PartBTime\(seconds\)(\d+)/i);
+  const tg=squash.match(/PartA(\d+)[–-](\d+)sec,?PartB(\d+)[–-](\d+)sec/i);
+  if(tg){ out.perf.tmtAr=`${tg[1]}–${tg[2]}`; out.perf.tmtBr=`${tg[3]}–${tg[4]}`; }
+  const tr=g(/Trials(\d+)/), rs=g(/Responses(\d+)/), co=g(/(?:^|[^n])Correct(\d+)/), inc=g(/Incorrect(\d+)/);
+  if(tr!==null&&rs!==null) out.perf.flkTR=`${tr} / ${rs}`; if(co!==null&&inc!==null) out.perf.flkCI=`${co} / ${inc}`;
+  out.ok = Object.keys(out.metrics).length>0;
+  if(out.ok) out.notes.push('Site-level P300 values (page 2) and the alpha-ratio map (page 3) are images in the PDF. Enter those by hand.');
+  return out;
+}
+
+
+/* ===== PDF import (pdf.js from cdnjs, loaded on first use; runs fully in-browser) ===== */
+let pdfReady=null;
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load '+src));document.head.appendChild(s);});}
+function ensurePdf(){ if(!pdfReady){ const b='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  pdfReady=loadScript(b+'pdf.worker.min.js').then(()=>loadScript(b+'pdf.min.js')).then(()=>{ pdfjsLib.GlobalWorkerOptions.workerSrc=b+'pdf.worker.min.js'; }); }
+  return pdfReady; }
+async function pdfLines(buf){
+  await ensurePdf();
+  const doc=await pdfjsLib.getDocument({data:buf, isEvalSupported:false}).promise; const L=[];
+  for(let p=1;p<=doc.numPages;p++){ const tc=await (await doc.getPage(p)).getTextContent(); const rows={};
+    tc.items.forEach(it=>{const y=Math.round(it.transform[5]);(rows[y]=rows[y]||[]).push([it.transform[4],it.str]);});
+    Object.keys(rows).sort((a,b)=>b-a).forEach(y=>L.push(rows[y].sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join(' '))); }
+  return L;
+}
+function applyImport(r){
+  const msg=$('impMsg');
+  if(!r.ok){ msg.innerHTML=`<span class="pill p-flag">Not imported</span> ${r.notes.join(' ')}`; return; }
+  if(!window.CURRENT_CODE) setv('c_id', (r.initials||'XX')+'-'+(r.scanDate||'').replace(/-/g,'').slice(2));
+  if(r.age!==null) setv('c_age', r.age); if(r.sex) setv('c_sex', r.sex);
+  if(r.scanDate) setv('c_date', r.scanDate); if(r.session) setv('c_session', r.session);
+  setv('c_sys','WAVi Scan'); if(!window.CURRENT_CODE) setv('c_reason','');
+  let n=0;
+  METRICS.forEach(m=>{ const x=r.metrics[m.k]; if(!x){ setv('m_'+m.k,''); setv('ly_'+m.k,''); return; }
+    setv('m_'+m.k, x.v??''); setv('ly_'+m.k, x.flag||''); if(x.lo!==null) setv('lo_'+m.k,x.lo); if(x.hi!==null) setv('hi_'+m.k,x.hi); n++; });
+  ['tmtA','tmtB','tmtAr','tmtBr','flkTR','flkCI'].forEach(k=>setv(k, r.perf[k]??(k.endsWith('r')?$(k).value:'')));
+  SITES.forEach((s,i)=>['sy_','su_','sm_'].forEach(p=>setv(p+i,''))); SITES.forEach((s,i)=>{$('sa_'+i).checked=false;});
+  setv('n100uv',''); setv('n100ms',''); setv('foR','');
+  ['s_sleep','s_meal','s_caf','s_sub','s_meds','s_ill','s_stress','s_rt'].forEach(k=>setv(k,''));
+  if(window.EXAMPLE && !window.CURRENT_CODE) clearIntake();
+  msg.innerHTML=`<span class="pill p-good">Imported ${n} metrics</span> Age ${r.age??'?'}, ${r.sex??'?'}, scan ${r.scanDate??'?'}. ${r.notes.join(' ')}`;
+  const lb=[...document.querySelectorAll('#pane-scan .banner.info')].find(x=>x.textContent.includes('Case 001')); if(lb) lb.style.display='none';
+}
+async function handlePdf(file){
+  const msg=$('impMsg'); msg.textContent='Reading…';
+  try{ const buf=new Uint8Array(await file.arrayBuffer()); const L=await pdfLines(buf); applyImport(parseWAVi(L)); }
+  catch(e){ msg.innerHTML=`<span class="pill p-flag">Couldn't read the PDF</span> ${esc(e.message)}`; }
+}
+$('pdfIn').addEventListener('change',e=>{ if(e.target.files[0]) handlePdf(e.target.files[0]); });
+const dc=$('dropCard'); ['dragover','dragenter'].forEach(ev=>dc.addEventListener(ev,e=>{e.preventDefault();dc.style.background='#d3eaea';}));
+['dragleave','drop'].forEach(ev=>dc.addEventListener(ev,e=>{e.preventDefault();dc.style.background='';}));
+dc.addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f) handlePdf(f); });
+
+buildForms();
+/* ===== Backend shim: Google Apps Script in production, localStorage demo otherwise ===== */
+const HAS_GAS = (typeof google !== 'undefined') && google.script && google.script.run;
+const DEMO = (() => {
+  const K = 'np_demo_v1';
+  const load = () => { try { return JSON.parse(localStorage.getItem(K)) || { clients: [], intakes: {}, reports: {} }; } catch (e) { return { clients: [], intakes: {}, reports: {} }; } };
+  const save = (d) => { try { localStorage.setItem(K, JSON.stringify(d)); } catch (e) {} };
+  const base = () => location.href.split('?')[0].replace(/Console\.html$/, 'Intake.html');
+  const out = (c) => c && ({ ...c, intakeUrl: base() + '?page=intake&c=' + c.code + '&t=' + c.token, reportUrl: base() + '?page=report&c=' + c.code + '&t=' + c.token });
+  const find = (d, code) => d.clients.find(c => c.code === code);
+  const rnd = (n) => Array.from({ length: n }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  return {
+    verifyLogin: async (u, p) => (u && p) ? { ok: true, session: 'demo-session' } : { ok: false, error: 'Enter a username and password (any value works in demo mode).' },
+    logout: async () => true,
+    whoami: async (_s) => ({ email: 'demo@thetrubrain.com', baseUrl: base(), brand: 'Rewired by TrueBrain', demo: true }),
+    createClient: async (_s, label) => { const d = load(); const c = { code: 'RW-' + rnd(6), label: label || '', token: rnd(32), created: new Date().toISOString(), intake_status: 'sent', report_status: 'none', urgent: false }; d.clients.push(c); save(d); return out(c); },
+    listClients: async (_s) => load().clients.map(out).reverse(),
+    getIntake: async (_s, code) => { const it = load().intakes[code]; return it || null; },
+    approveReport: async (_s, code, html) => { const d = load(); const c = find(d, code); d.reports[code] = html; c.report_status = 'approved'; c.approved_at = new Date().toISOString(); save(d); return out(c); },
+    revokeReport: async (_s, code) => { const d = load(); const c = find(d, code); c.report_status = 'revoked'; save(d); return out(c); },
+    loadIntake: async (code, token) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return { ok: false, error: 'This link is not valid. Please check the link you were sent.' };
+      if (c.intake_status === 'submitted') return { ok: true, submitted: true }; return { ok: true, draft: (d.intakes[code] || {}).data || {} }; },
+    saveDraft: async (code, token, data) => { const d = load(); const c = find(d, code); if (!c || c.token !== token || c.intake_status === 'submitted') return { ok: false };
+      d.intakes[code] = { status: 'draft', updated: new Date().toISOString(), data }; c.intake_status = 'draft'; save(d); return { ok: true }; },
+    submitIntake: async (code, token, data) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return { ok: false, error: 'Link not valid.' };
+      d.intakes[code] = { status: 'submitted', updated: new Date().toISOString(), data }; c.intake_status = 'submitted'; c.submitted_at = new Date().toISOString(); c.urgent = Number(data.phq8) > 0; save(d); return { ok: true, urgent: c.urgent }; },
+    _report: (code, token) => { const d = load(); const c = find(d, code); if (!c || c.token !== token) return null; return c.report_status === 'approved' ? d.reports[code] : ''; }
+  };
+})();
+function api(fn, ...args) {
+  if (HAS_GAS) return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+  return DEMO[fn](...args);
+}
+function urlParams() {
+  return new Promise(r => { if (HAS_GAS) google.script.url.getLocation(l => r(l.parameter || {})); else r(Object.fromEntries(new URLSearchParams(location.search))); });
+}
+
+/* ===== Console: clients, intake loading, release ===== */
+window.CURRENT_CODE=null; let CLIENTS=[]; let SESSION=null;
+async function staff(fn,...args){
+  try{ return await api(fn,SESSION,...args); }
+  catch(e){ if(String(e&&e.message||e).includes('SESSION_EXPIRED')){ showLogin('Your session expired. Sign in again.'); } throw e; }
+}
+function showLogin(msg){ $('loginOverlay').style.display='flex'; $('loginErr').textContent=msg||''; $('lgUser').focus(); }
+async function doLogin(ev){ ev.preventDefault(); const b=$('lgBtn'); b.disabled=true; $('loginErr').textContent='';
+  try{ const r=await api('verifyLogin',$('lgUser').value.trim(),$('lgPass').value); setv('lgPass','');
+    if(!r.ok){ $('loginErr').textContent=r.error; b.disabled=false; return; }
+    SESSION=r.session; $('loginOverlay').style.display='none'; startConsole();
+  }catch(e){ $('loginErr').textContent='Sign-in failed. Check your connection.'; } b.disabled=false; }
+const fmtD=s=>{ if(!s) return ''; const d=new Date(s); return isNaN(d)?'':d.toLocaleDateString(); };
+async function copy(text){ try{ await navigator.clipboard.writeText(text); toast('Link copied'); }catch(e){ toast('Copy blocked: select the link and copy it'); } }
+function statusPill(c){
+  const i={sent:['p-neutral','Link sent'],draft:['p-watch','In progress'],submitted:['p-good','Submitted']}[c.intake_status]||['p-neutral',c.intake_status];
+  const r={none:['p-neutral','No report'],approved:['p-good','Released'],revoked:['p-flag','Revoked']}[c.report_status]||['p-neutral',c.report_status];
+  return `<span class="pill ${i[0]}">${i[1]}</span> ${c.urgent?'<span class="pill p-flag">URGENT</span>':''} <span class="pill ${r[0]}">${r[1]}</span>`;
+}
+function renderClients(){
+  const el=$('clientList');
+  if(!CLIENTS.length){ el.innerHTML='<p class="src">No clients yet. Create an intake link above.</p>'; return; }
+  el.innerHTML=`<table><thead><tr><th>Code</th><th>Label</th><th>Status</th><th>Submitted</th><th></th></tr></thead><tbody>${CLIENTS.map(c=>`
+   <tr><td class="mono"><b>${esc(c.code)}</b></td><td>${esc(c.label)}</td><td>${statusPill(c)}</td><td>${fmtD(c.submitted_at)}</td>
+   <td><button class="btn ghost small" data-a="copyI" data-c="${c.code}">Copy intake link</button>
+       ${c.intake_status!=='sent'?`<button class="btn small" data-a="load" data-c="${c.code}">Open in platform</button>`:''}
+       ${c.report_status==='approved'?`<button class="btn ghost small" data-a="copyR" data-c="${c.code}">Copy report link</button><button class="btn ghost small" data-a="revoke" data-c="${c.code}">Revoke</button>`:''}</td></tr>`).join('')}</tbody></table>`;
+  el.querySelectorAll('button[data-a]').forEach(b=>b.onclick=()=>clientAction(b.dataset.a,b.dataset.c));
+}
+async function refreshClients(){ try{ CLIENTS=await staff('listClients'); renderClients(); }catch(e){ $('clientList').innerHTML=`<p class="banner danger">Couldn't load clients: ${esc(e.message||e)}</p>`; } }
+async function clientAction(a,code){
+  const c=CLIENTS.find(x=>x.code===code);
+  if(a==='copyI') return copy(c.intakeUrl);
+  if(a==='copyR') return copy(c.reportUrl);
+  if(a==='revoke'){ await staff('revokeReport',code); toast('Report link revoked'); return refreshClients(); }
+  if(a==='load'){
+    const it=await staff('getIntake',code); if(!it){ toast('No answers saved yet'); return; }
+    clearIntake(); window.EXAMPLE=false;
+    Object.entries(it.data||{}).forEach(([k,v])=>{ const e=$(k); if(!e) return; if(e.type==='checkbox') e.checked=!!v; else e.value=v; });
+    CURRENT_CODE=code; setv('c_id',code);
+    const b=$('curClientBanner'); b.style.display=''; b.innerHTML=`Working on <b>${esc(code)}</b>${c.label?' ('+esc(c.label)+')':''}: intake ${it.status==='submitted'?'submitted':'still in progress'}. Next: drop in their WAVi PDF below, fill in the pre-scan state, then review the report.`;
+    $('releaseCard').style.display=''; updateRelease(); go('scan'); toast('Intake loaded');
+  }
+}
+function updateRelease(){ const c=CLIENTS.find(x=>x.code===CURRENT_CODE); if(!c) return;
+  $('releaseState').innerHTML=c.report_status==='approved'?`Released ${fmtD(c.approved_at)}. Approving again replaces the released version.`:'Not released yet. The client sees "being reviewed" until you approve.'; }
+function snapshotClientView(){
+  const prev=VIEW; setView('client');
+  const css=document.querySelector('style').textContent;
+  const body=$('theReport').outerHTML;
+  setView(prev);
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Your NeuroProfile report</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${css}
+body{background:#EEF3F1} .report{max-width:960px;margin:24px auto} .rb{max-width:960px;margin:20px auto 0;padding:0 20px;font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui;font-weight:800;font-size:22px;color:#17222D}.rb span{font-weight:400;font-size:14px;color:#6B7A84}</style></head>
+<body><div class="rb">Rewired <span>by TrueBrain</span></div><main style="padding:0 16px">${body}</main></body></html>`;
+}
+$('approveBtn').onclick=()=>{ if(!CURRENT_CODE){ toast('Open a client from the Clients tab first'); return; } $('approveConfirm').style.display=''; };
+$('approveNo').onclick=()=>{ $('approveConfirm').style.display='none'; };
+$('approveYes').onclick=async()=>{
+  const b=$('approveYes'); b.disabled=true; b.textContent='Releasing…';
+  try{ render(); const html=snapshotClientView(); const c=await staff('approveReport',CURRENT_CODE,html);
+    const i=CLIENTS.findIndex(x=>x.code===c.code); if(i>=0) CLIENTS[i]=c; updateRelease(); renderClients();
+    $('approveConfirm').style.display='none'; toast('Report released'); await copy(c.reportUrl);
+  }catch(e){ toast('Release failed: '+(e.message||e)); }
+  b.disabled=false; b.textContent='Yes, release it';
+};
+$('newBtn').onclick=async()=>{
+  const b=$('newBtn'); b.disabled=true;
+  try{ const c=await staff('createClient',$('newLabel').value.trim()); setv('newLabel','');
+    $('newOut').innerHTML=`<div class="banner info" style="margin-top:12px"><b>${esc(c.code)}</b> created. Send this link to your client:<div class="row" style="margin-top:6px"><input class="mono" style="flex:1;min-width:240px;padding:8px;border:1px solid var(--line);border-radius:6px" readonly value="${esc(c.intakeUrl)}"><button class="btn small" id="cpNew">Copy link</button></div></div>`;
+    $('cpNew').onclick=()=>copy(c.intakeUrl); await refreshClients();
+  }catch(e){ toast('Could not create: '+(e.message||e)); }
+  b.disabled=false;
+};
+$('refreshBtn').onclick=refreshClients;
+async function startConsole(){ try{ const w=await staff('whoami'); $('whoami').innerHTML=(w.demo?'DEMO MODE (data stays in this browser) · ':'')+esc(w.email)+' · <a href="#" id="logoutLink" style="color:#a9e0d8">Sign out</a>';
+  $('logoutLink').onclick=async(e)=>{e.preventDefault(); await api('logout',SESSION); SESSION=null; CLIENTS=[]; renderClients(); showLogin('Signed out.');}; }catch(e){} refreshClients(); }
+$('loginForm').addEventListener('submit',doLogin);
+showLogin();
+
+</script>
+</body>
+</html>
