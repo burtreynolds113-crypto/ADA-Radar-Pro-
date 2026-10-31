@@ -19,9 +19,7 @@ python ops/are.py report 2026-W44                        # weekly CEO report
 - **Verified money:** $0 revenue, $0 spent, $0 profit.
 - **B03 (Confluence accessibility checker) rejected** by its pre-registered marketplace test: real Cloud installs ≤ 43 (run 41150180633).
 - **Lead:** B01, a trust center plus questionnaire answer library for small SaaS. Stage 1 (free generator, unpublished) is next; Stage 2 needs A-005.
-- **Pending owner decisions:**
-  - A-003: weekly schedule
-  - A-005: B01 Stage 2 ($15 cap)
+- **Approved 2026-10-31:** A-003 (weekly report, now scheduled) and A-005 (B01 Stage 2). Go-live is waiting on the owner steps in `products/b01-trust-page/GO_LIVE_CHECKLIST.md`.
 
   Also pending: switching the repo to private (A-002, owner action).
 

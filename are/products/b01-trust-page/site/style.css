@@ -38,3 +38,4 @@ th[scope=row] { width: 55%; font-weight: 600; }
 .price { font-size: 1.6rem; font-weight: 700; }
 footer { color: var(--muted); font-size: .9rem; margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
 @media print { .noprint { display:none !important; } body { font-size: 12pt; } }
+.mt0 { margin-top: 0; }

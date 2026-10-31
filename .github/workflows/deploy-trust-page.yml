@@ -1,0 +1,46 @@
+name: Deploy B01 trust page (manual)
+# Approved by owner as A-005 (2026-10-31). Manual dispatch only: publishing happens when the owner
+# (or the agent, after the owner has filled site.config.json) presses "Run workflow".
+# The build refuses to run while any value in site.config.json is missing.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: are/products/b01-trust-page
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Unit + build tests
+        run: node --test tests/app.test.mjs tests/build.test.mjs
+      - name: Build (fails if config incomplete)
+        run: node build.mjs --out dist
+      - name: End-to-end on the built site
+        run: |
+          npm install --no-save axe-core@4.14.0 playwright@1.63.0
+          npx playwright install --with-deps chromium
+          E2E_ROOT="$PWD/dist/" node tests/e2e.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: are/products/b01-trust-page/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,10 +1,10 @@
 name: Weekly CEO report
-# Schedule is DISABLED until approval A-003 is recorded in are/approvals/approvals.json.
-# To enable: uncomment the schedule block (that change itself is reviewed by the owner).
+# Schedule enabled by owner approval A-003 (2026-10-31). Read-only: builds the report and
+# dashboard as an artifact; commits nothing, sends nothing.
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "17 13 * * 1"   # Mondays 13:17 UTC
+  schedule:
+    - cron: "17 13 * * 1"   # Mondays 13:17 UTC
 permissions:
   contents: read
 jobs:

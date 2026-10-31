@@ -10,6 +10,8 @@ Rules:
 | ID | Date | Request | Spend cap | Status | Decided by |
 |---|---|---|---|---|---|
 | A-001 | 2026-10-30 | Run EXP-001 (ACR Kit paid pre-order test) | $115 | SUPERSEDED (2026-10-31) | — |
+| A-003 | 2026-10-31 | Weekly scheduled CEO report (read-only) | $0 | APPROVED 2026-10-31 | owner |
+| A-005 | 2026-10-31 | B01 Stage 2: domain, GitHub Pages, GoatCounter, Formspree waitlist, 3 owner-approved posts | $15 | APPROVED 2026-10-31 | owner |
 
 ## A-001 — details
 **Approving authorizes exactly these actions, and nothing else:**

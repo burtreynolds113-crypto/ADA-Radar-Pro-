@@ -31,11 +31,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Unit tests
-        run: node --test tests/app.test.mjs
+      - name: Unit + build tests
+        run: node --test tests/app.test.mjs tests/build.test.mjs
       - name: Install test tools
         run: |
           npm install --no-save axe-core@4.14.0 playwright@1.63.0
           npx playwright install --with-deps chromium
-      - name: End-to-end + accessibility
+      - name: End-to-end + accessibility (source site)
         run: node tests/e2e.mjs
+      - name: End-to-end + accessibility (built site with CSP, sample config)
+        run: |
+          printf '%s' '{"product_name":"VendorReady","site_domain":"vendorready.example","contact_email":"hello@vendorready.example","waitlist_form_action":"https://formspree.io/f/abc123","goatcounter_code":"vendorready"}' > /tmp/sample.json
+          node build.mjs --config /tmp/sample.json --out /tmp/dist
+          E2E_ROOT=/tmp/dist/ node tests/e2e.mjs

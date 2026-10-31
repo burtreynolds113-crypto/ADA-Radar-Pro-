@@ -51,11 +51,13 @@
         "uncomment schedule in .github/workflows/weekly-report.yml"
       ],
       "spend_cap_usd": 0,
-      "enables_workflows": [],
-      "status": "pending",
-      "decided_by": "",
-      "decided_at": "",
-      "evidence": ""
+      "enables_workflows": [
+        "weekly-report.yml"
+      ],
+      "status": "approved",
+      "decided_by": "owner",
+      "decided_at": "2026-10-31",
+      "evidence": "Owner message in session 2026-10-31: 'Approve A-005 and A-003'"
     },
     {
       "id": "A-004",
@@ -81,10 +83,10 @@
         "agent drafts 3 launch posts; owner approves exact text before posting"
       ],
       "spend_cap_usd": 15,
-      "status": "pending",
-      "decided_by": "",
-      "decided_at": "",
-      "evidence": ""
+      "status": "approved",
+      "decided_by": "owner",
+      "decided_at": "2026-10-31",
+      "evidence": "Owner message in session 2026-10-31: 'Approve A-005 and A-003'"
     }
   ]
 }

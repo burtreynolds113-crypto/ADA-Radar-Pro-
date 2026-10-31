@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 const axeSource = await readFile(require.resolve("axe-core/axe.min.js"), "utf8");
-const ROOT = new URL("../site/", import.meta.url).pathname;
+const ROOT = process.env.E2E_ROOT || new URL("../site/", import.meta.url).pathname;
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css" };
 
 const server = createServer(async (req, res) => {
@@ -24,7 +24,7 @@ const server = createServer(async (req, res) => {
 const base = `http://127.0.0.1:${server.address().port}/`;
 
 async function axe(page, label) {
-  await page.addScriptTag({ content: axeSource });
+  await page.evaluate(axeSource); // CDP evaluation is not subject to the page CSP
   const r = await page.evaluate(() => axe.run(document, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa", "best-practice"] }));
   const v = r.violations.map((x) => `${x.id} (${x.nodes.length})`);
   assert.deepEqual(v, [], `${label} axe violations: ${v.join(", ")}`);
@@ -34,7 +34,10 @@ const browser = await chromium.launch();
 try {
   for (const scheme of ["light", "dark"]) {
     const page = await browser.newPage({ colorScheme: scheme });
+    const cspErrors = [];
+    page.on("console", (m) => { if (/Content Security Policy/i.test(m.text())) cspErrors.push(m.text()); });
     await page.goto(base);
+    await page.route("https://gc.zgo.at/**", (r) => r.abort()); // no third-party calls in tests
     await axe(page, `generator (${scheme})`);
 
     // Empty submit shows an error summary that receives focus.
@@ -79,6 +82,7 @@ try {
     await viewer.goto(base + "p/#zBROKEN");
     await viewer.waitForSelector("h1");
     assert.match(await viewer.textContent("h1"), /can't be displayed/);
+    assert.deepEqual(cspErrors.filter((e) => !/axe|gc\.zgo\.at/.test(e)), [], "CSP violations");
     await page.close();
   }
   console.log("e2e: all checks passed");

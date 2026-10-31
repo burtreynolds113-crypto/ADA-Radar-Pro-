@@ -120,7 +120,7 @@ class ApprovalGate(unittest.TestCase):
 
     def test_unapproved_spend_fails(self):
         with open(self.root / "finance" / "ledger.csv", "a") as f:
-            f.write("2026-11-01,ads,20,test,A-003,yes,inv-1\n")
+            f.write("2026-11-01,ads,20,test,A-999,yes,inv-1\n")
         self.assertTrue(any("without approved" in e for e in self.errors()))
 
     def test_spend_over_cap_fails(self):
@@ -134,7 +134,8 @@ class ApprovalGate(unittest.TestCase):
 
     def test_agent_cannot_self_approve(self):
         data = json.loads((self.root / "approvals" / "approvals.json").read_text())
-        data["approvals"][3].update(status="approved", decided_by="claude", decided_at="2026-11-01")
+        data["approvals"].append({"id": "A-T2", "date": "2026-11-01", "request": "t", "spend_cap_usd": 0,
+                                  "status": "approved", "decided_by": "claude", "decided_at": "2026-11-01"})
         (self.root / "approvals" / "approvals.json").write_text(json.dumps(data))
         self.assertTrue(any("must be owner" in e for e in self.errors()))
 
