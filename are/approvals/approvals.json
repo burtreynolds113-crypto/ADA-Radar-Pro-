@@ -5,7 +5,9 @@
       "id": "A-000",
       "date": "2026-10-30",
       "request": "Operating budget and caps: $250 total, $100 per item, $10/month AI usage",
-      "actions": ["set ops/config.json caps"],
+      "actions": [
+        "set ops/config.json caps"
+      ],
       "spend_cap_usd": 0,
       "status": "approved",
       "decided_by": "owner",
@@ -16,7 +18,12 @@
       "id": "A-001",
       "date": "2026-10-30",
       "request": "EXP-001: ACR Kit paid pre-order test (domain, Stripe payment link, static landing page, Google Ads <= $100)",
-      "actions": ["register domain", "create Stripe payment link", "deploy landing page", "run Google Ads"],
+      "actions": [
+        "register domain",
+        "create Stripe payment link",
+        "deploy landing page",
+        "run Google Ads"
+      ],
       "spend_cap_usd": 115,
       "status": "superseded",
       "decided_by": "",
@@ -27,7 +34,9 @@
       "id": "A-002",
       "date": "2026-10-31",
       "request": "Make the operating-system repository private",
-      "actions": ["owner switches ADA-Radar-Pro- to private in GitHub settings"],
+      "actions": [
+        "owner switches ADA-Radar-Pro- to private in GitHub settings"
+      ],
       "spend_cap_usd": 0,
       "status": "approved",
       "decided_by": "owner",
@@ -38,7 +47,9 @@
       "id": "A-003",
       "date": "2026-10-31",
       "request": "Enable the weekly scheduled CEO report workflow (read-only; uses GitHub Actions free minutes)",
-      "actions": ["uncomment schedule in .github/workflows/weekly-report.yml"],
+      "actions": [
+        "uncomment schedule in .github/workflows/weekly-report.yml"
+      ],
       "spend_cap_usd": 0,
       "enables_workflows": [],
       "status": "pending",
@@ -50,7 +61,9 @@
       "id": "A-004",
       "date": "2026-10-31",
       "request": "Run read-only research collection on GitHub Actions (public APIs, no secrets, no writes, no spend)",
-      "actions": ["run .github/workflows/research-collect.yml on push or manual dispatch"],
+      "actions": [
+        "run .github/workflows/research-collect.yml on push or manual dispatch"
+      ],
       "spend_cap_usd": 0,
       "status": "approved",
       "decided_by": "standing instruction: 'Execute all authorized local and read-only tasks immediately' (2026-10-31)",
@@ -60,9 +73,14 @@
     {
       "id": "A-005",
       "date": "2026-10-31",
-      "request": "Distribution-plausibility test for the recommended product - see research/recommendation.md",
-      "actions": ["see recommendation.md section 'Approval requested'"],
-      "spend_cap_usd": 0,
+      "request": "B01 distribution test, Stage 2: register domain, publish free trust-page generator on GitHub Pages, Stripe payment link in TEST mode for paid-tier waitlist, 3 owner-approved launch posts",
+      "actions": [
+        "owner registers domain",
+        "agent publishes static site on GitHub Pages",
+        "owner creates Stripe account; agent creates test-mode payment link",
+        "agent drafts 3 launch posts; owner approves exact text before posting"
+      ],
+      "spend_cap_usd": 15,
       "status": "pending",
       "decided_by": "",
       "decided_at": "",

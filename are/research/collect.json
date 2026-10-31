@@ -1,42 +1,227 @@
 {
   "_comment": "Read-only public API queries. Opportunity IDs refer to research/opportunities_b2b.csv. Run via .github/workflows/research-collect.yml.",
   "jobs": [
-    {"opportunity": "B03", "source": "atlassian", "query": "accessibility"},
-    {"opportunity": "B03", "source": "atlassian", "query": "WCAG"},
-    {"opportunity": "B03", "source": "atlassian", "query": "alt text"},
-    {"opportunity": "B01", "source": "atlassian", "query": "trust center"},
-    {"opportunity": "B19", "source": "atlassian", "query": "security questionnaire"},
-    {"opportunity": "B18", "source": "atlassian", "query": "SOC 2"},
-    {"opportunity": "B20", "source": "atlassian", "query": "compliance"},
-    {"opportunity": "B09", "source": "atlassian", "query": "status page"},
-    {"opportunity": "B08", "source": "atlassian", "query": "customer feedback"},
-    {"opportunity": "B30", "source": "atlassian", "query": "release notes"},
-    {"opportunity": "B20", "source": "atlassian", "query": "checklist"},
-
-    {"opportunity": "B21", "source": "wordpress", "query": "accessibility"},
-    {"opportunity": "B05", "source": "wordpress", "query": "alt text"},
-    {"opportunity": "B10", "source": "wordpress", "query": "DMARC"},
-    {"opportunity": "B07", "source": "wordpress", "query": "wholesale"},
-    {"opportunity": "B06", "source": "wordpress", "query": "GPSR"},
-
-    {"opportunity": "B02", "source": "hn", "query": "VPAT"},
-    {"opportunity": "B19", "source": "hn", "query": "security questionnaire"},
-    {"opportunity": "B01", "source": "hn", "query": "trust center"},
-    {"opportunity": "B08", "source": "hn", "query": "Canny pricing"},
-    {"opportunity": "B09", "source": "hn", "query": "Statuspage"},
-    {"opportunity": "B10", "source": "hn", "query": "DMARC"},
-    {"opportunity": "B11", "source": "hn", "query": "dunning"},
-    {"opportunity": "B12", "source": "hn", "query": "bank statement PDF"},
-    {"opportunity": "B14", "source": "hn", "query": "certificate of insurance"},
-    {"opportunity": "B18", "source": "hn", "query": "Vanta expensive"},
-    {"opportunity": "B03", "source": "hn", "query": "Confluence accessibility"},
-    {"opportunity": "B23", "source": "hn", "query": "ADA website lawsuit"},
-
-    {"opportunity": "B04", "source": "shopify_app", "query": "accesskit", "paid": true},
-    {"opportunity": "B04", "source": "shopify_app", "query": "accessibility-by-appifycommerce", "paid": true},
-    {"opportunity": "B04", "source": "shopify_app", "query": "access-pro", "paid": true},
-    {"opportunity": "B04", "source": "shopify_app", "query": "accesswidget", "paid": true},
-    {"opportunity": "B06", "source": "shopify_app", "query": "gpsr-compliance-dashboard", "paid": true},
-    {"opportunity": "B07", "source": "shopify_app", "query": "wholesale-club", "paid": true}
+    {
+      "opportunity": "B03",
+      "source": "atlassian",
+      "query": "accessibility",
+      "match": [
+        "accessib",
+        "wcag",
+        "a11y",
+        "vpat",
+        "alt text",
+        "screen reader"
+      ]
+    },
+    {
+      "opportunity": "B03",
+      "source": "atlassian",
+      "query": "WCAG",
+      "match": [
+        "accessib",
+        "wcag",
+        "a11y"
+      ]
+    },
+    {
+      "opportunity": "B03",
+      "source": "atlassian",
+      "query": "alt text",
+      "match": [
+        "alt text",
+        "alt-text",
+        "accessib"
+      ]
+    },
+    {
+      "opportunity": "B01",
+      "source": "atlassian",
+      "query": "trust center",
+      "match": [
+        "trust"
+      ]
+    },
+    {
+      "opportunity": "B19",
+      "source": "atlassian",
+      "query": "security questionnaire",
+      "match": [
+        "questionnaire",
+        "vendor assessment"
+      ]
+    },
+    {
+      "opportunity": "B18",
+      "source": "atlassian",
+      "query": "SOC 2",
+      "match": [
+        "soc 2",
+        "soc2",
+        "compliance"
+      ]
+    },
+    {
+      "opportunity": "B20",
+      "source": "atlassian",
+      "query": "compliance",
+      "match": [
+        "compliance"
+      ]
+    },
+    {
+      "opportunity": "B09",
+      "source": "atlassian",
+      "query": "status page",
+      "match": [
+        "status"
+      ]
+    },
+    {
+      "opportunity": "B08",
+      "source": "atlassian",
+      "query": "customer feedback",
+      "match": [
+        "feedback"
+      ]
+    },
+    {
+      "opportunity": "B30",
+      "source": "atlassian",
+      "query": "release notes",
+      "match": [
+        "release note",
+        "changelog"
+      ]
+    },
+    {
+      "opportunity": "B20",
+      "source": "atlassian",
+      "query": "checklist",
+      "match": [
+        "checklist"
+      ]
+    },
+    {
+      "opportunity": "B21",
+      "source": "wordpress",
+      "query": "accessibility"
+    },
+    {
+      "opportunity": "B05",
+      "source": "wordpress",
+      "query": "alt text"
+    },
+    {
+      "opportunity": "B10",
+      "source": "wordpress",
+      "query": "DMARC"
+    },
+    {
+      "opportunity": "B07",
+      "source": "wordpress",
+      "query": "wholesale"
+    },
+    {
+      "opportunity": "B06",
+      "source": "wordpress",
+      "query": "GPSR"
+    },
+    {
+      "opportunity": "B02",
+      "source": "hn",
+      "query": "VPAT"
+    },
+    {
+      "opportunity": "B19",
+      "source": "hn",
+      "query": "security questionnaire"
+    },
+    {
+      "opportunity": "B01",
+      "source": "hn",
+      "query": "trust center"
+    },
+    {
+      "opportunity": "B08",
+      "source": "hn",
+      "query": "Canny pricing"
+    },
+    {
+      "opportunity": "B09",
+      "source": "hn",
+      "query": "Statuspage"
+    },
+    {
+      "opportunity": "B10",
+      "source": "hn",
+      "query": "DMARC"
+    },
+    {
+      "opportunity": "B11",
+      "source": "hn",
+      "query": "dunning"
+    },
+    {
+      "opportunity": "B12",
+      "source": "hn",
+      "query": "bank statement PDF"
+    },
+    {
+      "opportunity": "B14",
+      "source": "hn",
+      "query": "certificate of insurance"
+    },
+    {
+      "opportunity": "B18",
+      "source": "hn",
+      "query": "Vanta expensive"
+    },
+    {
+      "opportunity": "B03",
+      "source": "hn",
+      "query": "Confluence accessibility"
+    },
+    {
+      "opportunity": "B23",
+      "source": "hn",
+      "query": "ADA website lawsuit"
+    },
+    {
+      "opportunity": "B04",
+      "source": "shopify_app",
+      "query": "accesskit",
+      "paid": true
+    },
+    {
+      "opportunity": "B04",
+      "source": "shopify_app",
+      "query": "accessibility-by-appifycommerce",
+      "paid": true
+    },
+    {
+      "opportunity": "B04",
+      "source": "shopify_app",
+      "query": "access-pro",
+      "paid": true
+    },
+    {
+      "opportunity": "B04",
+      "source": "shopify_app",
+      "query": "accesswidget",
+      "paid": true
+    },
+    {
+      "opportunity": "B06",
+      "source": "shopify_app",
+      "query": "gpsr-compliance-dashboard",
+      "paid": true
+    },
+    {
+      "opportunity": "B07",
+      "source": "shopify_app",
+      "query": "wholesale-club",
+      "paid": true
+    }
   ]
 }

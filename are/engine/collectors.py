@@ -92,7 +92,9 @@ def parse_wordpress_search(body):
 # --- Hacker News (Algolia) - complaint / pain mentions ---------------------
 
 def hn_search_url(query, since_unix=None, tags="comment"):
-    params = {"query": query, "tags": tags, "hitsPerPage": 5}
+    # Quoted phrase + no typo tolerance: otherwise "VPAT" matches "VAT", "PAT", ...
+    params = {"query": f'"{query}"', "tags": tags, "hitsPerPage": 5, "typoTolerance": "false",
+              "advancedSyntax": "true"}
     if since_unix:
         params["numericFilters"] = f"created_at_i>{int(since_unix)}"
     return "https://hn.algolia.com/api/v1/search?" + urllib.parse.urlencode(params)
@@ -130,6 +132,24 @@ def parse_shopify_app(html):
                     "stars": float(agg.get("ratingValue") or 0),
                 }
     return None
+
+
+def relevant(listings, terms):
+    """Keep listings whose name contains any term (case-insensitive). Marketplace text search is
+    fuzzy: 'accessibility' also returns access-management apps, which must not count as demand."""
+    if not terms:
+        return listings
+    t = [x.lower() for x in terms]
+    return [l for l in listings if any(x in (l.get("name") or "").lower() for x in t)]
+
+
+def atlassian_version_url(key):
+    return f"https://marketplace.atlassian.com/rest/2/addons/{urllib.parse.quote(key)}/versions/latest"
+
+
+def parse_atlassian_version(body):
+    """Returns 'atlassian' (paid via Atlassian), 'free', 'vendor', or None."""
+    return json.loads(body).get("paymentModel")
 
 
 def summarize_listings(listings):

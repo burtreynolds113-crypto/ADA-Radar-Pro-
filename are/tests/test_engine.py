@@ -39,6 +39,20 @@ class CollectorParsing(unittest.TestCase):
         self.assertEqual((r["reviews"], r["stars"]), (61, 4.9))
         self.assertIsNone(c.parse_shopify_app("<html></html>"))
 
+    def test_relevance_filter_drops_offtopic_apps(self):
+        rows = [{"name": "Access Agent for Jira"}, {"name": "Clarable Accessibility Checker"}, {"name": "WCAG Lens"}]
+        self.assertEqual([r["name"] for r in c.relevant(rows, ["accessib", "wcag"])],
+                         ["Clarable Accessibility Checker", "WCAG Lens"])
+        self.assertEqual(len(c.relevant(rows, None)), 3)
+
+    def test_version_payment_model(self):
+        self.assertEqual(c.parse_atlassian_version('{"paymentModel": "atlassian"}'), "atlassian")
+
+    def test_hn_query_is_exact(self):
+        u = c.hn_search_url("VPAT")
+        self.assertIn("typoTolerance=false", u)
+        self.assertIn("%22VPAT%22", u)
+
     def test_urls_are_encoded(self):
         self.assertIn("text=alt+text", c.atlassian_search_url("alt text"))
         self.assertIn("numericFilters=created_at_i%3E100", c.hn_search_url("x", since_unix=100))

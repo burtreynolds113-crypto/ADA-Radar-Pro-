@@ -39,7 +39,14 @@ def run_job(job, fetcher, now=None):
     recs = []
     if src == "atlassian":
         url = c.atlassian_search_url(q)
-        listings = c.parse_atlassian_search(fetch_with_retry(url, fetcher))
+        found = c.parse_atlassian_search(fetch_with_retry(url, fetcher))
+        listings = c.relevant(found, job.get("match"))
+        for l in listings[:15]:  # payment model is only on the version resource
+            if l["key"] and l["payment_model"] is None:
+                try:
+                    l["payment_model"] = c.parse_atlassian_version(fetch_with_retry(c.atlassian_version_url(l["key"]), fetcher))
+                except Exception:
+                    l["payment_model"] = None
         s = c.summarize_listings(listings)
         recs.append(ev.make(opp, "competition", f"atlassian_cloud_listings:{q}", s["listings"], url, "api", "apps"))
         recs.append(ev.make(opp, "distribution", f"atlassian_cloud_total_installs:{q}", s["total_installs"], url, "api", "installs",
@@ -49,7 +56,7 @@ def run_job(job, fetcher, now=None):
         for l in sorted(listings, key=lambda x: x.get("installs") or 0, reverse=True)[:5]:
             recs.append(ev.make(opp, "distribution", f"atlassian_app_installs:{l['key']}", l["installs"], l["url"] or url, "api",
                                 "installs", note=f"{l['name']} | {l['payment_model']} | reviews={l['reviews']} stars={l['stars']}"))
-        line = (f"{opp} atlassian '{q}': {s['listings']} cloud apps, {s['total_installs']} installs "
+        line = (f"{opp} atlassian '{q}' ({len(found)} raw, {len(listings)} relevant): {s['listings']} cloud apps, {s['total_installs']} installs "
                 f"({s['paid_listings']} paid apps, {s['paid_installs']} paid installs), top {s['top_installs'][:3]}")
     elif src == "wordpress":
         url = c.wordpress_search_url(q)
