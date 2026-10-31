@@ -1,5 +1,5 @@
 /* Service worker: caches ONLY the app shell. Never caches portal pages, status, or anything cross-origin. */
-const VERSION = 'rewired-shell-v1';
+const VERSION = 'rewired-shell-v2';
 const SHELL = ['./', './index.html', './console.html', './app.css', './trace.js', './app.js', './console.js', './config.js',
   './manifest.webmanifest', './manifest-console.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/console-192.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
