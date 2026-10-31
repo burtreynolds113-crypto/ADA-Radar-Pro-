@@ -1,30 +1,28 @@
-# Autonomous Revenue Engine (ARE)
+# Venture operating system
 
-The operating system for this venture: research, experiments, approvals, finance, and reports.
-
-Start with the latest CEO report in `reports/weekly/`, then `approvals/decisions.md`.
+The operating system for an AI-operated software company: research, ranking, unit economics, approvals, finance, and reporting.
+Start with [ARCHITECTURE.md](ARCHITECTURE.md), then [research/recommendation.md](research/recommendation.md), then [approvals/approvals.json](approvals/approvals.json).
 
 ```bash
-python3 are/ops/are.py score              # rank opportunities
-python3 are/ops/are.py ledger             # verified P&L + spend vs cap
-python3 are/ops/are.py can-spend 25       # pre-spend check (caps + kill switch)
-python3 are/ops/are.py report 2026-W45    # generate the weekly CEO report
-python3 -m unittest discover -s are/tests # tests
+cd are
+python -m unittest discover -s tests                     # all tests
+python -m engine.rank research/opportunities_b2b.csv     # B2B ranking (34 opportunities)
+python -m engine.economics research/economics.json       # milestone requirements
+python -m engine.collect --config research/collect.json --out ev.jsonl   # live data (needs internet; runs on Actions)
+python -m ops.approvals check                            # approval gate (also runs in CI)
+python -m ops.finance dashboard --out dashboard.html     # financial dashboard
+python ops/are.py can-spend 25                           # spend cap + kill switch check
+python ops/are.py report 2026-W44                        # weekly CEO report
 ```
 
-## Current state (2026-10-30)
-- **Lead candidate:** O01, ACR Kit, a self-serve VPAT/ACR builder for small B2B SaaS.
-- **Next step:** EXP-001 paid pre-order test. Blocked on approval A-001.
-- **Money:** $0 revenue, $0 spend.
+## Status (2026-10-31)
+- **Verified money:** $0 revenue, $0 spent, $0 profit.
+- **Lead hypothesis:** B03, a Confluence Cloud accessibility checker. It needs a passing marketplace data test (Stage 1) before any build.
+- **Fallback:** B01, a trust center plus questionnaire library.
+- **Pending owner decisions:**
+  - A-003: weekly schedule
+  - A-005: B03 Stage 2
 
-## Operating functions (Phase 7 plan; deterministic first, AI only where it earns its cost)
-| Function | Mechanism | Status |
-|---|---|---|
-| Research & market intel | Scored CSV + `are.py score`; re-run quarterly | Built |
-| Financial reconciliation | `ledger.csv` + `are.py ledger/report`; Stripe CSV import later | Built (manual entry) |
-| Risk & spend control | `config.json` caps + kill switch + `can-spend` | Built |
-| CEO reporting | `are.py report` weekly | Built |
-| Approval queue | `approvals/decisions.md` | Built |
-| Product dev & testing | CI tests per product | After GO |
-| Growth analysis | metrics.json from analytics/Stripe exports | After launch |
-| Support assistance | FAQ + AI-drafted replies, human-sent | After first customers |
+  Also pending: switching the repo to private (A-002, owner action).
+
+The first round's files (`research/opportunities.csv`, EXP-001) are kept for the record. EXP-001 was superseded because a one-time $149 product can't credibly reach $50k/month.

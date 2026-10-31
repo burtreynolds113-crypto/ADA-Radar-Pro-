@@ -1,0 +1,30 @@
+name: Research collection (read-only)
+# Fetches public marketplace/community APIs. No secrets, no writes, no spend.
+# Results are printed to the run log and uploaded as an artifact; nothing is committed.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["are/research/collect.json", "are/engine/**"]
+permissions:
+  contents: read
+concurrency:
+  group: research-collect
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Collect
+        working-directory: are
+        run: python -m engine.collect --config research/collect.json --out evidence-run.jsonl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.run_id }}
+          path: are/evidence-run.jsonl
+          retention-days: 90

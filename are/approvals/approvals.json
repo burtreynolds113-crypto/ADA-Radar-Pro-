@@ -1,0 +1,72 @@
+{
+  "_rules": "Only the owner changes a status to approved (decided_by: owner). The agent may add pending requests. See approvals/decisions.md for human-readable context. Enforced in CI by `python -m ops.approvals check`.",
+  "approvals": [
+    {
+      "id": "A-000",
+      "date": "2026-10-30",
+      "request": "Operating budget and caps: $250 total, $100 per item, $10/month AI usage",
+      "actions": ["set ops/config.json caps"],
+      "spend_cap_usd": 0,
+      "status": "approved",
+      "decided_by": "owner",
+      "decided_at": "2026-10-30",
+      "evidence": "Owner's initial instructions: 'Starting capital: $250' and 'Initial total budget: $250'"
+    },
+    {
+      "id": "A-001",
+      "date": "2026-10-30",
+      "request": "EXP-001: ACR Kit paid pre-order test (domain, Stripe payment link, static landing page, Google Ads <= $100)",
+      "actions": ["register domain", "create Stripe payment link", "deploy landing page", "run Google Ads"],
+      "spend_cap_usd": 115,
+      "status": "superseded",
+      "decided_by": "",
+      "decided_at": "",
+      "evidence": "Superseded by the B2B recurring re-ranking (see research/recommendation.md); replaced by A-005."
+    },
+    {
+      "id": "A-002",
+      "date": "2026-10-31",
+      "request": "Make the operating-system repository private",
+      "actions": ["owner switches ADA-Radar-Pro- to private in GitHub settings"],
+      "spend_cap_usd": 0,
+      "status": "approved",
+      "decided_by": "owner",
+      "decided_at": "2026-10-31",
+      "evidence": "Owner answered 'Make current repo private' in session on 2026-10-31. Agent cannot change visibility; owner performs it."
+    },
+    {
+      "id": "A-003",
+      "date": "2026-10-31",
+      "request": "Enable the weekly scheduled CEO report workflow (read-only; uses GitHub Actions free minutes)",
+      "actions": ["uncomment schedule in .github/workflows/weekly-report.yml"],
+      "spend_cap_usd": 0,
+      "enables_workflows": [],
+      "status": "pending",
+      "decided_by": "",
+      "decided_at": "",
+      "evidence": ""
+    },
+    {
+      "id": "A-004",
+      "date": "2026-10-31",
+      "request": "Run read-only research collection on GitHub Actions (public APIs, no secrets, no writes, no spend)",
+      "actions": ["run .github/workflows/research-collect.yml on push or manual dispatch"],
+      "spend_cap_usd": 0,
+      "status": "approved",
+      "decided_by": "standing instruction: 'Execute all authorized local and read-only tasks immediately' (2026-10-31)",
+      "decided_at": "2026-10-31",
+      "evidence": "Read-only; no schedule. A recurring schedule would need a separate owner approval."
+    },
+    {
+      "id": "A-005",
+      "date": "2026-10-31",
+      "request": "Distribution-plausibility test for the recommended product - see research/recommendation.md",
+      "actions": ["see recommendation.md section 'Approval requested'"],
+      "spend_cap_usd": 0,
+      "status": "pending",
+      "decided_by": "",
+      "decided_at": "",
+      "evidence": ""
+    }
+  ]
+}

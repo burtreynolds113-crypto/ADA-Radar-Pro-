@@ -1,0 +1,63 @@
+{
+  "_comment": "Assumptions, not data. Replace each with measured values as soon as they exist (ledger, subscriptions, marketplace reports).",
+  "models": [
+    {
+      "id": "B03",
+      "name": "B03 Confluence Cloud accessibility checker (Atlassian Marketplace, Forge)",
+      "arpu_monthly": 150,
+      "platform_fee_pct": 0.17,
+      "payment_pct": 0.0,
+      "payment_fixed": 0.0,
+      "variable_cost_per_customer": 3,
+      "cac": 60,
+      "monthly_churn": {"base": 0.02, "high": 0.04},
+      "fixed_costs": {"M1": 15, "M2": 50, "M3": 150, "M4": 400, "M5": 1500, "M6": 3500},
+      "sources": {
+        "platform_fee": "0% on first $1M lifetime Forge revenue from 2026-01-01, then standard Forge rate (17% from 2026-10-01) [S31]. Modeled at 17% throughout = conservative.",
+        "payment": "Atlassian bills the customer; no separate payment processor [S32].",
+        "arpu": "UNVERIFIED ASSUMPTION. Cloud apps are priced by the customer's user tier [S32]; $150/mo implies roughly a few hundred-user org at sub-$1/user. Must be checked against competitor price tiers before build.",
+        "variable_cost": "Assumed Forge compute/storage within free allowances plus support time; Forge pricing beyond free tier is announced but not modeled [S31].",
+        "cac": "Organic marketplace + SEO; $60 = allocated listing/content/tooling cost per customer. Assumption.",
+        "churn": "Assumption: B2B compliance tooling with annual Atlassian licences; 2%/mo base, 4%/mo stress.",
+        "fixed_costs": "M1-M3 domain/tools; M4 adds monitoring and error tracking; M5-M6 add part-time support contractor (~20-40 h/mo) and bookkeeping."
+      }
+    },
+    {
+      "id": "B01",
+      "name": "B01 Lightweight trust center + questionnaire library for <50-person B2B SaaS (Stripe)",
+      "arpu_monthly": 99,
+      "platform_fee_pct": 0.0,
+      "payment_pct": 0.029,
+      "payment_fixed": 0.30,
+      "variable_cost_per_customer": 6,
+      "cac": 150,
+      "monthly_churn": {"base": 0.03, "high": 0.06},
+      "fixed_costs": {"M1": 25, "M2": 80, "M3": 200, "M4": 500, "M5": 1800, "M6": 4000},
+      "sources": {
+        "arpu": "Below incumbents ($5k-$20k/yr: SafeBase, Conveyor, Vanta [S26,S27]) but above free tiers (TrustCloud <20 employees, ShieldPage free/$49 [S26]). Assumption.",
+        "payment": "Stripe standard US card pricing 2.9% + $0.30 (verify at signup).",
+        "variable_cost": "Hosting + LLM calls for questionnaire drafting; assumption, capped by config.",
+        "cac": "SEO + product-led trust-page footer; assumption. Higher than B03 because there is no marketplace with built-in buyer search.",
+        "churn": "Small-SaaS customers churn when they fail or outgrow; 3% base, 6% stress. Assumption."
+      }
+    },
+    {
+      "id": "B04",
+      "name": "B04 Shopify accessibility audit app (Shopify App Store)",
+      "arpu_monthly": 15,
+      "platform_fee_pct": 0.0,
+      "payment_pct": 0.029,
+      "payment_fixed": 0.0,
+      "variable_cost_per_customer": 1,
+      "cac": 10,
+      "monthly_churn": {"base": 0.06, "high": 0.10},
+      "fixed_costs": {"M1": 25, "M2": 60, "M3": 200, "M4": 500, "M5": 1800, "M6": 4000},
+      "sources": {
+        "platform_fee": "0% revenue share on first $1M (reduced plan, $19 one-time registration) [S14]; 2.9% processing fee on app billing [S14].",
+        "arpu": "Competitor paid tiers $4.99-$59/mo [S7,S9]; $15 assumed.",
+        "churn": "Small-merchant apps churn fast; 6% base, 10% stress. Assumption.",
+        "cac": "App Store organic; assumption."
+      }
+    }
+  ]
+}

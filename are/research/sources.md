@@ -31,3 +31,27 @@ conflict, both are noted in `opportunities.csv`.
 | S23 | Wix a11y apps & policy; Squarespace free checkers | [Wix guidelines](https://dev.wix.com/docs/build-apps/launch-your-app/app-distribution/app-market-guidelines), [Tagpipes](https://tagpipes.com/tools/squarespace-accessibility-checker/) |
 | S24 | Commoditized micro-SaaS niches (opinion) | [kubaik](https://kubaik.github.io/ai-killed-these-micro-saas-niches/) |
 | S25 | Etsy printables saturation (opinion) | [Growing Your Craft](https://www.growingyourcraft.com/blog/most-popular-digital-products-on-etsy), [Deadline Funnel](https://www.deadlinefunnel.com/blog/etsy-digital-products) |
+
+## B2B round (retrieved 2026-10-31 via web search)
+
+| ID | Claim used | Source |
+|----|-----------|--------|
+| S26 | Trust-center pricing: SafeBase from ~$5k/yr (other reports $15k+); TrustCloud free <20 staff; ShieldPage free/$49; ComplyJet from $5k/yr; Vanta trust center gated by tier | [ComplyJet](https://www.complyjet.com/blog/best-trust-center-software), [Cyberbase](https://cyberbase.ai/blog/what-is-a-trust-center-2026), [Orbiq](https://www.orbiqhq.com/comparisons/vanta-pricing) |
+| S27 | Questionnaire automation: Conveyor Business from $9.6k/yr; Vanta ~$20k/yr avg with $6k trust add-on (competitor claim); many entrants | [Inventive AI](https://www.inventive.ai/blog-posts/best-security-questionnaire-automation-software), [Wolfia](https://wolfia.com/blog/vanta-reviews-pricing-alternatives) |
+| S28 | Confluence accessibility apps: built-in editor checker (WCAG 2.0, EAP); Communardo + Unstoppable are Server/DC; a Cloud "WCAG & ADA Accessibility Checker" listed 1 install; AccessLens for Confluence (Cloud) | [Atlassian docs](https://confluence.atlassian.com/doc/accessibility-checker-1055686972.html), [AccessLens](https://marketplace.atlassian.com/apps/1421596041/accesslens-for-confluence), [Unstoppable](https://marketplace.atlassian.com/apps/1216435/unstoppable-for-confluence) |
+| S31 | Atlassian: 0% revenue share on first $1M lifetime Forge revenue from 2026-01-01; Forge standard rate 15%→16% (Apr 2026)→17% (Oct 2026); Connect apps ineligible | [Atlassian blog](https://www.atlassian.com/blog/development/updates-to-marketplace-revenue-share-2026), [Extended timelines](https://www.atlassian.com/blog/development/extended-timelines-for-marketplace-revenue-share-changes) |
+| S32 | Cloud app pricing follows the customer's user tier; Atlassian bills the customer | [Atlassian developer docs](https://developer.atlassian.com/platform/marketplace/pricing-payment-and-billing/) |
+| S33 | 10+ Shopify GPSR apps; Aegis $9.99/mo | [Shopify GPSR Kit](https://apps.shopify.com/gpsr-kit), [Meetanshi](https://meetanshi.com/blog/eu-gpsr-for-shopify/) |
+| S34 | Shopify wholesale app leader ~549 reviews, ~$24.99/mo | [AppNavigator](https://appnavigator.io/app/wholesale-pricing-discount/reviews/?page=6), [BSS](https://bsscommerce.com/shopify/shopify-b2b-apps/) |
+| S35 | Canny tracked-user pricing complaints; alternatives | [updown.io](https://updown.io/blog/goodbye-canny), [Featurebase](https://www.featurebase.app/blog/canny-pricing) |
+| S36 | Status pages: Statuspage $99–$1,499; Instatus ~$20; Hyperping $24 | [Better Stack](https://betterstack.com/community/comparisons/statuspage-alternatives), [Hyperping](https://hyperping.com/blog/best-statuspage-alternatives) |
+| S37 | DMARC: Postmark free; paid $15–$35/mo | [Dupple](https://dupple.com/reviews/easydmarc), [Suped](https://suped.com/email-deliverability/answers/what-are-affordable-dmarc-service-alternatives-for-small-businesses) |
+| S38 | Dunning tools $25–$249/mo | [dev.to comparison](https://dev.to/astraedus/the-best-dunning-tools-for-indie-saas-in-2026-honest-comparison-2f3a), [Fungies](https://fungies.io/saas-dunning-management-failed-payment-recovery-2026/) |
+| S39 | Bank-statement converters on TrustMRR ($600 MRR; conflicting $128k MRR) | [TrustMRR](https://trustmrr.com/startup/bank-statement-converter), [Microns](https://www.microns.io/startup-listings/ai-bank-statement-parser) |
+| S40 | Screenshot/PDF APIs: acquire.com listing ~$6.3k MRR; PDFBolt on TrustMRR | [Acquire](https://app.acquire.com/public/f5to5nqgj6-highly-profitable-pdf-generation-screenshot-api-saas), [TrustMRR PDFBolt](https://trustmrr.com/startup/pdfbolt?metric=mrr) |
+| S41 | COI tracking: bcs $0.95/vendor/mo; Certificial $49; TrustLayer free ≤50 vendors | [bcs pricing](https://www.getbcs.com/pricing), [G2 Certificial](https://www.g2.com/products/certificial/reviews) |
+| S42 | IFTA software $10–$40/mo | [Software Advice](https://www.softwareadvice.com/fleet-management/ifta-profile/) |
+| S43 | Email signatures: Exclaimer ~$0.90/user/mo | [G2](https://www.g2.com/products/exclaimer/pricing), [TrustRadius](https://www.trustradius.com/compare-products/wisestamp-vs-exclaimer) |
+| S44 | TaxDome ~$800+/yr/user; small-firm cost complaints | [Capterra](https://www.capterra.com/p/186749/TaxDome/), [Software Advice](https://www.softwareadvice.com/tax-preparation/taxdome-profile/) |
+| S45 | SOC 2 tooling $7.5k–$15k+/yr | [Klaay](https://www.klaay.com/blog/best-soc-2-tools-for-startups-2026), [CostBench](https://www.costbench.com/compare/drata-vs-vanta/) |
+| S46 | Atlassian ecosystem: $300M app sales year reported by Atlassian; 1,000+ vendors | [Atlassian developer blog](https://blog.developer.atlassian.com/?p=2723), [Atlassian $7B marketplace](https://www.atlassian.com/blog/teamwork/atlassian-marketplace-7-billion) |

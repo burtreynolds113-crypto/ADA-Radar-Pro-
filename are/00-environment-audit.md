@@ -45,3 +45,16 @@ An Express + SQLite + Clerk + Stripe skeleton for a website accessibility scanne
 | `ops/are.py`, `ops/config.json` | Deterministic CLI: scoring, ledger, spend caps, kill switch, weekly report |
 | `tests/test_are.py` | 11 unit tests (passing) |
 | `reports/weekly/` | CEO reports |
+
+## Update 2026-10-31: GitHub and integration audit
+| Item | Finding |
+|---|---|
+| GitHub identity | `burtreynolds113-crypto` (account created 2025-11-17) |
+| Repositories | `ADA-Radar` and `ADA-Radar-Pro-`, **both public**, admin rights on both. Owner chose to make `ADA-Radar-Pro-` private (A-002); the agent cannot change visibility. |
+| Write access | Push to `claude/autonomous-revenue-engine-veeken` works. Creating new repos is restricted to repos attached to this session. |
+| GitHub Actions | No workflows existed. Added `ci.yml` (tests + approval gate), `research-collect.yml` (read-only data collection) and `weekly-report.yml` (manual; schedule needs A-003). Free minutes: public repos unlimited; private repos 2,000 min/month on GitHub Free. |
+| Container network | **Blocked:** api.wordpress.org, hn.algolia.com, apps.shopify.com, marketplace.atlassian.com, trustmrr.com, capterra.com, indiehackers.com, api.stripe.com. **Allowed:** GitHub, npm/PyPI. Live market data therefore comes from Actions runners. Payments can't be called from this container. |
+| Payments | No Stripe account or keys. Atlassian Marketplace (if B03) bills customers itself, so no processor is needed. |
+| Hosting | None. Available free once approved: GitHub Pages (static), Atlassian Forge (for B03). |
+| Analytics / support | None connected. Gmail is connected but unused (outbound email needs approval). |
+| Budget | $250 total (A-000); $0 spent. |

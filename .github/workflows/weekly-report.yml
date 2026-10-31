@@ -1,0 +1,32 @@
+name: Weekly CEO report
+# Schedule is DISABLED until approval A-003 is recorded in are/approvals/approvals.json.
+# To enable: uncomment the schedule block (that change itself is reviewed by the owner).
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "17 13 * * 1"   # Mondays 13:17 UTC
+permissions:
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build report and dashboard
+        working-directory: are
+        run: |
+          WEEK=$(date -u +%G-W%V)
+          python ops/are.py report "$WEEK"
+          python -m ops.finance dashboard --out dashboard.html
+          cat "reports/weekly/${WEEK}-generated.md" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ceo-report-${{ github.run_id }}
+          path: |
+            are/reports/weekly/*-generated.md
+            are/dashboard.html
+          retention-days: 90

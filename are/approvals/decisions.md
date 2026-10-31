@@ -1,5 +1,7 @@
 # Approval queue & decision log
 
+> **Machine-readable source of truth is now `approvals.json`, and CI enforces it. This file keeps the narrative history.** A-001 is superseded (see `research/recommendation.md`).
+
 Rules:
 - The agent never spends, publishes, activates live payments, creates accounts, or sends external messages without an **APPROVED** entry here.
 - An approval covers only what it names.
@@ -7,7 +9,7 @@ Rules:
 
 | ID | Date | Request | Spend cap | Status | Decided by |
 |---|---|---|---|---|---|
-| A-001 | 2026-10-30 | Run EXP-001 (ACR Kit paid pre-order test) | $115 | **PENDING** | — |
+| A-001 | 2026-10-30 | Run EXP-001 (ACR Kit paid pre-order test) | $115 | SUPERSEDED (2026-10-31) | — |
 
 ## A-001 — details
 **Approving authorizes exactly these actions, and nothing else:**
