@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free security trust page and questionnaire answers for small SaaS teams</title>
+<meta name="description" content="Answer 22 questions once. Get a shareable security overview page and a starter answer bank for vendor security questionnaires. Free; nothing stored on our servers.">
+<link rel="stylesheet" href="style.css">
+<!-- NOT PUBLISHED. Placeholders filled only after approval A-005:
+     {{PRODUCT_NAME}} (working name, trademark check pending), {{WAITLIST_FORM_ACTION}}, {{CONTACT_EMAIL}}
+     Cookieless analytics (GoatCounter) script tag is added only after approval. -->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header>
+  <p><strong>{{PRODUCT_NAME}}</strong></p>
+  <h1>A prospect sent a security questionnaire. Start with a trust page you can share today.</h1>
+  <p class="lede">Answer 22 questions about how you run security. You get a shareable security overview page and a starter answer bank (CSV) for the questions that come up in almost every vendor review. Free, no account, and your answers are never stored on our servers.</p>
+</header>
+
+<main id="main">
+  <div class="box" role="note">
+    <p><strong>How your data is handled:</strong> your page lives entirely inside its link, in the part after the “#”. Browsers never send that part to any server. We can't read, change or delete your page; anyone with the link can view it.</p>
+  </div>
+
+  <div id="errors" role="alert" tabindex="-1" hidden>
+    <h2 style="margin-top:0">Please fix these before generating your page</h2>
+    <ul id="error-list"></ul>
+  </div>
+
+  <form id="tp-form" novalidate>
+    <p class="hint">Fields marked * are required.</p>
+    <div id="fields"></div>
+    <p class="hint">Answer truthfully. Your page says it is self-reported, and buyers may ask for evidence of anything you state.</p>
+    <button class="btn" type="submit">Generate my trust page</button>
+  </form>
+
+  <section id="result" class="result" hidden aria-labelledby="result-h" tabindex="-1">
+    <h2 id="result-h" style="margin-top:0">Your trust page is ready</h2>
+    <p><label for="share-link"><strong>Share link</strong> (send this to prospects or link it from your website)</label></p>
+    <textarea id="share-link" class="linkbox" rows="3" readonly></textarea>
+    <p>
+      <button class="btn" type="button" id="copy">Copy link</button>
+      <a class="btn secondary" id="open" href="#" target="_blank" rel="noopener">Open page</a>
+      <button class="btn secondary" type="button" id="csv">Download answer bank (CSV)</button>
+    </p>
+    <p id="copy-status" role="status" class="hint"></p>
+    <p class="hint">To change anything later, edit the form above and generate a new link. Old links keep showing the old answers.</p>
+  </section>
+
+  <section aria-labelledby="paid-h">
+    <h2 id="paid-h">Coming next: the full questionnaire answer library</h2>
+    <p>The free answer bank covers about 20 common questions. The paid plan is for teams that receive questionnaires every month:</p>
+    <ul>
+      <li>An answer library covering the long-form questionnaires enterprise buyers send, drafted from your answers and kept in one place</li>
+      <li>Your trust page on your own domain, with documents behind an NDA request</li>
+      <li>Change history, so you can show what was true on the date you answered</li>
+    </ul>
+    <p class="price">$49 / month <span class="hint">(planned price)</span></p>
+    <p><strong>Not available yet.</strong> Join the waitlist and we'll offer you a founding price when it opens. We don't take payment now.</p>
+    <p><button class="btn" type="button" id="paid-cta">Join the waitlist</button></p>
+    <form id="waitlist" action="{{WAITLIST_FORM_ACTION}}" method="POST" hidden>
+      <div class="field">
+        <label for="wl-email">Work email</label>
+        <input id="wl-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="wl-volume">Questionnaires you receive per month</label>
+        <select id="wl-volume" name="volume"><option>0–1</option><option>2–5</option><option>6–20</option><option>More than 20</option></select>
+      </div>
+      <p class="hint">We'll only email you about this plan. Unsubscribe any time.</p>
+      <button class="btn" type="submit">Notify me</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>{{PRODUCT_NAME}} is not affiliated with any auditor or certification body, and a trust page is not a certification. Nothing here is legal advice.</p>
+  <p>Contact: {{CONTACT_EMAIL}}</p>
+</footer>
+</div>
+<script type="module" src="generator.js"></script>
+</body>
+</html>

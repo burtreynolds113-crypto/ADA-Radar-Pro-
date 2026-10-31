@@ -1,0 +1,13 @@
+{
+  "name": "b01-trust-page",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/app.test.mjs",
+    "e2e": "node tests/e2e.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.0"
+  },
+  "_comment": "e2e needs Playwright: preinstalled locally (NODE_PATH=$(npm root -g)); CI installs it explicitly."
+}

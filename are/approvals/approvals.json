@@ -73,11 +73,11 @@
     {
       "id": "A-005",
       "date": "2026-10-31",
-      "request": "B01 distribution test, Stage 2: register domain, publish free trust-page generator on GitHub Pages, Stripe payment link in TEST mode for paid-tier waitlist, 3 owner-approved launch posts",
+      "request": "B01 distribution test, Stage 2: domain, publish free trust-page generator on GitHub Pages, cookieless analytics (GoatCounter), waitlist form (Formspree free) with no payment, 3 owner-approved launch posts",
       "actions": [
-        "owner registers domain",
-        "agent publishes static site on GitHub Pages",
-        "owner creates Stripe account; agent creates test-mode payment link",
+        "owner registers domain after name check",
+        "agent publishes products/b01-trust-page/site on GitHub Pages",
+        "owner creates GoatCounter + Formspree accounts; agent wires them",
         "agent drafts 3 launch posts; owner approves exact text before posting"
       ],
       "spend_cap_usd": 15,

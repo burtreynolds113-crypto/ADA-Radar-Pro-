@@ -19,3 +19,23 @@ jobs:
       - name: Approval gate (caps and kill switch changes need an approved record)
         working-directory: are
         run: python -m ops.approvals check
+
+  trust-page:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: are/products/b01-trust-page
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Unit tests
+        run: node --test tests/app.test.mjs
+      - name: Install test tools
+        run: |
+          npm install --no-save axe-core@4.14.0 playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: End-to-end + accessibility
+        run: node tests/e2e.mjs

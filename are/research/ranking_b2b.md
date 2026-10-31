@@ -1,9 +1,9 @@
 | # | Score | ID | Opportunity | Channel | ARPU | Customers for $50k/mo | Evidence | Paying-customer proof |
 |---:|---:|---|---|---|---:|---:|---|---|
-| 1 | 3.25 | B01 | Lightweight trust center + security-questionnaire library for <50-person SaaS | SEO + product-led trust pages | $99 | 632 | E | yes |
-| 2 | 3.25 | B02 | ACR/VPAT kit with monitoring subscription | SEO | $49 | 1,276 | E | yes |
-| 3 | 3.25 | B04 | Shopify accessibility audit app (code-level; no overlay) | Shopify App Store | $15 | 4,167 | E | yes |
-| 4 | 3.20 | B06 | Shopify GPSR product-safety compliance app | Shopify App Store | $10 | 6,250 | E | yes |
+| 1 | 3.25 | B02 | ACR/VPAT kit with monitoring subscription | SEO | $49 | 1,276 | E | yes |
+| 2 | 3.25 | B04 | Shopify accessibility audit app (code-level; no overlay) | Shopify App Store | $15 | 4,167 | E | yes |
+| 3 | 3.20 | B06 | Shopify GPSR product-safety compliance app | Shopify App Store | $10 | 6,250 | E | yes |
+| 4 | 3.10 | B01 | Lightweight trust center + security-questionnaire library for <50-person SaaS | SEO + product-led trust pages | $99 | 632 | E | yes |
 | 5 | 3.10 | B05 | Bulk AI alt-text for Shopify/WooCommerce | Shopify/Woo marketplaces | $9 | 6,945 | E | yes |
 | 6 | 3.10 | B20 | Generic Atlassian compliance/checklist app | Atlassian Marketplace | $100 | 625 | A | no |
 | 7 | 3.00 | B21 | WordPress accessibility checker plugin (freemium) | WordPress.org | $12 | 5,209 | E | yes |
