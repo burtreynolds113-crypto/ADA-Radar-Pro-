@@ -14,6 +14,13 @@
 - **Search noise:** the other high-install apps returned for "accessibility" were access-management tools (for example "Access Agent", 312 installs), not accessibility. The collector now filters by name.
 - **What this shows:** the marketplace can deliver installs for workflow tools. Checklist apps reach 4,500–30,000 Cloud installs. But no one is installing accessibility checkers on Cloud. The regulatory deadlines haven't produced marketplace demand.
 - **Cost of this lesson:** $0 and no product code.
+- **Confirmed by the corrected collector (run 41150458512):** relevant accessibility apps on Cloud have **2 paid installs** (Clarable, paid via Atlassian). Accessible Web for Jira (38) and Continuous Accessibility (0) are free. "Alt Text" (63 paid) is a Markdown editor, not an accessibility tool.
+- **Side finding (same run):** the Marketplace does carry paid demand in crowded workflow categories.
+  - Status-page apps: 24,204 paid Cloud installs across 12 paid apps.
+  - Checklist apps: 22,345 across 12.
+  - Compliance apps: 1,501 across 14.
+
+  Recorded for future candidates; it doesn't change the B03 verdict.
 
 ## New lead: B01, a lightweight trust center plus security-questionnaire answer library for B2B SaaS companies under 50 people
 It is the highest-ranked opportunity with evidence that people pay. Ranking: 3.25, tied with B02 and B04. B01 wins the tie on ARPU and on the $50K path: about 633 customers at $99, versus 1,276 for B02 and 4,167 for B04.
@@ -21,6 +28,7 @@ It is the highest-ranked opportunity with evidence that people pay. Ranking: 3.2
 | Factor | Evidence | Status |
 |---|---|---|
 | People pay | Incumbents charge $5k–$20k/yr: SafeBase from about $5k, Conveyor $9.6k, Vanta averages about $20k plus a $6k trust-center add-on [S26, S27] | Third-party pricing data |
+| Community signal | Exact-match Hacker News comments in the last 12 months: "trust center" 26, "security questionnaire" 5, "VPAT" 3 (run 41150458512). HN is not where these buyers talk, so this is weak either way | Measured, low weight |
 | Underserved segment | Tiny companies get a security questionnaire before they can afford Vanta; complaints say $7.5k+ is too much under 20 staff [S45] | Plausible, not measured |
 | Competition at the low end | Free tiers: TrustCloud (<20 staff), ShieldPage, Cyberbase, Orbiq [S26] | **Real risk.** Price alone won't win; the questionnaire answer library has to be the paid value |
 | Distribution | (1) Product-led: every customer's public trust page is read by their prospects' security reviewers, who work at B2B companies themselves. (2) SEO on questionnaire and security-page searches | **Unproven, the key risk** |

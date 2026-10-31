@@ -9,3 +9,6 @@ Each file holds raw records captured from one GitHub Actions run of `research-co
 3. **Payment model is missing (`None`).** The search endpoint doesn't expose it; the collector now reads `/versions/latest`.
 
 The B03 decision uses only per-app rows judged relevant by name, so it is unaffected by these defects.
+
+## `2026-10-31-run-41150458512.jsonl`
+First run with the corrected collector. No known defects. The Shopify handle `accesskit` returned no rating data, so that handle is probably wrong.
